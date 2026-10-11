@@ -171,18 +171,14 @@ def test_admit_grades_composite_floor() -> None:
     assert admit_grades(grades, RubricThresholds(composite_min=0.60)) is None
 
 
-def test_match_post_uses_classifier_for_ambiguous() -> None:
-    fake = FakeClassifier(keep_terms=frozenset({'co-op'}))
+def test_match_post_regex_floor_without_decider() -> None:
     strong = match_post('Mutual credit clearing beats landlord title.')
     assert strong.matched is True
     assert strong.reason == 'strong_positive'
 
-    keep_ai = match_post(
-        'Our co-op shares tools citywide and refuses landlords.',
-        classifier=fake,
-    )
-    assert keep_ai.matched is True
-    assert keep_ai.reason.startswith('classifier:ambiguous:')
+    leftover = match_post('Our co-op shares tools citywide and refuses landlords.')
+    assert leftover.matched is False
+    assert leftover.reason == 'ambiguous_no_context:co-op'
 
 
 def test_solicit_cue_vetoes_strong_positive_without_classifier() -> None:
@@ -193,36 +189,39 @@ def test_solicit_cue_vetoes_strong_positive_without_classifier() -> None:
     assert result.reason.startswith('solicit_cue_unscored:')
 
 
-def test_solicit_cue_passes_when_classifier_clears() -> None:
-    fake = FakeClassifier(keep_substrings=('mutual credit',), solicit=0.1)
+def test_solicit_cue_passes_when_decider_keeps() -> None:
+    from server.decider import FakeDecider
+
     result = match_post(
         'Mutual credit association goal: donate via our collective PayPal.',
-        classifier=fake,
+        decider=FakeDecider(keep=True, score=0.8),
     )
     assert result.matched is True
-    assert result.reason == 'strong_positive'
+    assert result.reason == 'decision_keep:strong_positive:0.800'
 
 
-def test_solicit_cue_drops_when_classifier_flags_solicit() -> None:
-    fake = FakeClassifier(reject_substrings=('Venmo me',))
+def test_solicit_cue_drops_when_decider_rejects() -> None:
+    from server.decider import FakeDecider
+
     result = match_post(
         'Mutualism mutual credit — Venmo me if you can spare anything for rent.',
-        classifier=fake,
+        decider=FakeDecider(keep=False, score=0.04),
     )
     assert result.matched is False
-    assert result.reason == 'quality_reject:solicit'
+    assert result.reason == 'decision_reject:strong_positive:0.040'
 
 
 def test_allowlist_solicit_cue_still_gated() -> None:
-    fake = FakeClassifier(reject_substrings=('CashApp',))
+    from server.decider import FakeDecider
+
     result = match_post(
         'CashApp me for mutual aid please',
         author_did='did:plc:allowlisted000000000000001',
         allowlist_dids={'did:plc:allowlisted000000000000001'},
-        classifier=fake,
+        decider=FakeDecider(keep=False, score=0.02),
     )
     assert result.matched is False
-    assert result.reason == 'quality_reject:solicit'
+    assert result.reason == 'decision_reject:allowlist_did:0.020'
 
 
 def test_helpsky_hashtag_soup_is_solicit_shaped() -> None:

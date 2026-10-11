@@ -39,10 +39,16 @@ FEED_URI: str = _feed_uri
 IGNORE_ARCHIVED_POSTS = _get_bool_env_var(os.environ.get('IGNORE_ARCHIVED_POSTS', 'true'))
 IGNORE_REPLY_POSTS = _get_bool_env_var(os.environ.get('IGNORE_REPLY_POSTS', 'true'))
 POST_RETENTION_DAYS = int(os.environ.get('POST_RETENTION_DAYS', '7'))
-# Soft priors: authors with this many strong text matches in the window may keep
-# bare ambiguous terms (never hard negatives). See server/author_priors.py.
-SOFT_PRIOR_MIN_STRONG = int(os.environ.get('SOFT_PRIOR_MIN_STRONG', '3'))
+# Soft priors: this many decider keeps, and zero rejections, in the window
+# unlock bare ambiguous terms. Regex matches do not count. See author_priors.py.
+SOFT_PRIOR_MIN_KEEPS = int(
+    os.environ.get('SOFT_PRIOR_MIN_KEEPS', os.environ.get('SOFT_PRIOR_MIN_STRONG', '3'))
+)
 SOFT_PRIOR_WINDOW_DAYS = int(os.environ.get('SOFT_PRIOR_WINDOW_DAYS', '30'))
+DECISION_ENABLED = _get_bool_env_var(os.environ.get('DECISION_ENABLED', ''))
+DECISION_MODEL = os.environ.get('DECISION_MODEL', 'perplexity/pplx-decider-v1.1-27b').strip()
+DECISION_KEEP_MIN = float(os.environ.get('DECISION_KEEP_MIN', '0.5'))
+OPENROUTER_API_KEY_SET = bool(os.environ.get('OPENROUTER_API_KEY', '').strip())
 DATABASE_PATH = os.environ.get('DATABASE_PATH', 'feed_database.db')
 JETSTREAM_URL = os.environ.get(
     'JETSTREAM_URL',
@@ -59,7 +65,8 @@ MUTED_KEYWORDS = tuple(
     part.strip().lower() for part in os.environ.get('MUTED_KEYWORDS', '').split(',') if part.strip()
 )
 
-# DeepSeek quality rubric (ambiguous leftovers + solicit-shaped provisional keeps).
+# DeepSeek rubric settings for server/classifier.py and scripts/llm_label_judge.py.
+# Ingest keep/reject is the Perplexity decider configured above.
 CLASSIFIER_ENABLED = _get_bool_env_var(os.environ.get('CLASSIFIER_ENABLED', 'true'))
 CLASSIFIER_MODEL = os.environ.get('CLASSIFIER_MODEL', 'deepseek-v4-flash').strip()
 # Composite floor; CLASSIFIER_THRESHOLD is a legacy alias read by classifier.py.
@@ -81,7 +88,8 @@ BLOCKLIST_HANDLES = load_blocklist_handles()
 logger.info(
     'config loaded hostname=%s service_did=%s allowlist_dids=%d allowlist_handles=%d '
     'blocklist_dids=%d blocklist_handles=%d '
-    'soft_prior_min=%d soft_prior_window_days=%d ranking_mode=%s muted_keywords=%d '
+    'soft_prior_min_keeps=%d soft_prior_window_days=%d ranking_mode=%s muted_keywords=%d '
+    'decision_enabled=%s decision_model=%s openrouter_key=%s decision_keep_min=%.2f '
     'classifier_enabled=%s classifier_model=%s deepseek_key=%s '
     'rubric_thematic>=%.2f valence>=%.2f wow>=%.2f solicit<=%.2f composite>=%.2f',
     HOSTNAME,
@@ -90,10 +98,14 @@ logger.info(
     len(ALLOWLIST_HANDLES),
     len(BLOCKLIST_DIDS),
     len(BLOCKLIST_HANDLES),
-    SOFT_PRIOR_MIN_STRONG,
+    SOFT_PRIOR_MIN_KEEPS,
     SOFT_PRIOR_WINDOW_DAYS,
     RANKING_MODE,
     len(MUTED_KEYWORDS),
+    DECISION_ENABLED,
+    DECISION_MODEL,
+    'set' if OPENROUTER_API_KEY_SET else 'missing',
+    DECISION_KEEP_MIN,
     CLASSIFIER_ENABLED,
     CLASSIFIER_MODEL,
     'set' if DEEPSEEK_API_KEY_SET else 'missing',

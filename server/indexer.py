@@ -5,9 +5,12 @@ from __future__ import annotations
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+import peewee
+
 from server import config
-from server.author_priors import author_has_soft_prior, is_strong_match_reason, record_strong_match
+from server.author_priors import author_has_soft_prior, record_decision
 from server.database import Post, db, prune_old_posts, utc_now
+from server.decider import KEEP_PREFIX, REJECT_PREFIX
 from server.logger import logger
 from server.matcher import extract_alt_text, match_post
 
@@ -132,7 +135,10 @@ def handle_event(event: dict[str, Any]) -> None:
         blocklist_handles=config.BLOCKLIST_HANDLES,
         soft_prior_dids=soft_prior_dids,
         embed=embed,
+        use_default_decider=True,
     )
+    if result.reason.startswith(REJECT_PREFIX):
+        record_decision(author_did, kept=False)
     if not result.matched:
         return
 
@@ -140,21 +146,23 @@ def handle_event(event: dict[str, Any]) -> None:
     parent = (reply.get('parent') or {}).get('uri')
     root = (reply.get('root') or {}).get('uri')
 
-    with db.atomic():
-        Post.insert(
-            uri=uri,
-            cid=event.get('cid') or '',
-            author_did=author_did,
-            reply_parent=parent,
-            reply_root=root,
-            match_reason=result.reason,
-            created_at=created_at,
-            like_count=0,
-            repost_count=0,
-        ).on_conflict_ignore().execute()
-
-    if is_strong_match_reason(result.reason):
-        record_strong_match(author_did)
+    try:
+        with db.atomic():
+            Post.create(
+                uri=uri,
+                cid=event.get('cid') or '',
+                author_did=author_did,
+                reply_parent=parent,
+                reply_root=root,
+                match_reason=result.reason,
+                created_at=created_at,
+                like_count=0,
+                repost_count=0,
+            )
+    except peewee.IntegrityError:
+        return
+    if result.reason.startswith(KEEP_PREFIX):
+        record_decision(author_did, kept=True)
 
     logger.info('indexed %s reason=%s', uri, result.reason)
     _maybe_prune()

@@ -6,17 +6,17 @@ from datetime import UTC, datetime
 from typing import Any
 
 import pytest
-from server.database import AuthorLocalStats, Post, SubscriptionState, db
+from server.database import AuthorDecision, Post, SubscriptionState, db
 
 
 @pytest.fixture()
 def isolated_db() -> Any:
     """Rebuild post tables so each test starts empty."""
     db.connect(reuse_if_open=True)
-    db.drop_tables([Post, SubscriptionState, AuthorLocalStats], safe=True)
-    db.create_tables([Post, SubscriptionState, AuthorLocalStats])
+    db.drop_tables([Post, SubscriptionState, AuthorDecision], safe=True)
+    db.create_tables([Post, SubscriptionState, AuthorDecision])
     yield
-    AuthorLocalStats.delete().execute()
+    AuthorDecision.delete().execute()
     Post.delete().execute()
 
 
@@ -63,15 +63,33 @@ def test_handle_event_skips_unknown_author_without_placename(isolated_db: None) 
     assert Post.select().where(Post.uri == event['uri']).count() == 0
 
 
-def test_handle_event_records_strong_match_and_soft_prior_keeps_bare(isolated_db: None) -> None:
-    from server import config
+def test_regex_keep_does_not_earn_soft_prior(isolated_db: None) -> None:
     from server.author_priors import author_has_soft_prior
     from server.indexer import handle_event
 
     author = 'did:plc:indexersoftprior0000000001'
-    assert author not in config.ALLOWLIST_DIDS
+    event = _create_event(author=author, text='Mutual credit clearing update.')
+    handle_event(event)
+    row = Post.get(Post.uri == event['uri'])
+    assert row.match_reason == 'strong_positive'
+    assert not author_has_soft_prior(author)
+    assert AuthorDecision.select().count() == 0
 
-    for i in range(config.SOFT_PRIOR_MIN_STRONG):
+
+def test_decider_keeps_earn_soft_prior(isolated_db: None, monkeypatch: pytest.MonkeyPatch) -> None:
+    from server import config
+    from server.author_priors import author_has_soft_prior
+    from server.decider import FakeDecider
+    from server.indexer import handle_event
+
+    author = 'did:plc:indexersoftprior0000000001'
+    assert author not in config.ALLOWLIST_DIDS
+    monkeypatch.setattr(
+        'server.matcher.get_default_decider',
+        lambda: FakeDecider(keep=True, score=0.9),
+    )
+
+    for i in range(config.SOFT_PRIOR_MIN_KEEPS):
         handle_event(
             _create_event(
                 author=author,
@@ -80,7 +98,9 @@ def test_handle_event_records_strong_match_and_soft_prior_keeps_bare(isolated_db
             )
         )
     assert author_has_soft_prior(author)
-    assert AuthorLocalStats.get_by_id(author).strong_match_count == config.SOFT_PRIOR_MIN_STRONG
+    assert AuthorDecision.select().where(AuthorDecision.kept == 1).count() == (
+        config.SOFT_PRIOR_MIN_KEEPS
+    )
 
     bare = _create_event(
         author=author,
@@ -89,7 +109,40 @@ def test_handle_event_records_strong_match_and_soft_prior_keeps_bare(isolated_db
     )
     handle_event(bare)
     row = Post.get(Post.uri == bare['uri'])
-    assert row.match_reason == 'soft_prior_ambiguous:direct action'
+    assert (row.match_reason or '').startswith('decision_keep:soft_prior_ambiguous:direct action:')
+
+
+def test_decider_rejection_blocks_soft_prior(
+    isolated_db: None, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from server import config
+    from server.author_priors import author_has_soft_prior
+    from server.decider import FakeDecider
+    from server.indexer import handle_event
+
+    author = 'did:plc:indexerrejectprior000000001'
+    monkeypatch.setattr(
+        'server.matcher.get_default_decider',
+        lambda: FakeDecider(reject_substrings=('socialist',), keep=True, score=0.9),
+    )
+    for i in range(config.SOFT_PRIOR_MIN_KEEPS):
+        handle_event(
+            _create_event(
+                author=author,
+                text=f'Mutual credit clearing update {i}.',
+                uri_key=f'strong{i}',
+            )
+        )
+    assert author_has_soft_prior(author)
+
+    hostile = _create_event(
+        author=author,
+        text='Proudhonian mutualism is just socialist chaos.',
+        uri_key='hostile',
+    )
+    handle_event(hostile)
+    assert Post.select().where(Post.uri == hostile['uri']).count() == 0
+    assert not author_has_soft_prior(author)
 
 
 def test_handle_event_skips_blocklisted_did_with_strong_text(isolated_db: None) -> None:

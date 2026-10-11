@@ -275,7 +275,7 @@ def iter_search_posts(
 
 def bind_database(path: Path) -> None:
     """Point Peewee at ``path`` after config/dotenv have already loaded."""
-    from server.database import AuthorLocalStats, Post, SubscriptionState, db
+    from server.database import AuthorDecision, AuthorLocalStats, Post, SubscriptionState, db
 
     if not db.is_closed():
         db.close()
@@ -287,7 +287,7 @@ def bind_database(path: Path) -> None:
         },
     )
     db.connect(reuse_if_open=True)
-    db.create_tables([Post, SubscriptionState, AuthorLocalStats], safe=True)
+    db.create_tables([Post, SubscriptionState, AuthorLocalStats, AuthorDecision], safe=True)
 
 
 def set_indexed_at_to_created(uri: str, created_at: datetime) -> None:
@@ -337,6 +337,7 @@ def process_event(
             blocklist_dids=config.BLOCKLIST_DIDS,
             blocklist_handles=config.BLOCKLIST_HANDLES,
             embed=embed,
+            use_default_decider=True,
         )
         return 'dry_run_match' if result.matched else 'dry_run_skip'
 

@@ -1,9 +1,8 @@
 """Quality rubric classifier (DeepSeek).
 
-The regex floor in ``matcher.match_post`` keeps strong positives / hard
-negatives / allowlists / soft priors / definitive event+venue hits. Ambiguous
-leftovers — and provisional keeps that look like money asks — are scored here
-on four dimensions via ``deepseek-v4-flash``:
+Not consulted during ingest. The feed's content filter is ``server.decider``.
+This module scores four dimensions via ``deepseek-v4-flash`` for tests and for
+offline rubric experiments:
 
 - thematic_fit: Proudhonian mutualism / left-market mutualist alignment
 - positive_valence: constructive / generative tone (hate/violence low)
