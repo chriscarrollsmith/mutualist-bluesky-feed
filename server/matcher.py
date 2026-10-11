@@ -12,15 +12,15 @@ Rejects common false positives:
 - Crypto/Web3 "decentralized" jargon without mutualist values
 - Bare ambiguous left terms without mutualist context
 - Mutual aid without mutualist-economics framing
-- Personal fundraising / extractive "mutual aid" money asks (quality rubric)
-- Hate and violence celebration (quality rubric; defiance / non-violent
-  resistance may still keep)
+- Personal fundraising / extractive "mutual aid" money asks
+- Hate and violence celebration (defiance / non-violent resistance may still keep)
 
-Recall without keywords comes from author allowlists and soft author priors
-earned from repeated strong text matches. Author blocklists drop an account
-even when the text would otherwise keep. Ambiguous leftovers — and
-provisional keeps that look like money asks — route to the DeepSeek quality
-rubric (see ``server/classifier.py``).
+Recall without keywords comes from author allowlists and from soft author
+priors. A prior is three decision-model keeps and no rejections in the window;
+regex matches do not earn one. Author blocklists drop an account even when the
+text would otherwise keep. When a decision model is enabled, it keep/rejects every candidate that
+passes this floor (see ``server/decider.py``). Bare ambiguous terms stay
+dropped unless a soft prior lets them through to that filter.
 """
 
 from __future__ import annotations
@@ -30,7 +30,13 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Any, cast
 
-from server.classifier import ClassifierBackend, ClassifierDecision, classify_candidate
+from server.decider import (
+    KEEP_PREFIX,
+    REJECT_PREFIX,
+    UNSCORED_PREFIX,
+    DecisionBackend,
+    get_default_decider,
+)
 from server.gazetteer import Gazetteer, default_gazetteer
 
 
@@ -493,58 +499,31 @@ def looks_like_solicit(
     return bool(opaque and _MUTUAL_AID_TOKEN.search(haystack or ''))
 
 
-def _run_classifier(
-    haystack: str,
-    *,
-    term: str | None,
-    classifier: ClassifierBackend | None,
-    allow_without_term: bool = False,
-) -> ClassifierDecision | None:
-    return classify_candidate(
-        haystack,
-        term=term,
-        has_event_cue=bool(_EVENT_CUE.search(haystack)),
-        has_local_venue=bool(_LOCAL_EVENT_VENUE.search(haystack)),
-        classifier=classifier,
-        allow_without_term=allow_without_term,
-    )
-
-
-def _classifier_keep(
-    haystack: str,
-    *,
-    term: str | None,
-    classifier: ClassifierBackend | None,
-) -> MatchResult | None:
-    decision = _run_classifier(haystack, term=term, classifier=classifier)
-    if decision is None:
-        return None
-    if not decision.matched:
-        return MatchResult(False, decision.reason)
-    return MatchResult(True, decision.reason)
-
-
-def _maybe_quality_gate(
+def _content_filter(
     haystack: str,
     provisional: MatchResult,
     *,
-    classifier: ClassifierBackend | None,
+    decider: DecisionBackend | None,
     embed: object | None = None,
 ) -> MatchResult:
-    """Re-score solicit-shaped provisional keeps via the quality rubric."""
-    if not provisional.matched or not looks_like_solicit(haystack, embed=embed):
+    """Keep or reject a regex candidate.
+
+    With no decider, the regex result stands, except solicit-shaped keeps,
+    which drop. With a decider, its yes/no is authoritative. A decline
+    (timeout, missing key, bad payload) drops the post.
+    """
+    if not provisional.matched:
         return provisional
-    decision = _run_classifier(
-        haystack,
-        term=None,
-        classifier=classifier,
-        allow_without_term=True,
-    )
+    if decider is None:
+        if looks_like_solicit(haystack, embed=embed):
+            return MatchResult(False, f'solicit_cue_unscored:{provisional.reason}')
+        return provisional
+    decision = decider.decide(haystack)
     if decision is None:
-        return MatchResult(False, f'solicit_cue_unscored:{provisional.reason}')
-    if not decision.matched:
-        return MatchResult(False, decision.reason)
-    return provisional
+        return MatchResult(False, f'{UNSCORED_PREFIX}{provisional.reason}')
+    if decision.keep:
+        return MatchResult(True, f'{KEEP_PREFIX}{provisional.reason}:{decision.score:.3f}')
+    return MatchResult(False, f'{REJECT_PREFIX}{provisional.reason}:{decision.score:.3f}')
 
 
 def match_post(
@@ -559,27 +538,26 @@ def match_post(
     blocklist_dids: set[str] | None = None,
     blocklist_handles: set[str] | None = None,
     soft_prior_dids: set[str] | None = None,
-    classifier: ClassifierBackend | None = None,
-    classifier_model: ClassifierBackend | None = None,
+    decider: DecisionBackend | None = None,
     gazetteer: Gazetteer | None = None,
     embed: object | None = None,
+    use_default_decider: bool = False,
 ) -> MatchResult:
     """Return whether a post belongs in the mutualism feed.
 
-    Decision order: blocklist → allowlist (+ solicit gate) → gazetteer
-    other-entity → hard negative / gazetteer local / strong regex →
-    event+venue → ambiguous+context → soft prior → quality rubric classifier
-    → drop.
+    Decision order: blocklist → allowlist → gazetteer other-entity → hard
+    negative / gazetteer local / strong regex → event+venue →
+    ambiguous+context → soft prior → ambiguous leftover → drop.
 
-    Provisional regex/allowlist keeps that look like money asks are rechecked
-    by the quality rubric when available; otherwise they are dropped.
+    When a decision model is active, it keep/rejects every candidate that
+    passes the regex floor, including soft-prior ambiguous terms. Bare
+    ambiguous terms with no prior stay dropped. Pass ``decider`` to inject
+    one. ``use_default_decider`` is the indexer path: a disabled filter
+    leaves the regex floor in place and still drops solicit-shaped keeps.
 
     ``embed`` is the raw Bluesky embed object (Jetstream or AppView). Opaque
-    quote refs paired with mutual-aid language are solicit-gated even when the
-    quoted body is not hydrated yet.
-
-    ``classifier`` (or legacy ``classifier_model``) is for tests; production
-    uses the DeepSeek backend when ``CLASSIFIER_ENABLED`` is set.
+    quote refs paired with mutual-aid language are solicit-shaped even when
+    the quoted body is not hydrated yet.
     """
     allowlist_dids = allowlist_dids or set()
     allowlist_handles = {h.lower() for h in (allowlist_handles or set())}
@@ -588,7 +566,12 @@ def match_post(
     soft_prior_dids = soft_prior_dids or set()
     places = gazetteer if gazetteer is not None else default_gazetteer()
     lang_tags = _normalize_langs(langs)
-    backend = classifier if classifier is not None else classifier_model
+    if decider is not None:
+        backend: DecisionBackend | None = decider
+    elif use_default_decider:
+        backend = get_default_decider()
+    else:
+        backend = None
 
     if author_did and author_did in blocklist_dids:
         return MatchResult(False, 'blocklist_did')
@@ -599,10 +582,10 @@ def match_post(
 
     if author_did and author_did in allowlist_dids:
         provisional = MatchResult(True, 'allowlist_did')
-        return _maybe_quality_gate(haystack, provisional, classifier=backend, embed=embed)
+        return _content_filter(haystack, provisional, decider=backend, embed=embed)
     if author_handle and author_handle.lower() in allowlist_handles:
         provisional = MatchResult(True, 'allowlist_handle')
-        return _maybe_quality_gate(haystack, provisional, classifier=backend, embed=embed)
+        return _content_filter(haystack, provisional, decider=backend, embed=embed)
 
     if not haystack:
         return MatchResult(False, 'empty')
@@ -615,33 +598,33 @@ def match_post(
 
     if _HARD_NEGATIVE.search(haystack):
         if strong_hit and not _HARD_NEGATIVE_BLOCKS_STRONG.search(haystack):
-            return _maybe_quality_gate(
+            return _content_filter(
                 haystack,
                 MatchResult(True, 'strong_positive_over_negative'),
-                classifier=backend,
+                decider=backend,
                 embed=embed,
             )
         return MatchResult(False, 'hard_negative')
 
     if entity is not None and entity.region == 'local':
-        return _maybe_quality_gate(
+        return _content_filter(
             haystack,
             MatchResult(True, f'entity_local:{entity.entity_id}'),
-            classifier=backend,
+            decider=backend,
             embed=embed,
         )
 
     if strong_hit:
-        return _maybe_quality_gate(
+        return _content_filter(
             haystack,
             MatchResult(True, 'strong_positive'),
-            classifier=backend,
+            decider=backend,
             embed=embed,
         )
 
     event_match = _match_local_event(haystack)
     if event_match is not None:
-        return _maybe_quality_gate(haystack, event_match, classifier=backend, embed=embed)
+        return _content_filter(haystack, event_match, decider=backend, embed=embed)
 
     place_haystack = _haystack_without_handles(haystack)
     ambiguous_hits = _AMBIGUOUS_TERM.findall(place_haystack)
@@ -650,19 +633,17 @@ def match_post(
         term = sorted(distinct)[0]
 
         if _MUTUALIST_CONTEXT.search(place_haystack) or _STRONG_POSITIVE.search(haystack):
-            return _maybe_quality_gate(
+            return _content_filter(
                 haystack,
                 MatchResult(True, f'ambiguous_with_context:{term}'),
-                classifier=backend,
+                decider=backend,
                 embed=embed,
             )
 
         prior = _soft_prior_ambiguous(author_did, soft_prior_dids, term)
         if prior:
-            return _maybe_quality_gate(haystack, prior, classifier=backend, embed=embed)
+            return _content_filter(haystack, prior, decider=backend, embed=embed)
 
-        clf = _classifier_keep(haystack, term=term, classifier=backend)
-        return clf if clf else MatchResult(False, f'ambiguous_no_context:{term}')
+        return MatchResult(False, f'ambiguous_no_context:{term}')
 
-    # No ambiguous latch → do not spend AI quota on every firehose post.
     return MatchResult(False, 'no_match')

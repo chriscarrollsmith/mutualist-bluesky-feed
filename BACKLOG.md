@@ -10,9 +10,8 @@ Living backlog for the mutualist Bluesky feed.
 - **Recall:** Surface inspiring **proto-anarchist** / decentralized-leftist
   content — including authors who never say “anarchist” — plus allowlisted
   collectives and mutual-aid *praxis*.
-- **Quality rubric:** Ambiguous leftovers, latent compound latches, and
-  solicit-shaped provisional keeps are scored by DeepSeek (`deepseek-v4-flash`)
-  on thematic fit, positive valence, wow factor, and solicit intensity.
+- **Content filter:** The Perplexity decider keep/rejects every regex candidate.
+  A soft prior is three decider keeps and no rejections in 30 days.
 - **Tone:** Prefer constructive, respectable, high-wow posts. Governance is to
   be spread out, humanized, and voluntarized — not abolished as a slogan, and
   not replaced by state-capacity politics.

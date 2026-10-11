@@ -9,7 +9,6 @@ from server.allowlists import (
     load_blocklist_dids,
     load_blocklist_handles,
 )
-from server.classifier import FakeClassifier
 from server.matcher import extract_alt_text, is_opaque_record_embed, match_post
 
 ALL_CASES = json.loads(
@@ -154,14 +153,15 @@ def test_mutual_aid_with_mutualist_economics_keeps() -> None:
     assert result.matched is True
 
 
-def test_classifier_can_keep_ambiguous_co_op() -> None:
-    fake = FakeClassifier(keep_substrings=('co-op',))
+def test_ambiguous_co_op_stays_on_the_regex_floor() -> None:
+    from server.decider import FakeDecider
+
     result = match_post(
         'Our co-op shares tools citywide and refuses landlords.',
-        classifier=fake,
+        decider=FakeDecider(keep=True),
     )
-    assert result.matched is True
-    assert result.reason.startswith('classifier:')
+    assert result.matched is False
+    assert result.reason == 'ambiguous_no_context:co-op'
 
 
 def test_extract_alt_text_clips_external_description() -> None:

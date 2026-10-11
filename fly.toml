@@ -20,9 +20,9 @@ primary_region = "ewr"
   JETSTREAM_URL = "wss://jetstream2.us-east.bsky.network/subscribe"
   PORT = "8080"
   LOG_LEVEL = "INFO"
-  CLASSIFIER_ENABLED = "true"
-  CLASSIFIER_MODEL = "deepseek-v4-flash"
-  CLASSIFIER_THRESHOLD = "0.72"
+  DECISION_ENABLED = "true"
+  DECISION_MODEL = "perplexity/pplx-decider-v1.1-27b"
+  DECISION_KEEP_MIN = "0.5"
 
 [http_service]
   internal_port = 8080

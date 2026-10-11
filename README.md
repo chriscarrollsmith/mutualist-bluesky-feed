@@ -13,7 +13,7 @@ Architecture forked from [capital-region-feed](https://github.com/chriscarrollsm
 ## Architecture
 
 ```
-Jetstream (posts/likes/reposts) → matcher → SQLite → getFeedSkeleton → Bluesky AppView
+Jetstream (posts/likes/reposts) → matcher → decider → SQLite → getFeedSkeleton → Bluesky AppView
 ```
 
 Bluesky only asks this service for post URIs; AppView hydrates them.
@@ -21,7 +21,7 @@ Bluesky only asks this service for post URIs; AppView hydrates them.
 | Path | Role |
 |------|------|
 | `server/matcher.py` | Regex floor (strong / ambiguous / hard negatives) |
-| `server/classifier.py` | DeepSeek quality rubric (theme / valence / wow / solicit) |
+| `server/decider.py` | Perplexity decider keep/reject on regex candidates |
 | `server/jetstream.py` | Websocket consumer + cursor persistence |
 | `server/indexer.py` | Match → DB writes / deletes |
 | `server/app.py` | XRPC + `did:web` endpoints |
@@ -34,42 +34,39 @@ Decision order:
 
 ```
 blocklist → allowlist → gazetteer other/local → hard negatives → strong regex →
-event+venue → (ambiguous + context) → soft prior → DeepSeek quality rubric → drop
+event+venue → (ambiguous + context) → soft prior → Perplexity decider → drop
 ```
 
-Provisional keeps (including allowlist / strong positives) that look like personal
-money-asks or HelpSky-style fundraising boosts (Venmo, CashApp, GoFundMe,
-`#HelpSky` / `#MutualAidRequest` / `💸`, “please help”, opaque quote+`#mutualaid`,
-…) are rechecked by the quality rubric. If the classifier is offline, those
-solicit-shaped posts are dropped.
+Anything that passes the regex floor is a candidate. With `DECISION_ENABLED=true`,
+`perplexity/pplx-decider-v1.1-27b` (OpenRouter Decisions API) keep/rejects that
+candidate. Keep when the yes-probability (`noul`) is at least `DECISION_KEEP_MIN`
+(default 0.5). A timeout, a bad payload, or an enabled filter with no
+`OPENROUTER_API_KEY` drops the post.
 
-**Keep** when:
+Offline eval and unit tests leave the filter disabled. The regex floor then
+stands, except personal money-asks (Venmo, CashApp, GoFundMe, `#HelpSky`,
+`#MutualAidRequest`, `💸`, “please help”, opaque quote + `#mutualaid`, …), which
+still drop.
+
+**Regex candidates** (then the decider, when enabled):
 
 - Strong phrases (`mutualism`, `Proudhon`, `mutual credit`, `occupancy-and-use`,
-  `agorism`, `free-market anti-capitalism`, `Kropotkin`, `C4SS`, …) and not a
-  personal money-ask
+  `agorism`, `free-market anti-capitalism`, `Kropotkin`, `C4SS`, …)
 - Ambiguous terms (`anarchism`, `mutual aid`, `libertarian socialism`, `co-op`,
   …) with **mutualist** context (not general-anarchist context)
-- Author is allowlisted (`data/allowlist_handles.txt` / `allowlist_dids.txt`) and
-  not a personal money-ask
-- Soft prior authors (repeated strong matches) use bare ambiguous terms
+- Allowlisted authors (`data/allowlist_handles.txt` / `allowlist_dids.txt`)
+- Soft-prior authors using a bare ambiguous term
 - Event phrasing + mutualist venue/project (`mutualist reading circle`,
   `Really Really Free Market`, …)
-- DeepSeek (`deepseek-v4-flash`) clears the quality rubric gates on an ambiguous leftover
 
-**Quality rubric** (see `server/classifier.py`):
+**Soft prior:** three decider keeps and no decider rejections in the last
+`SOFT_PRIOR_WINDOW_DAYS` (30). A prior lets bare ambiguous terms through to the
+decider. It does not skip the decider, and a regex match does not earn one.
 
-| Dimension | Gate (defaults) |
-|-----------|-----------------|
-| `thematic_fit` | ≥ `CLASSIFIER_THEMATIC_MIN` (0.70) |
-| `positive_valence` | ≥ `CLASSIFIER_VALENCE_MIN` (0.55) |
-| `wow` | ≥ `CLASSIFIER_WOW_MIN` (0.45) |
-| `solicit` (inverted) | ≤ `CLASSIFIER_SOLICIT_MAX` (0.35) |
-| composite `0.45·theme + 0.25·valence + 0.30·wow` | ≥ `CLASSIFIER_COMPOSITE_MIN` (0.68) |
-
-Personal Venmo/CashApp hardship asks score high on `solicit` and are dropped.
-Hate / violence celebration is a category reject. Collective org fundraisers and
-non-monetary mutualist praxis can still keep.
+The decider's reject criteria include right-wing or reactionary framing,
+anarcho-capitalism, chaos or entertainment "anarchy", crypto jargon, sibling
+anarchist tendencies without mutualist economics, bare mutual aid, personal
+fundraising, hate, and celebration of violence. Unclear posts are rejects.
 
 **Drop** when the author is blocklisted (`data/blocklist_handles.txt` /
 `blocklist_dids.txt`), even if the text would otherwise keep.
@@ -95,8 +92,8 @@ cp .env.example .env
 # SERVICE_DID=did:web:localhost
 # DATABASE_PATH=./feed_database.db
 # FEED_URI=at://did:plc:test/app.bsky.feed.generator/mutualism
-# CLASSIFIER_ENABLED=false   # optional offline
-# DEEPSEEK_API_KEY=…         # required when CLASSIFIER_ENABLED=true
+# DECISION_ENABLED=false     # optional offline
+# OPENROUTER_API_KEY=…       # required when DECISION_ENABLED=true
 ```
 
 ### Lint, type-check, and test
@@ -147,11 +144,11 @@ you create a renamed app; `FEED_URI` should point at the `mutualism` rkey.
 ```bash
 fly apps create mutualist-bluesky-feed   # optional rename; or keep existing app
 fly volumes create feed_data --region ewr --size 1
-fly secrets set DEEPSEEK_API_KEY=…
+fly secrets set OPENROUTER_API_KEY=…
 fly deploy
 ```
 
-`fly.toml` keeps **one always-on machine** (`auto_stop_machines = "off"`) because Jetstream must stay connected. Set `DEEPSEEK_API_KEY` as a Fly secret for the live AI pass.
+`fly.toml` keeps **one always-on machine** (`auto_stop_machines = "off"`) because Jetstream must stay connected. Set `OPENROUTER_API_KEY` as a Fly secret. `DECISION_ENABLED=true` with no key drops every regex candidate.
 
 Confirm:
 

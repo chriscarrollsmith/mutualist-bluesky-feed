@@ -1,8 +1,9 @@
-"""Soft author priors earned from repeated strong topic text matches.
+"""Soft author priors earned from decision-model keep/reject outcomes.
 
-Hard allowlists (``allowlist_*.txt``) always-keep curated accounts. Soft priors
-are a separate tier: authors who repeatedly match via strong text cues can keep
-ambiguous bare terms, without unlocking hard negatives or every no-keyword post.
+A prior unlocks bare ambiguous terms so they reach the content filter. It does
+not skip that filter, and regex matches do not earn one. An author has a prior
+after at least ``SOFT_PRIOR_MIN_KEEPS`` keeps and zero rejections in the last
+``SOFT_PRIOR_WINDOW_DAYS`` days.
 """
 
 from __future__ import annotations
@@ -10,59 +11,35 @@ from __future__ import annotations
 from datetime import timedelta
 
 from server import config
-from server.database import AuthorLocalStats, db, utc_now
-
-# Text-earned topic signal only — not allowlist / soft-prior / classifier reasons
-# (avoids loops where second-stage keeps inflate soft priors).
-_STRONG_MATCH_REASONS = frozenset(
-    {
-        'strong_positive',
-        'strong_positive_over_negative',
-    }
-)
-
-
-def is_strong_match_reason(reason: str | None) -> bool:
-    if not reason:
-        return False
-    if reason in _STRONG_MATCH_REASONS:
-        return True
-    return (
-        reason.startswith('ambiguous_with_context:')
-        or reason.startswith('event_local_venue:')
-        or reason.startswith('entity_local:')
-    )
+from server.database import AuthorDecision, db, utc_now
 
 
 def author_has_soft_prior(author_did: str | None) -> bool:
-    """True when the author has enough recent strong text matches."""
+    """True when recent decider keeps are enough and unrejected."""
     if not author_did:
         return False
-    row = AuthorLocalStats.get_or_none(AuthorLocalStats.author_did == author_did)
-    if row is None or row.last_strong_at is None:
-        return False
-    window = timedelta(days=config.SOFT_PRIOR_WINDOW_DAYS)
-    if utc_now() - row.last_strong_at > window:
-        return False
-    return row.strong_match_count >= config.SOFT_PRIOR_MIN_STRONG
+    keeps, rejects = _window_counts(author_did)
+    return keeps >= config.SOFT_PRIOR_MIN_KEEPS and rejects == 0
 
 
-def record_strong_match(author_did: str | None) -> None:
-    """Increment (or reset) the author's strong-match counter in the window."""
+def record_decision(author_did: str | None, *, kept: bool) -> None:
+    """Append one decider outcome for ``author_did``."""
     if not author_did:
         return
-    now = utc_now()
-    window = timedelta(days=config.SOFT_PRIOR_WINDOW_DAYS)
     with db.atomic():
-        row, created = AuthorLocalStats.get_or_create(
-            author_did=author_did,
-            defaults={'strong_match_count': 1, 'last_strong_at': now},
-        )
-        if created:
-            return
-        if row.last_strong_at is None or now - row.last_strong_at > window:
-            row.strong_match_count = 1
+        AuthorDecision.create(author_did=author_did, kept=kept, decided_at=utc_now())
+
+
+def _window_counts(author_did: str) -> tuple[int, int]:
+    cutoff = utc_now() - timedelta(days=config.SOFT_PRIOR_WINDOW_DAYS)
+    keeps = 0
+    rejects = 0
+    query = AuthorDecision.select(AuthorDecision.kept).where(
+        (AuthorDecision.author_did == author_did) & (AuthorDecision.decided_at >= cutoff)
+    )
+    for row in query:
+        if row.kept:
+            keeps += 1
         else:
-            row.strong_match_count += 1
-        row.last_strong_at = now
-        row.save()
+            rejects += 1
+    return keeps, rejects

@@ -21,12 +21,12 @@ Case schema (``data/eval_cases.json``):
 - ``regression``: if false, scored in reports but ignored for exit code / pytest
   (known recall gaps until author/event/AI backlog items land)
 - ``soft_prior``: if true with ``author_did``, treat that DID as soft-prior eligible
-  for this case (earned priors in production come from ``AuthorLocalStats``)
+  for this case (earned priors in production come from decider keep/reject rows)
 - ``langs``: optional Bluesky language tags
-- Bucket ``ambiguous_classifier`` covers second-stage AI keeps and precision
-  anchors that must stay dropped when the classifier is offline
+- Bucket ``ambiguous_classifier`` covers bare ambiguous terms. They stay dropped
+  on the regex floor; a soft prior is what lets them reach the decider
 - Bucket ``solicit_reject`` covers personal money-asks that must stay dropped
-  (regex solicit cue; quality rubric when the classifier is online)
+  when the decider is offline
 """
 
 from __future__ import annotations
