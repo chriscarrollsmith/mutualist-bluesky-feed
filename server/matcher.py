@@ -38,6 +38,7 @@ from server.decider import (
     get_default_decider,
 )
 from server.gazetteer import Gazetteer, default_gazetteer
+from server.post_images import image_data_urls
 
 
 @dataclass(frozen=True)
@@ -505,12 +506,14 @@ def _content_filter(
     *,
     decider: DecisionBackend | None,
     embed: object | None = None,
+    author_did: str | None = None,
 ) -> MatchResult:
     """Keep or reject a regex candidate.
 
     With no decider, the regex result stands, except solicit-shaped keeps,
     which drop. With a decider, its yes/no is authoritative. A decline
-    (timeout, missing key, bad payload) drops the post.
+    (timeout, missing key, bad payload) drops the post. Images on the embed
+    are downloaded and sent with the post; a failed download omits that image.
     """
     if not provisional.matched:
         return provisional
@@ -518,7 +521,8 @@ def _content_filter(
         if looks_like_solicit(haystack, embed=embed):
             return MatchResult(False, f'solicit_cue_unscored:{provisional.reason}')
         return provisional
-    decision = decider.decide(haystack)
+    images = image_data_urls(embed, author_did=author_did) or None
+    decision = decider.decide(haystack, images=images)
     if decision is None:
         return MatchResult(False, f'{UNSCORED_PREFIX}{provisional.reason}')
     if decision.keep:
@@ -582,10 +586,14 @@ def match_post(
 
     if author_did and author_did in allowlist_dids:
         provisional = MatchResult(True, 'allowlist_did')
-        return _content_filter(haystack, provisional, decider=backend, embed=embed)
+        return _content_filter(
+            haystack, provisional, decider=backend, embed=embed, author_did=author_did
+        )
     if author_handle and author_handle.lower() in allowlist_handles:
         provisional = MatchResult(True, 'allowlist_handle')
-        return _content_filter(haystack, provisional, decider=backend, embed=embed)
+        return _content_filter(
+            haystack, provisional, decider=backend, embed=embed, author_did=author_did
+        )
 
     if not haystack:
         return MatchResult(False, 'empty')
@@ -603,6 +611,7 @@ def match_post(
                 MatchResult(True, 'strong_positive_over_negative'),
                 decider=backend,
                 embed=embed,
+                author_did=author_did,
             )
         return MatchResult(False, 'hard_negative')
 
@@ -612,6 +621,7 @@ def match_post(
             MatchResult(True, f'entity_local:{entity.entity_id}'),
             decider=backend,
             embed=embed,
+            author_did=author_did,
         )
 
     if strong_hit:
@@ -620,11 +630,14 @@ def match_post(
             MatchResult(True, 'strong_positive'),
             decider=backend,
             embed=embed,
+            author_did=author_did,
         )
 
     event_match = _match_local_event(haystack)
     if event_match is not None:
-        return _content_filter(haystack, event_match, decider=backend, embed=embed)
+        return _content_filter(
+            haystack, event_match, decider=backend, embed=embed, author_did=author_did
+        )
 
     place_haystack = _haystack_without_handles(haystack)
     ambiguous_hits = _AMBIGUOUS_TERM.findall(place_haystack)
@@ -638,11 +651,14 @@ def match_post(
                 MatchResult(True, f'ambiguous_with_context:{term}'),
                 decider=backend,
                 embed=embed,
+                author_did=author_did,
             )
 
         prior = _soft_prior_ambiguous(author_did, soft_prior_dids, term)
         if prior:
-            return _content_filter(haystack, prior, decider=backend, embed=embed)
+            return _content_filter(
+                haystack, prior, decider=backend, embed=embed, author_did=author_did
+            )
 
         return MatchResult(False, f'ambiguous_no_context:{term}')
 

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import pytest
 from server.decider import (
     _KEEP_QUESTION,
@@ -36,16 +38,16 @@ def test_decision_from_payload_rejects_unusable_body() -> None:
 
 
 def test_openrouter_decider_uses_injected_judge() -> None:
-    seen: list[str] = []
+    seen: list[tuple[str, list[str]]] = []
 
-    def judge(text: str) -> dict[str, object]:
-        seen.append(text)
+    def judge(text: str, images: Sequence[str]) -> dict[str, object]:
+        seen.append((text, list(images)))
         return {'answers': {'keep': {'type': 'noul', 'noul': 0.2}}}
 
     decider = OpenRouterDecider(api_key='test', keep_min=0.5, _judge=judge)
     decision = decider.decide('Mutual credit for neighbors.')
     assert decision == Decision(False, 0.2)
-    assert seen == ['Mutual credit for neighbors.']
+    assert seen == [('Mutual credit for neighbors.', [])]
     assert decider.decide('Mutual credit for neighbors.') == Decision(False, 0.2)
     assert len(seen) == 1
 
@@ -96,6 +98,89 @@ def test_soft_prior_candidate_is_filtered() -> None:
     )
     assert rejected.matched is False
     assert rejected.reason.startswith('decision_reject:soft_prior_ambiguous:direct action:')
+
+
+def test_openrouter_decider_sends_image_parts_and_keeps_text_state(monkeypatch) -> None:
+    import json
+
+    captured: list[dict[str, object]] = []
+
+    class _Response:
+        def read(self) -> bytes:
+            return b'{"answers":{"keep":{"type":"noul","noul":0.2}}}'
+
+        def __enter__(self) -> _Response:
+            return self
+
+        def __exit__(self, *_args: object) -> bool:
+            return False
+
+    def fake_urlopen(request, timeout: float) -> _Response:
+        del timeout
+        captured.append(json.loads(request.data.decode()))
+        return _Response()
+
+    monkeypatch.setattr('server.decider.urllib.request.urlopen', fake_urlopen)
+    url = 'data:image/jpeg;base64,' + ('A' * 16)
+    decider = OpenRouterDecider(api_key='test', timeout_s=8)
+
+    text_only = decider.decide('Mutual credit for neighbors.')
+    assert text_only == Decision(False, 0.2)
+    assert captured[0]['state'] == {'post': 'Mutual credit for neighbors.'}
+
+    with_image = decider.decide(
+        'Mutual credit for neighbors.',
+        images=[url, 'https://evil.example/a.jpg', url],
+    )
+    assert with_image == Decision(False, 0.2)
+    assert captured[1]['state'] == {
+        'post': 'Mutual credit for neighbors.',
+        'images': [{'type': 'image_url', 'image_url': {'url': url}}],
+    }
+    assert decider.decide('Mutual credit for neighbors.', images=[url]) == Decision(False, 0.2)
+    assert len(captured) == 2
+
+
+def test_match_post_passes_embed_images_to_decider(monkeypatch: pytest.MonkeyPatch) -> None:
+    seen: dict[str, object] = {}
+
+    def fake_urls(embed: object, *, author_did: str | None) -> list[str]:
+        seen['embed'] = embed
+        seen['author_did'] = author_did
+        return ['data:image/jpeg;base64,YQ==']
+
+    monkeypatch.setattr('server.matcher.image_data_urls', fake_urls)
+
+    class _Spy:
+        def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision:
+            seen['haystack'] = haystack
+            seen['images'] = images
+            return Decision(True, 0.8)
+
+    result = match_post(
+        'Mutual credit clearing beats landlord title.',
+        author_did='did:plc:abc123',
+        embed={'$type': 'app.bsky.embed.images'},
+        decider=_Spy(),
+    )
+    assert result.matched is True
+    assert seen['author_did'] == 'did:plc:abc123'
+    assert seen['images'] == ['data:image/jpeg;base64,YQ==']
+    assert 'Mutual credit' in str(seen['haystack'])
+
+
+def test_match_post_without_decider_does_not_fetch_images(monkeypatch: pytest.MonkeyPatch) -> None:
+    def boom(embed: object, *, author_did: str | None) -> list[str]:
+        del embed, author_did
+        raise AssertionError('image fetch on the regex floor')
+
+    monkeypatch.setattr('server.matcher.image_data_urls', boom)
+    result = match_post(
+        'Mutual credit clearing beats landlord title.',
+        embed={'$type': 'app.bsky.embed.images'},
+    )
+    assert result.matched is True
+    assert result.reason == 'strong_positive'
 
 
 def test_unavailable_decider_drops_candidate() -> None:

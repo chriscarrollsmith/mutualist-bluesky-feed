@@ -35,7 +35,9 @@ command reference. Dependencies are managed with [uv](https://docs.astral.sh/uv/
   - `DECISION_ENABLED=false` in unit tests (set via `tests/conftest.py`) so
     pytest stays offline. Production sets `DECISION_ENABLED=true` and
     `OPENROUTER_API_KEY`; the Perplexity decider keep/rejects every regex
-    candidate. A missing key or a failed request drops the post.
+    candidate. A missing key or a failed request drops the post. Image
+    candidates also download JPEG thumbnails from `cdn.bsky.app`. A failed
+    download omits that image; `DECISION_IMAGES=false` skips the download.
 - `server/config.py` calls `load_dotenv(override=True)`, so values in `.env`
   win over exported shell variables.
 - The Jetstream consumer runs in a background daemon thread started from the

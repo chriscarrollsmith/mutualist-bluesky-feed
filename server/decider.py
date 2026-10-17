@@ -2,8 +2,10 @@
 
 The regex floor in ``server.matcher`` proposes candidates. This module
 keep/rejects those candidates with ``perplexity/pplx-decider-v1.2``.
-Application code thresholds the returned yes-probability (``noul``). Network
-errors and unusable payloads decline (``None``) so the matcher can fail closed.
+Application code thresholds the returned yes-probability (``noul``). When a
+candidate has images, those JPEG data URLs are sent in ``state`` next to the
+post text. Network errors and unusable payloads decline (``None``) so the
+matcher can fail closed.
 
 ``get_default_decider`` is off unless ``DECISION_ENABLED`` is set, so offline
 eval and unit tests stay on the regex floor. When the flag is on and no API
@@ -15,9 +17,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import urllib.error
 import urllib.request
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any, Protocol
 
@@ -31,6 +34,9 @@ PROMPT_VERSION = 'mutualism-keep-v2'
 KEEP_PREFIX = 'decision_keep:'
 REJECT_PREFIX = 'decision_reject:'
 UNSCORED_PREFIX = 'decision_unscored:'
+_MAX_IMAGE_PARTS = 4
+_MAX_DATA_URL_CHARS = 2_000_000
+_DATA_URL = re.compile(r'^data:image/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$')
 
 _KEEP_QUESTION: dict[str, Any] = {
     'keep': {
@@ -71,10 +77,39 @@ class Decision:
 
 
 class DecisionBackend(Protocol):
-    def decide(self, haystack: str) -> Decision | None: ...
+    def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None: ...
 
 
-JudgeFn = Callable[[str], dict[str, Any]]
+JudgeFn = Callable[[str, Sequence[str]], dict[str, Any]]
+
+
+def image_parts(images: Sequence[str] | None) -> list[dict[str, Any]]:
+    """Keep up to four valid image data URLs, in order, without duplicates."""
+    parts: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for url in images or ():
+        if not isinstance(url, str) or url in seen or len(url) > _MAX_DATA_URL_CHARS:
+            continue
+        if _DATA_URL.match(url) is None:
+            continue
+        seen.add(url)
+        parts.append({'type': 'image_url', 'image_url': {'url': url}})
+        if len(parts) >= _MAX_IMAGE_PARTS:
+            break
+    return parts
+
+
+def decision_state(text: str, images: Sequence[str] | None = None) -> dict[str, Any]:
+    """State object for one classification. Text-only posts stay ``{'post': text}``."""
+    state: dict[str, Any] = {}
+    if text:
+        state['post'] = text
+    parts = image_parts(images)
+    if parts:
+        state['images'] = parts
+    if not state:
+        raise ValueError('empty decision state')
+    return state
 
 
 def decision_enabled() -> bool:
@@ -122,19 +157,21 @@ class OpenRouterDecider:
         if self._cache is None:
             self._cache = {}
 
-    def decide(self, haystack: str) -> Decision | None:
+    def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None:
         text = (haystack or '').strip()
-        if not text:
+        urls = [part['image_url']['url'] for part in image_parts(images)]
+        if not text and not urls:
             return None
         clipped = text[: self.max_text_chars]
+        image_tag = hashlib.sha256('\n'.join(urls).encode()).hexdigest() if urls else ''
         cache_key = hashlib.sha256(
-            f'{self.model}|{PROMPT_VERSION}|{self.keep_min:.3f}|{clipped}'.encode()
+            f'{self.model}|{PROMPT_VERSION}|{self.keep_min:.3f}|{clipped}|{image_tag}'.encode()
         ).hexdigest()
         assert self._cache is not None
         if cache_key in self._cache:
             return self._cache[cache_key]
         try:
-            payload = self._judge(clipped) if self._judge else self._call_api(clipped)
+            payload = self._judge(clipped, urls) if self._judge else self._call_api(clipped, urls)
             decision = decision_from_payload(payload, keep_min=self.keep_min)
         except (
             urllib.error.URLError,
@@ -149,10 +186,10 @@ class OpenRouterDecider:
         self._cache[cache_key] = decision
         return decision
 
-    def _call_api(self, text: str) -> dict[str, Any]:
+    def _call_api(self, text: str, images: Sequence[str]) -> dict[str, Any]:
         body = {
             'model': self.model,
-            'state': {'post': text},
+            'state': decision_state(text, images),
             'questions': _KEEP_QUESTION,
         }
         request = urllib.request.Request(
@@ -176,8 +213,8 @@ class OpenRouterDecider:
 class UnavailableDecider:
     """Enabled filter with no client. ``decide`` declines so callers fail closed."""
 
-    def decide(self, haystack: str) -> Decision | None:
-        del haystack
+    def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None:
+        del haystack, images
         return None
 
 
@@ -190,7 +227,8 @@ class FakeDecider:
     reject_substrings: tuple[str, ...] = ()
     score: float = 0.91
 
-    def decide(self, haystack: str) -> Decision | None:
+    def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None:
+        del images
         lowered = haystack.lower()
         for needle in self.reject_substrings:
             if needle.lower() in lowered:
