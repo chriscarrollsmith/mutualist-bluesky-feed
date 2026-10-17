@@ -38,7 +38,7 @@ event+venue → (ambiguous + context) → soft prior → Perplexity decider → 
 ```
 
 Anything that passes the regex floor is a candidate. With `DECISION_ENABLED=true`,
-`perplexity/pplx-decider-v1.1-27b` (OpenRouter Decisions API) keep/rejects that
+`perplexity/pplx-decider-v1.2` (OpenRouter Decisions API) keep/rejects that
 candidate. Keep when the yes-probability (`noul`) is at least `DECISION_KEEP_MIN`
 (default 0.5). A timeout, a bad payload, or an enabled filter with no
 `OPENROUTER_API_KEY` drops the post.

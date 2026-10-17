@@ -46,7 +46,7 @@ SOFT_PRIOR_MIN_KEEPS = int(
 )
 SOFT_PRIOR_WINDOW_DAYS = int(os.environ.get('SOFT_PRIOR_WINDOW_DAYS', '30'))
 DECISION_ENABLED = _get_bool_env_var(os.environ.get('DECISION_ENABLED', ''))
-DECISION_MODEL = os.environ.get('DECISION_MODEL', 'perplexity/pplx-decider-v1.1-27b').strip()
+DECISION_MODEL = os.environ.get('DECISION_MODEL', 'perplexity/pplx-decider-v1.2').strip()
 DECISION_KEEP_MIN = float(os.environ.get('DECISION_KEEP_MIN', '0.5'))
 OPENROUTER_API_KEY_SET = bool(os.environ.get('OPENROUTER_API_KEY', '').strip())
 DATABASE_PATH = os.environ.get('DATABASE_PATH', 'feed_database.db')
