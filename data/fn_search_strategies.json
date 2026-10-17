@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "notes": "Recall-oriented AppView searchPosts strategies for the daily false-negative review. Each query is one strategy; family is the coarse bucket used to measure entropy. This catalog is not the high-precision backfill list in scripts/backfill_gap.py (those presets mostly return posts the matcher already keeps). A query belongs here when a relevant post can mention mutualism without the phrase the matcher already requires. Append a query when a review surfaces false negatives with a strategy that was not already listed.",
+  "families": [
+    {
+      "id": "bare_term",
+      "queries": [
+        "anarchism",
+        "anarchist",
+        "anarchy",
+        "mutual aid",
+        "libertarian socialism",
+        "individualist anarchism",
+        "cooperative",
+        "co-op",
+        "reciprocity",
+        "free association",
+        "direct action",
+        "anti-capitalism",
+        "commune",
+        "autonomy"
+      ]
+    },
+    {
+      "id": "practice",
+      "queries": [
+        "time bank",
+        "community land trust",
+        "LETS",
+        "tool library",
+        "WIR bank",
+        "Sarafu",
+        "Circles UBI",
+        "credit clearing",
+        "cost principle",
+        "worker cooperative",
+        "open source hardware",
+        "Really Really Free Market",
+        "infoshop"
+      ]
+    },
+    {
+      "id": "figure",
+      "queries": [
+        "Lysander Spooner",
+        "Stephen Pearl Andrews",
+        "Ezra Heywood",
+        "Clarence Lee Swartz",
+        "Joshua King Ingalls",
+        "William Greene",
+        "Silvio Gesell",
+        "Markets Not Capitalism",
+        "What is Property",
+        "Instead of a Book",
+        "Mutual Banking",
+        "The Iron Fist Behind the Invisible Hand",
+        "Desktop Regulatory State"
+      ]
+    },
+    {
+      "id": "current",
+      "queries": [
+        "counter-economics",
+        "labor for labor",
+        "freed market",
+        "four monopolies",
+        "cost the limit",
+        "absentee title",
+        "usufruct",
+        "geoism",
+        "bank of the people",
+        "equitable exchange",
+        "individualist anarchist",
+        "stateless society"
+      ]
+    },
+    {
+      "id": "event_phrase",
+      "queries": [
+        "reading circle",
+        "bookfair",
+        "anarchist bookfair",
+        "skillshare",
+        "distro",
+        "teach-in",
+        "free school",
+        "Really Really Free"
+      ]
+    },
+    {
+      "id": "hashtag",
+      "queries": [
+        "#mutualaid",
+        "#anarchism",
+        "#anarchy",
+        "#anarchist",
+        "#directaction",
+        "#coop",
+        "#cooperative",
+        "#timebank",
+        "#leftlibertarian",
+        "#libertariansocialism",
+        "#freedmarket",
+        "#countereconomics",
+        "#mutualbanking",
+        "#usufruct"
+      ]
+    }
+  ]
+}
