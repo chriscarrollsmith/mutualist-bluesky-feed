@@ -39,7 +39,7 @@ DEFAULT_SOLICIT_MAX = 0.35
 DEFAULT_COMPOSITE_MIN = 0.68
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 1200
-RUBRIC_VERSION = 'quality-v1'
+RUBRIC_VERSION = 'quality-v2'
 
 THEMATIC_WEIGHT = 0.45
 VALENCE_WEIGHT = 0.25
@@ -57,7 +57,8 @@ socialism when framed that way, and Kropotkin. Sibling anarchist tendencies
 (anarcho-communism, syndicalism, Bakuninist collectivism, Bookchin/social
 ecology, Food Not Bombs, IWW, CrimethInc, etc.) are out of scope unless the
 post is substantially about mutualist economics. Bare "mutual aid" without
-mutualist-economics framing is out of scope.
+mutualist-economics framing is out of scope. Biological mutualism (symbiosis
+between species) is out of scope.
 
 Score each dimension in [0,1] using this shared scale:
 - 0.0–0.29 clear miss / opposite of the dimension
@@ -90,6 +91,7 @@ Also set keep=false for category errors regardless of scores:
 - crypto/Web3/DeFi "decentralized" jargon without mutualist values
 - generic left or general-anarchist slogans with no mutualist signal
 - sibling anarchist tendencies without mutualist economics
+- biological mutualism (symbiosis between species)
 - authoritarian state-socialist celebration of centralized power
 - hate speech, dehumanization, or celebration / advocacy of violence
 

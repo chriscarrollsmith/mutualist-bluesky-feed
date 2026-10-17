@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from server.classifier import (
+    SYSTEM_PROMPT,
     ClassifierModel,
     DeepSeekClassifier,
     FakeClassifier,
@@ -19,6 +20,11 @@ from server.matcher import (
     looks_like_solicit,
     match_post,
 )
+
+
+def test_prompt_excludes_biological_mutualism() -> None:
+    note = 'biological mutualism (symbiosis between species)'
+    assert note in SYSTEM_PROMPT.lower()
 
 
 def test_load_default_model_stub() -> None:

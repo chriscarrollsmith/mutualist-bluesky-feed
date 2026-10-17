@@ -26,7 +26,7 @@ DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
-PROMPT_VERSION = 'mutualism-keep-v1'
+PROMPT_VERSION = 'mutualism-keep-v2'
 
 KEEP_PREFIX = 'decision_keep:'
 REJECT_PREFIX = 'decision_reject:'
@@ -40,7 +40,8 @@ _KEEP_QUESTION: dict[str, Any] = {
             'mutualism and closely related left-market currents (reciprocity, '
             'occupancy-and-use, mutual credit, free banking, equitable commerce, '
             'agorism, free-market anti-capitalism, libertarian socialism when '
-            'framed that way, and Kropotkin)?'
+            'framed that way, and Kropotkin)? Biological mutualism (symbiosis '
+            'between species) is out of scope.'
         ),
         'criteria': {
             'true': (
@@ -54,8 +55,9 @@ _KEEP_QUESTION: dict[str, Any] = {
                 'or reactionary framing, scare coverage of socialism or anarchism, '
                 'anarcho-capitalism, chaos or entertainment uses of anarchy, crypto '
                 'or Web3 jargon, sibling anarchist tendencies without mutualist '
-                'economics, bare mutual aid, personal fundraising, hate, or '
-                'celebration of violence.'
+                'economics, biological mutualism (symbiosis between species), '
+                'bare mutual aid, personal fundraising, hate, or celebration '
+                'of violence.'
             ),
         },
     }

@@ -7,11 +7,17 @@ from pathlib import Path
 
 import pytest
 from scripts.llm_label_judge import (
+    SYSTEM_PROMPT,
     apply_proposal,
     judge_rows,
     main,
     parse_judge_response,
 )
+
+
+def test_prompt_excludes_biological_mutualism() -> None:
+    note = 'biological mutualism (symbiosis between species)'
+    assert note in SYSTEM_PROMPT.lower()
 
 
 def test_parse_judge_response_plain_and_fenced() -> None:
