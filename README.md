@@ -42,7 +42,9 @@ Anything that passes the regex floor is a candidate. With `DECISION_ENABLED=true
 `perplexity/pplx-decider-v1.2` (OpenRouter Decisions API) keep/rejects that
 candidate. Keep when the yes-probability (`noul`) is at least `DECISION_KEEP_MIN`
 (default 0.5). A timeout, a bad payload, or an enabled filter with no
-`OPENROUTER_API_KEY` drops the post.
+`OPENROUTER_API_KEY` drops the post. Candidates with images also send JPEG
+thumbnails from the Bluesky CDN. A failed download omits that image and the
+text decision still runs. `DECISION_IMAGES=false` classifies on text only.
 
 Offline eval and unit tests leave the filter disabled. The regex floor then
 stands, except personal money-asks (Venmo, CashApp, GoFundMe, `#HelpSky`,

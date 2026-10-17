@@ -9,6 +9,7 @@ from server.allowlists import (
     load_blocklist_handles,
 )
 from server.logger import logger
+from server.post_images import images_enabled
 
 # Override process env so a shell HOSTNAME cannot beat .env / Fly config.
 load_dotenv(override=True)
@@ -89,7 +90,8 @@ logger.info(
     'config loaded hostname=%s service_did=%s allowlist_dids=%d allowlist_handles=%d '
     'blocklist_dids=%d blocklist_handles=%d '
     'soft_prior_min_keeps=%d soft_prior_window_days=%d ranking_mode=%s muted_keywords=%d '
-    'decision_enabled=%s decision_model=%s openrouter_key=%s decision_keep_min=%.2f '
+    'decision_enabled=%s decision_model=%s decision_images=%s openrouter_key=%s '
+    'decision_keep_min=%.2f '
     'classifier_enabled=%s classifier_model=%s deepseek_key=%s '
     'rubric_thematic>=%.2f valence>=%.2f wow>=%.2f solicit<=%.2f composite>=%.2f',
     HOSTNAME,
@@ -104,6 +106,7 @@ logger.info(
     len(MUTED_KEYWORDS),
     DECISION_ENABLED,
     DECISION_MODEL,
+    images_enabled(),
     'set' if OPENROUTER_API_KEY_SET else 'missing',
     DECISION_KEEP_MIN,
     CLASSIFIER_ENABLED,

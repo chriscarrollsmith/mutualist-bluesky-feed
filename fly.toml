@@ -23,6 +23,7 @@ primary_region = "ewr"
   DECISION_ENABLED = "true"
   DECISION_MODEL = "perplexity/pplx-decider-v1.2"
   DECISION_KEEP_MIN = "0.5"
+  DECISION_IMAGES = "true"
 
 [http_service]
   internal_port = 8080
