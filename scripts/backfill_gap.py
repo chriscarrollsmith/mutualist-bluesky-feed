@@ -44,6 +44,9 @@ DEFAULT_API_HOST = 'https://api.bsky.app'
 USER_AGENT = 'mutualist-bluesky-feed-backfill/0.1 (+https://github.com/chriscarrollsmith/mutualist-bluesky-feed)'
 
 # High-precision mutualist queries for AppView search (latest sort).
+# Kept in sync with server.fn_search.HIGH_PRECISION_QUERIES. The daily
+# false-negative review refuses these: they mostly return posts the matcher
+# already keeps.
 DEFAULT_SEARCH_QUERIES = (
     'mutualism',
     'mutualist',

@@ -15,6 +15,9 @@ command reference. Dependencies are managed with [uv](https://docs.astral.sh/uv/
 - Live decider check (opt-in, needs `OPENROUTER_API_KEY`): `uv run pytest -m live`
 - Matcher precision/recall eval (no network needed):
   `uv run python scripts/eval_filter.py`
+- Daily false-negative planner (no network): `uv run python scripts/fn_search.py summary`
+  then `plan`. Record judged results with `record`. Do not pass
+  `DEFAULT_SEARCH_QUERIES` / `HIGH_PRECISION_QUERIES`.
 - Lint/format: `uv run ruff check .` and `uv run ruff format .`
 - Type check: `uv run ty check`
 - Run the server (dev): `uv run python -m server` (uvicorn on `PORT`, default
@@ -45,3 +48,10 @@ command reference. Dependencies are managed with [uv](https://docs.astral.sh/uv/
   recall.
 - After editing `data/blocklist_handles.txt`, refresh DIDs with
   `uv run python scripts/resolve_allowlist_dids.py --handles data/blocklist_handles.txt --output data/blocklist_dids.txt`.
+- The false-negative planner never calls Bluesky. `searchPosts` often returns
+  403 from a datacenter IP; record the planned query with `--status blocked`
+  and do not invent a zero. A miss is a post that belongs in the feed and that
+  the indexer would drop (`match_post` after the reply, archive, blocklist, and
+  mute checks). Replies are not misses while `IGNORE_REPLY_POSTS` is set.
+  Commit `data/fn_search_strategies.json`, `data/fn_search_log.jsonl`, the eval
+  case, and the matcher change together.

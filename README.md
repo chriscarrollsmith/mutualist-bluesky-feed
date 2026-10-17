@@ -26,6 +26,7 @@ Bluesky only asks this service for post URIs; AppView hydrates them.
 | `server/indexer.py` | Match → DB writes / deletes |
 | `server/app.py` | XRPC + `did:web` endpoints |
 | `data/eval_cases.json` | Stratified keep/drop fixtures |
+| `server/fn_search.py` | Daily false-negative query planner and log |
 | `publish_feed.py` | Create/update the generator record |
 
 ## Matching policy
@@ -175,3 +176,82 @@ uv run python scripts/eval_filter.py && uv run pytest -q
 
 After matcher changes, audit/purge stale rows with `scripts/audit_indexed_feed.py`.
 If Jetstream skips a lag gap, backfill with `scripts/backfill_gap.py`.
+
+### Daily false-positive and false-negative review
+
+The two errors live in different samples. The feed database only stores posts the
+matcher kept, and retention deletes them. Sampling the served feed shows false
+positives and nothing else:
+
+```bash
+uv run python scripts/audit_indexed_feed.py --source feed --feed "$FEED_URI" --limit 100
+```
+
+Recall is measured by asking the public AppView `searchPosts` for posts the
+matcher would drop. `scripts/fn_search.py` is the planner and the log. It does
+not call Bluesky. `searchPosts` is unauthenticated
+(`GET https://api.bsky.app/xrpc/app.bsky.feed.searchPosts`, `sort=latest`,
+`since` 24 hours ago). Page with `cursor` when a query needs more than one page.
+The client already lives in `scripts/backfill_gap.py` as `iter_search_posts`.
+A datacenter IP often gets 403; record that attempt as blocked and do not invent
+a zero.
+
+Do not spend the day on the high-precision backfill presets (`mutualism`,
+`Proudhon`, and the rest of `DEFAULT_SEARCH_QUERIES` in `scripts/backfill_gap.py`).
+Those mostly return posts the matcher already keeps, so the log looks like “no
+misses” and the planner learns the wrong lesson. `HIGH_PRECISION_QUERIES` in
+`server/fn_search.py` is that denylist.
+
+```bash
+uv run python scripts/fn_search.py summary
+uv run python scripts/fn_search.py plan
+```
+
+`plan` prints a slate of 8. The seed is the UTC date, so a rerun the same day is
+stable. `--seed` and `--now` override it. The slate mixes:
+
+- **exploit** — queries that have already produced false negatives, including
+  queries that were not in the original catalog, weighted by historical
+  false-negative count. A query that ran in the last 36 hours is weighted at
+  `0.25`.
+- **explore** — the least-used query from the least-used family in
+  `data/fn_search_strategies.json`. Families are coarse recall hypotheses
+  (`bare_term`, `practice`, `figure`, `current`, `event_phrase`, `hashtag`),
+  because entropy is computed over families.
+
+With no completed miss yet, the whole slate is explore. After that,
+`explore_fraction = 0.35 + (1 - diversity) * 0.45`, where diversity is the
+Shannon entropy of family counts divided by the entropy of a uniform
+distribution over the families in use. A slate larger than one query keeps at
+least one exploit slot and one explore slot. Unfilled exploit slots go to
+explore.
+
+Judge each in-window post with the indexer decision: drop replies when
+`IGNORE_REPLY_POSTS` is set, drop archived and muted posts, drop blocklisted
+authors, then `match_post`. A hit is a false negative only when the post belongs
+in the feed and that decision would drop it. Off-topic noise the matcher
+correctly drops, posts it already keeps, and replies are not false negatives.
+`hits` is how many in-window posts were judged.
+
+```bash
+uv run python scripts/fn_search.py record \
+  --query "time bank" --family practice \
+  --hits 4 --false-negatives 1 \
+  --false-negative-id "at://did:plc:example/app.bsky.feed.post/abc" \
+  --notes "clearing house, no mutual-credit phrase"
+uv run python scripts/fn_search.py record \
+  --query "mutual aid" --family bare_term --status blocked
+```
+
+Recording appends one JSON object to `data/fn_search_log.jsonl`. On `ok`, when
+the false-negative count is at least one and the query is not already listed,
+it is appended to the named family (created if needed) so a later exploit day
+can select it. `--no-remember` skips that. Re-recording a known query keeps the
+catalog’s original casing and refuses a different family. The planned eight are
+the minimum: an extra query the day’s reading suggests is recorded the same way.
+
+For each real miss, add an `expected: true` eval case and change the matcher
+the same day. Commit the catalog, the log, the eval case, and the matcher
+together. Exploit only has something to reuse because every miss was written
+down with its query, and explore stays spread out because every attempt,
+including the empty ones, was written down too.
