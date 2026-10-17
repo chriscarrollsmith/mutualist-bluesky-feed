@@ -21,7 +21,7 @@ primary_region = "ewr"
   PORT = "8080"
   LOG_LEVEL = "INFO"
   DECISION_ENABLED = "true"
-  DECISION_MODEL = "perplexity/pplx-decider-v1.1-27b"
+  DECISION_MODEL = "perplexity/pplx-decider-v1.2"
   DECISION_KEEP_MIN = "0.5"
 
 [http_service]

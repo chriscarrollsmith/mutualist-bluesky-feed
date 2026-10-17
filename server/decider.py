@@ -1,7 +1,7 @@
 """Perplexity decision-model content filter (OpenRouter Decisions API).
 
 The regex floor in ``server.matcher`` proposes candidates. This module
-keep/rejects those candidates with ``perplexity/pplx-decider-v1.1-27b``.
+keep/rejects those candidates with ``perplexity/pplx-decider-v1.2``.
 Application code thresholds the returned yes-probability (``noul``). Network
 errors and unusable payloads decline (``None``) so the matcher can fail closed.
 
@@ -21,7 +21,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-DEFAULT_MODEL = 'perplexity/pplx-decider-v1.1-27b'
+DEFAULT_MODEL = 'perplexity/pplx-decider-v1.2'
 DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
