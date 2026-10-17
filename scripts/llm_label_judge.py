@@ -51,7 +51,8 @@ agorism, free-market anti-capitalism, libertarian socialism when framed that
 way, and Kropotkin. Sibling anarchist tendencies (ancom, syndicalism,
 Bakuninism, Bookchin/social ecology, FNB, IWW, CrimethInc, etc.) are out of
 scope unless the post is substantially about mutualist economics. Bare
-"mutual aid" without mutualist-economics framing is out of scope.
+"mutual aid" without mutualist-economics framing is out of scope. Biological
+mutualism (symbiosis between species) is out of scope.
 
 Return JSON only: {"expected": true|false, "rationale": "<short reason>",
 "confidence": "high"|"medium"|"low"}.
@@ -68,6 +69,7 @@ Drop (expected=false) for:
 - Crypto/Web3/DeFi "decentralized" jargon without mutualist values
 - Bare ambiguous left or general-anarchist terms with no mutualist signal
 - Sibling anarchist tendencies without mutualist economics
+- Biological mutualism (symbiosis between species)
 - Personal money-asks (Venmo/CashApp/GoFundMe/PayPal-me, "I'm short on rent",
   individual "mutual aid request") even when wrapped in mutualist language
 - Hate speech or celebration / advocacy of violence

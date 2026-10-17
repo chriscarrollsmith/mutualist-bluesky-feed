@@ -65,8 +65,9 @@ decider. It does not skip the decider, and a regex match does not earn one.
 
 The decider's reject criteria include right-wing or reactionary framing,
 anarcho-capitalism, chaos or entertainment "anarchy", crypto jargon, sibling
-anarchist tendencies without mutualist economics, bare mutual aid, personal
-fundraising, hate, and celebration of violence. Unclear posts are rejects.
+anarchist tendencies without mutualist economics, biological mutualism
+(symbiosis between species), bare mutual aid, personal fundraising, hate, and
+celebration of violence. Unclear posts are rejects.
 
 **Drop** when the author is blocklisted (`data/blocklist_handles.txt` /
 `blocklist_dids.txt`), even if the text would otherwise keep.
