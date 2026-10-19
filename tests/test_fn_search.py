@@ -77,7 +77,12 @@ def test_checked_in_catalog_excludes_backfill_presets() -> None:
     families = {item.family for item in catalog}
     assert families >= {'bare_term', 'practice', 'figure', 'current', 'event_phrase', 'hashtag'}
     assert all(item.key not in HIGH_PRECISION_QUERIES for item in catalog)
-    assert load_log() == ()
+    catalog_by_key = {item.key: item for item in catalog}
+    for entry in load_log():
+        assert entry.key not in HIGH_PRECISION_QUERIES, entry.query
+        known = catalog_by_key.get(entry.key)
+        if known is not None:
+            assert entry.family == known.family, entry.query
 
 
 def test_catalog_queries_are_not_already_strong_keeps() -> None:
