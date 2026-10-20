@@ -37,8 +37,8 @@ from server.decider import (
     DecisionBackend,
     get_default_decider,
 )
-from server.gazetteer import Gazetteer, default_gazetteer
 from server.post_images import image_data_urls
+from server.topic_entities import TopicEntities, default_topic_entities
 
 
 @dataclass(frozen=True)
@@ -236,7 +236,7 @@ _EVENT_CUE = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
-_LOCAL_EVENT_VENUE = re.compile(
+_IN_SCOPE_EVENT_VENUE = re.compile(
     r"""
     (?:
         mutualis[mt]\s+(?:meetup|reading|circle|conference|forum|bookfair)
@@ -473,14 +473,14 @@ def _soft_prior_ambiguous(
     return None
 
 
-def _match_local_event(haystack: str) -> MatchResult | None:
+def _match_in_scope_event(haystack: str) -> MatchResult | None:
     if not _EVENT_CUE.search(haystack):
         return None
-    match = _LOCAL_EVENT_VENUE.search(haystack)
+    match = _IN_SCOPE_EVENT_VENUE.search(haystack)
     if not match:
         return None
     venue = re.sub(r'\s+', ' ', match.group(0).lower())
-    return MatchResult(True, f'event_local_venue:{venue}')
+    return MatchResult(True, f'event_in_scope_venue:{venue}')
 
 
 def looks_like_solicit(
@@ -543,14 +543,14 @@ def match_post(
     blocklist_handles: set[str] | None = None,
     soft_prior_dids: set[str] | None = None,
     decider: DecisionBackend | None = None,
-    gazetteer: Gazetteer | None = None,
+    topic_entities: TopicEntities | None = None,
     embed: object | None = None,
     use_default_decider: bool = False,
 ) -> MatchResult:
     """Return whether a post belongs in the mutualism feed.
 
-    Decision order: blocklist → allowlist → gazetteer other-entity → hard
-    negative / gazetteer local / strong regex → event+venue →
+    Decision order: blocklist → allowlist → out-of-scope entity → hard
+    negative / in-scope entity / strong regex → event+venue →
     ambiguous+context → soft prior → ambiguous leftover → drop.
 
     When a decision model is active, it keep/rejects every candidate that
@@ -568,7 +568,7 @@ def match_post(
     blocklist_dids = blocklist_dids or set()
     blocklist_handles = {h.lower() for h in (blocklist_handles or set())}
     soft_prior_dids = soft_prior_dids or set()
-    places = gazetteer if gazetteer is not None else default_gazetteer()
+    entities = topic_entities if topic_entities is not None else default_topic_entities()
     lang_tags = _normalize_langs(langs)
     if decider is not None:
         backend: DecisionBackend | None = decider
@@ -598,11 +598,11 @@ def match_post(
     if not haystack:
         return MatchResult(False, 'empty')
 
-    entity = places.lookup(haystack)
+    entity = entities.lookup(haystack)
     strong_hit = _STRONG_POSITIVE.search(haystack)
 
-    if entity is not None and entity.region == 'other' and not strong_hit:
-        return MatchResult(False, f'entity_other:{entity.entity_id}')
+    if entity is not None and entity.scope == 'out_of_scope' and not strong_hit:
+        return MatchResult(False, f'entity_out_of_scope:{entity.entity_id}')
 
     if _HARD_NEGATIVE.search(haystack):
         if strong_hit and not _HARD_NEGATIVE_BLOCKS_STRONG.search(haystack):
@@ -615,10 +615,10 @@ def match_post(
             )
         return MatchResult(False, 'hard_negative')
 
-    if entity is not None and entity.region == 'local':
+    if entity is not None and entity.scope == 'in_scope':
         return _content_filter(
             haystack,
-            MatchResult(True, f'entity_local:{entity.entity_id}'),
+            MatchResult(True, f'entity_in_scope:{entity.entity_id}'),
             decider=backend,
             embed=embed,
             author_did=author_did,
@@ -633,19 +633,19 @@ def match_post(
             author_did=author_did,
         )
 
-    event_match = _match_local_event(haystack)
+    event_match = _match_in_scope_event(haystack)
     if event_match is not None:
         return _content_filter(
             haystack, event_match, decider=backend, embed=embed, author_did=author_did
         )
 
-    place_haystack = _haystack_without_handles(haystack)
-    ambiguous_hits = _AMBIGUOUS_TERM.findall(place_haystack)
+    term_haystack = _haystack_without_handles(haystack)
+    ambiguous_hits = _AMBIGUOUS_TERM.findall(term_haystack)
     if ambiguous_hits:
         distinct = {re.sub(r'\s+', ' ', h.lower()) for h in ambiguous_hits}
         term = sorted(distinct)[0]
 
-        if _MUTUALIST_CONTEXT.search(place_haystack) or _STRONG_POSITIVE.search(haystack):
+        if _MUTUALIST_CONTEXT.search(term_haystack) or _STRONG_POSITIVE.search(haystack):
             return _content_filter(
                 haystack,
                 MatchResult(True, f'ambiguous_with_context:{term}'),

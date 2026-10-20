@@ -86,7 +86,7 @@ def test_main_with_injected_judge(tmp_path: Path) -> None:
     )
 
     def judge(_row: dict) -> dict:
-        return {'expected': True, 'rationale': 'local', 'confidence': 'medium'}
+        return {'expected': True, 'rationale': 'on topic', 'confidence': 'medium'}
 
     assert main(['--input', str(inp), '--output', str(out)], judge=judge) == 0
     written = [json.loads(line) for line in out.read_text(encoding='utf-8').splitlines()]

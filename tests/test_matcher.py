@@ -72,7 +72,7 @@ def test_soft_prior_unlocks_bare_ambiguous_not_hard_negative() -> None:
         soft_prior_dids=priors,
     )
     assert blocked.matched is False
-    assert blocked.reason in {'hard_negative', 'entity_other:anarcho_capitalism'}
+    assert blocked.reason in {'hard_negative', 'entity_out_of_scope:anarcho_capitalism'}
 
 
 def test_allowlist_did_matches_without_handle_or_keywords() -> None:
@@ -119,10 +119,10 @@ def test_blocklist_beats_allowlist() -> None:
     assert result.reason == 'blocklist_did'
 
 
-def test_event_local_venue_requires_cue_and_venue() -> None:
+def test_event_in_scope_venue_requires_cue_and_venue() -> None:
     keep = match_post('Really Really Free Market this Saturday in the park — bring what you can.')
     assert keep.matched is True
-    assert keep.reason.startswith('event_local_venue:')
+    assert keep.reason.startswith('event_in_scope_venue:')
 
     no_cue = match_post('The really really free market archive needs a new index.')
     assert no_cue.matched is False

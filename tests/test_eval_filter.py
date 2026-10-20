@@ -30,7 +30,7 @@ def test_evaluate_cases_stratifies_and_respects_gaps() -> None:
             'text': 'Hello from the mutual credit clearing',
             'expected': True,
             'signal': 'text',
-            'bucket': 'strong_local',
+            'bucket': 'strong_positive',
             'split': 'dev',
             'regression': True,
         },
@@ -40,7 +40,7 @@ def test_evaluate_cases_stratifies_and_respects_gaps() -> None:
             'author_handle': 'allowlisted.bsky.social',
             'expected': True,
             'signal': 'author',
-            'bucket': 'local_org_no_placename',
+            'bucket': 'allowlisted_author',
             'split': 'holdout',
             'regression': True,
         },
@@ -50,7 +50,7 @@ def test_evaluate_cases_stratifies_and_respects_gaps() -> None:
             'author_handle': 'not-allowlisted.bsky.social',
             'expected': True,
             'signal': 'author',
-            'bucket': 'local_org_no_placename',
+            'bucket': 'allowlisted_author',
             'split': 'dev',
             'regression': False,
         },
@@ -62,7 +62,7 @@ def test_evaluate_cases_stratifies_and_respects_gaps() -> None:
     assert report.by_split['holdout'].tp == 1
     assert report.by_signal['author'].tp == 1
     assert report.by_signal['author'].fn == 1
-    assert report.by_bucket['local_org_no_placename'].fn == 1
+    assert report.by_bucket['allowlisted_author'].fn == 1
     assert len(report.failures) == 1
     assert len(report.regression_failures) == 0
 
@@ -88,7 +88,7 @@ def test_eval_cases_have_required_strata() -> None:
     assert 'event' in signals
     assert 'author_blocklist' in buckets
     assert 'author_soft_prior' in buckets
-    assert 'regional_event' in buckets
+    assert 'in_scope_event' in buckets
     assert 'ambiguous_classifier' in buckets
     assert 'solicit_reject' in buckets
     assert splits == {'dev', 'holdout'}
@@ -107,7 +107,7 @@ def test_eval_cases_have_required_strata() -> None:
 
     author_cases = [c for c in cases if c.get('signal') == 'author']
     fn_event = [
-        c for c in cases if c.get('bucket') == 'regional_event' and c.get('expected') is True
+        c for c in cases if c.get('bucket') == 'in_scope_event' and c.get('expected') is True
     ]
     assert len(author_cases) >= 3
     assert len(fn_event) >= 2

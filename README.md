@@ -34,7 +34,7 @@ Bluesky only asks this service for post URIs; AppView hydrates them.
 Decision order:
 
 ```
-blocklist → allowlist → gazetteer other/local → hard negatives → strong regex →
+blocklist → allowlist → out-of-scope entity → hard negatives → in-scope entity / strong regex →
 event+venue → (ambiguous + context) → soft prior → Perplexity decider → drop
 ```
 

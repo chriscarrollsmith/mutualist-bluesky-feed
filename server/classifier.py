@@ -146,7 +146,7 @@ class ClassifierBackend(Protocol):
         *,
         term: str | None,
         has_event_cue: bool,
-        has_local_venue: bool,
+        has_in_scope_venue: bool,
     ) -> ClassifierDecision | None: ...
 
 
@@ -206,9 +206,9 @@ class ClassifierModel:
         *,
         term: str | None,
         has_event_cue: bool,
-        has_local_venue: bool,
+        has_in_scope_venue: bool,
     ) -> ClassifierDecision | None:
-        del haystack, has_event_cue, has_local_venue
+        del haystack, has_event_cue, has_in_scope_venue
         # Offline stub: never keep unless tests override via FakeBackend.
         del term
         return None
@@ -243,7 +243,7 @@ class DeepSeekClassifier:
         *,
         term: str | None,
         has_event_cue: bool,
-        has_local_venue: bool,
+        has_in_scope_venue: bool,
     ) -> ClassifierDecision | None:
         text = (haystack or '').strip()
         if not text:
@@ -252,7 +252,7 @@ class DeepSeekClassifier:
         clipped = text[: self.max_text_chars]
         cache_key = hashlib.sha256(
             f'{self.model}|{RUBRIC_VERSION}|{self.thresholds.cache_token()}|{term}|'
-            f'{int(has_event_cue)}|{int(has_local_venue)}|{clipped}'.encode()
+            f'{int(has_event_cue)}|{int(has_in_scope_venue)}|{clipped}'.encode()
         ).hexdigest()
         assert self._cache is not None
         if cache_key in self._cache:
@@ -321,9 +321,9 @@ class FakeClassifier:
         *,
         term: str | None,
         has_event_cue: bool,
-        has_local_venue: bool,
+        has_in_scope_venue: bool,
     ) -> ClassifierDecision | None:
-        del has_event_cue, has_local_venue
+        del has_event_cue, has_in_scope_venue
         lowered = haystack.lower()
         for needle in self.reject_substrings:
             if needle.lower() in lowered:
@@ -526,12 +526,12 @@ def extract_features(
     *,
     term: str | None,
     has_event_cue: bool,
-    has_local_venue: bool,
+    has_in_scope_venue: bool,
 ) -> dict[str, float]:
     """Lightweight feature view for debugging / offline scripts."""
     return {
         'has_event_cue': 1.0 if has_event_cue else 0.0,
-        'has_local_venue': 1.0 if has_local_venue else 0.0,
+        'has_in_scope_venue': 1.0 if has_in_scope_venue else 0.0,
         'has_ambiguous': 1.0 if term else 0.0,
         'text_len': float(min(len(haystack or ''), 2000)),
     }
@@ -542,7 +542,7 @@ def classify_candidate(
     *,
     term: str | None,
     has_event_cue: bool,
-    has_local_venue: bool,
+    has_in_scope_venue: bool,
     classifier: ClassifierBackend | None = None,
     model: ClassifierBackend | None = None,
     allow_without_term: bool = False,
@@ -567,5 +567,5 @@ def classify_candidate(
         haystack,
         term=term,
         has_event_cue=has_event_cue,
-        has_local_venue=has_local_venue,
+        has_in_scope_venue=has_in_scope_venue,
     )

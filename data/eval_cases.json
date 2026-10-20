@@ -125,7 +125,7 @@
     "expected": true,
     "note": "event+venue",
     "signal": "event",
-    "bucket": "regional_event",
+    "bucket": "in_scope_event",
     "split": "dev",
     "regression": true
   },
@@ -135,7 +135,7 @@
     "expected": true,
     "note": "RRFM free-market gift praxis",
     "signal": "event",
-    "bucket": "regional_event",
+    "bucket": "in_scope_event",
     "split": "holdout",
     "regression": true
   },

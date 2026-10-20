@@ -22,7 +22,7 @@ if _is_memory:
     # Keep at least one connection open (see connect() below) or SQLite
     # discards the shared database when the last connection closes.
     db = peewee.SqliteDatabase(
-        'file:capital_region_feed?mode=memory&cache=shared',
+        'file:mutualist_feed?mode=memory&cache=shared',
         uri=True,
     )
 else:

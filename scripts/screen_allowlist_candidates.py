@@ -6,7 +6,8 @@ selection passes can keep a high signal/noise ratio.
 
 Examples:
 
-    uv run python scripts/screen_allowlist_candidates.py timesunion.com wnyt.bsky.social
+    uv run python scripts/screen_allowlist_candidates.py \\
+        c4ssdotorg.bsky.social kevincarson1.bsky.social
     uv run python scripts/screen_allowlist_candidates.py --from-file /tmp/candidates.txt
     uv run python scripts/screen_allowlist_candidates.py --from-allowlist --json
 """

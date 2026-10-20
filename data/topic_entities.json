@@ -1,60 +1,60 @@
 {
   "version": 1,
-  "notes": "Surface-form → topic entity map. region=local keeps; region=other drops. Longest match wins.",
+  "notes": "Surface-form → topic entity map. scope=in_scope keeps; scope=out_of_scope drops. Longest match wins.",
   "entities": [
     {
       "id": "c4ss",
-      "region": "local",
+      "scope": "in_scope",
       "surfaces": ["center for a stateless society", "c4ss"]
     },
     {
-      "id": "mutualism",
-      "region": "local",
-      "surfaces": ["proudhonian mutualism"]
+      "id": "mutualism", // pragma: allowlist secret
+      "scope": "in_scope",
+      "surfaces": ["proudhonian mutualism"] // pragma: allowlist secret
     },
     {
       "id": "food_not_bombs",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["food not bombs", "foodnotbombs"]
     },
     {
       "id": "crimethinc",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["crimethinc", "crimeth.inc"]
     },
     {
       "id": "ak_press",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["ak press"]
     },
     {
       "id": "black_rose_anarchist_federation",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["black rose anarchist federation", "black rose federation"]
     },
     {
       "id": "institute_for_anarchist_studies",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["institute for anarchist studies"]
     },
     {
       "id": "anarcho_capitalism",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["anarcho-capitalism", "anarcho capitalism", "ancap", "anarcho-capitalist"]
     },
     {
       "id": "sons_of_anarchy",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["sons of anarchy"]
     },
     {
       "id": "anarchy_online",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["anarchy online"]
     },
     {
       "id": "mises_institute",
-      "region": "other",
+      "scope": "out_of_scope",
       "surfaces": ["mises institute"]
     }
   ]
