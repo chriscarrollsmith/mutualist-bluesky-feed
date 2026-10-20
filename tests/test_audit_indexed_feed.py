@@ -59,7 +59,7 @@ def test_evaluate_post_drops_replies_when_configured() -> None:
     assert reason == 'reply_ignored'
 
 
-def test_evaluate_post_keeps_strong_local() -> None:
+def test_evaluate_post_keeps_strong_positive() -> None:
     post = {
         'uri': 'at://did:plc:x/app.bsky.feed.post/1',
         'author': {'did': 'did:plc:x', 'handle': 'x.bsky.social'},

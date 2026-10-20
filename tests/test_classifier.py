@@ -38,7 +38,7 @@ def test_extract_features_ambiguous_term() -> None:
         'Our co-op refuses landlords',
         term='co-op',
         has_event_cue=False,
-        has_local_venue=False,
+        has_in_scope_venue=False,
     )
     assert feats['has_ambiguous'] == 1.0
     assert feats['has_event_cue'] == 0.0
@@ -50,7 +50,7 @@ def test_fake_classifier_keeps_substring() -> None:
         'Our co-op shares tools and refuses landlords.',
         term='co-op',
         has_event_cue=False,
-        has_local_venue=False,
+        has_in_scope_venue=False,
         classifier=fake,
     )
     assert decision is not None
@@ -77,7 +77,7 @@ def test_deepseek_classifier_uses_injected_judge() -> None:
         'Horizontal assemblies without bosses',
         term='autonomous',
         has_event_cue=False,
-        has_local_venue=False,
+        has_in_scope_venue=False,
     )
     assert decision is not None
     assert decision.matched is True
@@ -95,7 +95,7 @@ def test_deepseek_classifier_accepts_legacy_score_payload() -> None:
         'Horizontal assemblies without bosses',
         term='autonomous',
         has_event_cue=False,
-        has_local_venue=False,
+        has_in_scope_venue=False,
     )
     assert decision is not None
     assert decision.matched is True
@@ -119,7 +119,7 @@ def test_deepseek_classifier_respects_thematic_gate() -> None:
         'maybe related',
         term='punk',
         has_event_cue=False,
-        has_local_venue=False,
+        has_in_scope_venue=False,
     )
     assert decision is not None
     assert decision.matched is False
@@ -142,7 +142,7 @@ def test_deepseek_classifier_rejects_high_solicit() -> None:
         'Mutual aid please Venmo me for rent',
         term=None,
         has_event_cue=False,
-        has_local_venue=False,
+        has_in_scope_venue=False,
     )
     assert decision is not None
     assert decision.matched is False
@@ -287,7 +287,7 @@ def test_classifier_model_stub_never_keeps() -> None:
             'anything',
             term='anarchy',
             has_event_cue=False,
-            has_local_venue=False,
+            has_in_scope_venue=False,
         )
         is None
     )

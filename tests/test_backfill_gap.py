@@ -71,7 +71,7 @@ def test_extract_author_feed_skips_reposts() -> None:
             {
                 'post': {
                     'uri': 'own',
-                    'author': {'did': 'did:plc:tu', 'handle': 'timesunion.com'},
+                    'author': {'did': 'did:plc:author', 'handle': 'example.bsky.social'},
                     'record': {'text': 'mine', 'createdAt': '2026-07-30T17:00:00Z'},
                 }
             },
@@ -85,7 +85,7 @@ def test_extract_author_feed_skips_reposts() -> None:
             },
         ]
     }
-    posts = extract_author_feed_posts(payload, actor='did:plc:tu')
+    posts = extract_author_feed_posts(payload, actor='did:plc:author')
     assert [p['uri'] for p in posts] == ['own']
 
 

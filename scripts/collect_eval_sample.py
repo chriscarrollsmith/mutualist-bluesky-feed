@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Sample Bluesky posts for hand-labeling into the matcher eval set.
 
-Unlike sampling only from an existing place-name feed, this tool can pull:
+This tool can pull:
 
-- ``authors`` — posts from candidate local handles/DIDs (allowlist or CLI)
-- ``near-miss`` — search hits for ambiguous / off-region place-name homographs
-- ``events`` — search hits for regional event-like announcements
-- ``feed`` — posts from a custom feed URI (legacy / place-name-biased)
+- ``authors`` — posts from allowlisted or CLI handles/DIDs
+- ``near-miss`` — search hits for ambiguous or false-friend phrases
+- ``events`` — search hits for in-scope event announcements
+- ``feed`` — posts from a custom feed URI
 - ``search`` — free-form ``searchPosts`` queries
 
 Output is JSON lines on stdout. Label ``expected`` (true/false), then merge with:
@@ -277,7 +277,7 @@ def collect_from_authors(
                     post,
                     source='authors',
                     signal='author',
-                    bucket='local_org_no_placename',
+                    bucket='allowlisted_author',
                     split=split,
                 )
             )
@@ -381,7 +381,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     feed_p.add_argument('--limit', type=int, default=50)
 
-    authors_p = sub.add_parser('authors', help='Sample posts from local candidate accounts')
+    authors_p = sub.add_parser('authors', help='Sample posts from allowlisted or named accounts')
     authors_p.add_argument(
         '--from-allowlist',
         action='store_true',
@@ -393,7 +393,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     near_p = sub.add_parser(
         'near-miss',
-        help='Search for ambiguous / off-region place-name near-misses',
+        help='Search for ambiguous or false-friend phrases',
     )
     near_p.add_argument(
         '--query',
@@ -408,12 +408,12 @@ def build_parser() -> argparse.ArgumentParser:
         help='Use only --query values (skip built-in near-miss presets)',
     )
 
-    events_p = sub.add_parser('events', help='Search for event-like regional posts')
+    events_p = sub.add_parser('events', help='Search for in-scope event announcements')
     events_p.add_argument(
         '--query',
         action='append',
         default=[],
-        help='Extra search query (repeatable); defaults include regional event cues',
+        help='Extra search query (repeatable); defaults include in-scope event cues',
     )
     events_p.add_argument('--limit-per-query', type=int, default=20)
     events_p.add_argument(
@@ -511,7 +511,7 @@ def collect(args: argparse.Namespace, *, fetcher: Fetcher | None = None) -> list
             limit_per_query=args.limit_per_query,
             source='events',
             signal='event',
-            bucket='regional_event',
+            bucket='in_scope_event',
             split=args.split,
             require_event_cue=args.require_event_cue,
             api_host=args.api_host,

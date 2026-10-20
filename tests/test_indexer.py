@@ -35,7 +35,7 @@ def _create_event(*, author: str, text: str, uri_key: str = 'abc') -> dict[str, 
     }
 
 
-def test_handle_event_indexes_allowlisted_did_without_placename(
+def test_handle_event_indexes_allowlisted_did_without_topic_phrase(
     isolated_db: None, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     from server import config
@@ -51,7 +51,7 @@ def test_handle_event_indexes_allowlisted_did_without_placename(
     assert row.match_reason == 'allowlist_did'
 
 
-def test_handle_event_skips_unknown_author_without_placename(isolated_db: None) -> None:
+def test_handle_event_skips_unknown_author_without_topic_phrase(isolated_db: None) -> None:
     from server.indexer import handle_event
 
     event = _create_event(
@@ -202,7 +202,7 @@ def test_handle_event_archived_uses_event_time_not_wall_clock(
         'time_us': int(event_time.timestamp() * 1_000_000),
         'record': {
             '$type': 'app.bsky.feed.post',
-            'text': 'Catch-up local bulletin for subscribers.',
+            'text': 'Catch-up bulletin for subscribers.',
             'createdAt': created.isoformat().replace('+00:00', 'Z'),
         },
     }

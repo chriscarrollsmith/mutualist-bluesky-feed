@@ -42,12 +42,12 @@ def test_production_blocklists_are_aligned() -> None:
 def test_build_did_file_includes_handle_provenance() -> None:
     text = build_did_file(
         [
-            ('timesunion.com', 'did:plc:exampletimesunion'),
-            ('news10.bsky.social', 'did:plc:examplenews10'),
+            ('example.bsky.social', 'did:plc:exampleauthor'),
+            ('other.example', 'did:plc:exampleother'),
         ]
     )
-    assert '# timesunion.com' in text
-    assert 'did:plc:exampletimesunion' in text
+    assert '# example.bsky.social' in text
+    assert 'did:plc:exampleauthor' in text
     assert 'resolve_allowlist_dids.py' in text
     blocked = build_did_file(
         [('bypophoenix.bsky.social', 'did:plc:vdykwvsuhnim6beywhcqje7r')],

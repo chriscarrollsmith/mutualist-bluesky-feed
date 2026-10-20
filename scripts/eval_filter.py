@@ -16,7 +16,7 @@ Case schema (``data/eval_cases.json``):
 - ``id``, ``text``, ``expected`` (bool) — required
 - ``signal``: ``text`` | ``author`` | ``event`` — how the topic cue arrives
 - ``bucket``: reason-oriented stratum (e.g. ``skyfeed_fp``,
-  ``local_org_no_placename``, ``regional_event``, ``solicit_reject``)
+  ``allowlisted_author``, ``in_scope_event``, ``solicit_reject``)
 - ``split``: ``dev`` (iterate freely) or ``holdout`` (report separately)
 - ``regression``: if false, scored in reports but ignored for exit code / pytest
   (known recall gaps until author/event/AI backlog items land)

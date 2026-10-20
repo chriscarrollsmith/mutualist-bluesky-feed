@@ -25,29 +25,29 @@ def test_normalize_case_skips_unlabeled() -> None:
 def test_normalize_case_applies_defaults_and_optional_fields() -> None:
     case = normalize_case(
         {
-            'id': 'tp-local-org',
+            'id': 'tp-allowlisted-author',
             'text': 'Newsletter is out.',
             'expected': True,
-            'author_handle': 'timesunion.com',
-            'note': 'no placename',
+            'author_handle': 'example.bsky.social',
+            'note': 'no topic phrase',
             'langs': ['en'],
             'soft_prior': True,
         },
         default_signal='author',
-        default_bucket='local_org_no_placename',
+        default_bucket='allowlisted_author',
         default_split='holdout',
         default_regression=False,
     )
     assert case == {
-        'id': 'tp-local-org',
+        'id': 'tp-allowlisted-author',
         'text': 'Newsletter is out.',
         'expected': True,
         'signal': 'author',
-        'bucket': 'local_org_no_placename',
+        'bucket': 'allowlisted_author',
         'split': 'holdout',
         'regression': False,
-        'author_handle': 'timesunion.com',
-        'note': 'no placename',
+        'author_handle': 'example.bsky.social',
+        'note': 'no topic phrase',
         'langs': ['en'],
         'soft_prior': True,
     }
@@ -74,14 +74,14 @@ def test_merge_cases_adds_new_and_skips_duplicates() -> None:
         existing,
         incoming,
         default_signal='text',
-        default_bucket='regional_event',
+        default_bucket='in_scope_event',
         default_split='dev',
         default_regression=True,
     )
     assert stats == {'added': 1, 'skipped_unlabeled': 1, 'skipped_existing': 1}
     assert len(merged) == 2
     assert merged[1]['id'] == 'new-one'
-    assert merged[1]['bucket'] == 'regional_event'
+    assert merged[1]['bucket'] == 'in_scope_event'
 
 
 def test_read_jsonl(tmp_path: Path) -> None:
