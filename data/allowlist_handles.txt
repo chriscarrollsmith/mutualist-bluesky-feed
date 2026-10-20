@@ -4,10 +4,9 @@
 #   uv run python scripts/resolve_allowlist_dids.py
 #
 # Curation bar: prefer high signal/noise publishers and organizers whose recent
-# posts are mostly human-written and values-aligned with Proudhonian mutualism
-# (reciprocity, possession, mutual credit) or closely related left-market
-# currents. Exclude general-anarchist sibling orgs, firehose volume, pure drama
-# accounts, and ancap/right-"libertarian" voices.
+# posts are mostly human-written and values-aligned with in-scope institutions
+# (mutual credit, possession, cooperatives, assemblies, confederations).
+# Exclude firehose volume, pure drama accounts, and ancap/right-"libertarian" voices.
 # Screen candidates with:
 #   uv run python scripts/screen_allowlist_candidates.py --from-file …
 #

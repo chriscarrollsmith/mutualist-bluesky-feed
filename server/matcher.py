@@ -1,19 +1,21 @@
 """Mutualist post matcher.
 
-Keeps posts that celebrate or practice Proudhonian mutualism and closely
-related left-market / libertarian-socialist currents: reciprocity, possession
-(occupancy-and-use), mutual credit, free banking, agorism, and free-market
-anti-capitalism. Kropotkin is in scope; Bakuninist collectivism, anarcho-
-communism, syndicalism, and similar sibling tendencies are not.
+Keeps posts about durable institutions people can use while firms and states
+still dominate: mutual credit, possession, cooperatives, commons, assemblies,
+and confederations. Proudhonian and left-market traditions are the core.
+Bookchin, libertarian municipalism, and democratic confederalism are in scope
+when the post is about those institutions. Contract and assembly both belong.
+Kropotkin stays for mutual aid and the federated commune.
 
 Rejects common false positives:
 - Anarcho-capitalism / right-"libertarian" market fundamentalism
 - Chaos / entertainment uses of "anarchy" without political content
 - Crypto/Web3 "decentralized" jargon without mutualist values
-- Bare ambiguous left terms without mutualist context
-- Mutual aid without mutualist-economics framing
-- Personal fundraising / extractive "mutual aid" money asks
-- Hate and violence celebration (defiance / non-violent resistance may still keep)
+- Bare ambiguous terms without institutional context
+- Bare mutual aid and charity
+- Personal fundraising / extractive money asks
+- Offensive violence, martyrdom, and armed-struggle celebration
+  (defiance and non-violent resistance may still keep)
 
 Recall without keywords comes from author allowlists and from soft author
 priors. A prior is three decision-model keeps and no rejections in the window;
@@ -47,7 +49,7 @@ class MatchResult:
     reason: str
 
 
-# Phrases that almost always mean mutualism / left-market mutualist economics.
+# Phrases that almost always mean an in-scope institution.
 _STRONG_POSITIVE = re.compile(
     r"""
     (?:
@@ -81,12 +83,24 @@ _STRONG_POSITIVE = re.compile(
       | free[\s-]market\s+anti[\s-]?capital
       | anti[\s-]?capitalist\s+free[\s-]market
       | mutualist\s+economics?
+      | \bbookchin\b
+      | libertarian\s+municipalism
+      | democratic\s+confederalism
+      | municipal\s+assembl(?:y|ies)
+      | neighborhood\s+assembl(?:y|ies)
+      | community\s+land\s+trusts?
+      | \btime[\s-]?banks?\b
+      | worker\s+cooperatives?
+      | worker\s+co[\s-]?ops?
+      | platform\s+cooperatives?
+      | platform\s+co[\s-]?ops?
+      | community\s+currenc(?:y|ies)
     )
     """,
     re.IGNORECASE | re.VERBOSE,
 )
 
-# Ambiguous terms that need mutualist context (or AI).
+# Ambiguous terms that need institutional context (or the decider).
 # Includes bare anarchism, mutual aid, and broad left-market labels.
 _AMBIGUOUS_TERM = re.compile(
     r"""
@@ -118,6 +132,15 @@ _AMBIGUOUS_TERM = re.compile(
       | without\s+(?:bosses|rulers|masters|landlords)
       | anti[\s-]?authoritarian
       | anti[\s-]?capitalis(?:m|t)
+      | social[\s-]ecology\b
+      | \bcommunalism\b
+      | \bconfederalism\b
+      | dual\s+power
+      | \brojava\b
+      | \baanes\b
+      | \bdaanes\b
+      | shop\s+committee
+      | solidarity\s+union
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -157,6 +180,63 @@ _MUTUALIST_CONTEXT = re.compile(
       | anti[\s-]?capitalist\s+free[\s-]market
       | mutualist\s+economics?
       | left[\s-]?libertarian
+      | \bbookchin\b
+      | libertarian\s+municipalism
+      | democratic\s+confederalism
+      | municipal\s+assembl
+      | neighborhood\s+assembl
+      | community\s+land\s+trusts?
+      | \btime[\s-]?banks?\b
+      | worker\s+cooperatives?
+      | worker\s+co[\s-]?ops?
+      | platform\s+cooperatives?
+      | platform\s+co[\s-]?ops?
+      | community\s+currenc(?:y|ies)
+    )
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+# Subjects that stay dropped until an institutional cue is also present.
+# "Social ecology" alone is academic or Bookchin; "communalism" is often
+# sectarian politics; "confederalism" is often the EU; "Rojava" is often war.
+_INSTITUTION_SUBJECT = re.compile(
+    r"""
+    (?:
+        social[\s-]ecology\b
+      | \bcommunalism\b
+      | \bconfederalism\b
+      | dual\s+power
+      | \brojava\b
+      | \baanes\b
+      | \bdaanes\b
+      | shop\s+committee
+      | solidarity\s+union
+    )
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+# Cues that unlock those subjects. Bare "council" and bare "assembly" are
+# intentionally absent.
+_INSTITUTION_CUE = re.compile(
+    r"""
+    (?:
+        \bcommunes?\b
+      | \bcooperatives?\b
+      | \bco[\s-]?ops?\b
+      | municipal\s+assembl
+      | neighborhood\s+assembl
+      | people'?s\s+assembl
+      | women'?s\s+(?:council|assembl|cooperative|co[\s-]?op)
+      | community\s+land\s+trusts?
+      | \btime[\s-]?banks?\b
+      | worker\s+co(?:operatives?|[\s-]?ops?)
+      | platform\s+co(?:operatives?|[\s-]?ops?)
+      | community\s+currenc
+      | \bbookchin\b
+      | libertarian\s+municipalism
+      | democratic\s+confederalism
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -187,6 +267,8 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | hans[\s-]hermann\s+hoppe
       | \bvoluntaryism\b
       | property[\s-]rights\s+anarch
+      | \bmartyrs?\b
+      | \bmartyrdom\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -215,6 +297,11 @@ _HARD_NEGATIVE = re.compile(
       | this\s+is\s+anarchy!
       | pure\s+chaos\s+anarchy
       | state\s+of\s+anarchy
+      | \bmartyrs?\b
+      | \bmartyrdom\b
+      | armed\s+struggle
+      | people'?s\s+war
+      | \binsurrectionary\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -645,7 +732,10 @@ def match_post(
         distinct = {re.sub(r'\s+', ' ', h.lower()) for h in ambiguous_hits}
         term = sorted(distinct)[0]
 
-        if _MUTUALIST_CONTEXT.search(term_haystack) or _STRONG_POSITIVE.search(haystack):
+        paired = _INSTITUTION_SUBJECT.search(term_haystack) and _INSTITUTION_CUE.search(
+            term_haystack
+        )
+        if _MUTUALIST_CONTEXT.search(term_haystack) or _STRONG_POSITIVE.search(haystack) or paired:
             return _content_filter(
                 haystack,
                 MatchResult(True, f'ambiguous_with_context:{term}'),

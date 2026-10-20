@@ -1,12 +1,16 @@
 # Mutualist Bluesky Feed
 
-Self-hosted Bluesky custom feed that aggregates and celebrates **Proudhonian
-mutualism** — reciprocity, possession, mutual credit — plus closely related
-left-market currents (agorism, free-market anti-capitalism, libertarian
-socialism when framed that way). Kropotkin is in scope; sibling anarchist
-tendencies (ancom, syndicalism, Bakuninism, FNB/IWW/CrimethInc, etc.) are not.
-Bare mutual aid keeps only when paired with mutualist economics. The feed aims
-to stay hate- and violence-free; defiance and non-violent resistance are fine.
+Self-hosted Bluesky custom feed for durable institutions — mutual credit,
+possession, cooperatives, commons, assemblies, confederations — that people
+can use while firms and states still dominate, and whose aim is to reduce
+dependence on both. Proudhonian and left-market traditions are the core.
+Libertarian municipalism, Bookchin's social ecology when it is about communes
+or assemblies, and democratic confederalism when it is about councils,
+cooperatives, or women's institutions are in scope too. Contract and assembly
+both belong. Kropotkin stays for mutual aid and the federated commune.
+Offensive violence, insurrection, martyrdom, and party war communiqués stay
+out. Bare mutual aid keeps only when paired with one of those institutions.
+The feed aims to stay hate-free; defiance and non-violent resistance are fine.
 
 Architecture forked from [capital-region-feed](https://github.com/chriscarrollsmith/capital-region-feed).
 
@@ -53,24 +57,29 @@ still drop.
 
 **Regex candidates** (then the decider, when enabled):
 
-- Strong phrases (`mutualism`, `Proudhon`, `mutual credit`, `occupancy-and-use`,
-  `agorism`, `free-market anti-capitalism`, `Kropotkin`, `C4SS`, …)
-- Ambiguous terms (`anarchism`, `mutual aid`, `libertarian socialism`, `co-op`,
-  …) with **mutualist** context (not general-anarchist context)
+- Strong phrases (`Proudhon`, `mutual credit`, `occupancy-and-use`, `agorism`,
+  `Bookchin`, `libertarian municipalism`, `democratic confederalism`,
+  `worker cooperative`, `community land trust`, `time bank`, `Kropotkin`,
+  `C4SS`, …)
+- Ambiguous terms (`anarchism`, `mutual aid`, `co-op`, `social ecology`,
+  `Rojava`, `communalism`, `confederalism`, …) with institutional context
 - Allowlisted authors (`data/allowlist_handles.txt` / `allowlist_dids.txt`)
 - Soft-prior authors using a bare ambiguous term
-- Event phrasing + mutualist venue/project (`mutualist reading circle`,
+- Event phrasing + an in-scope venue or project (`mutualist reading circle`,
   `Really Really Free Market`, …)
 
 **Soft prior:** three decider keeps and no decider rejections in the last
 `SOFT_PRIOR_WINDOW_DAYS` (30). A prior lets bare ambiguous terms through to the
 decider. It does not skip the decider, and a regex match does not earn one.
 
-The decider's reject criteria include right-wing or reactionary framing,
-anarcho-capitalism, chaos or entertainment "anarchy", crypto jargon, sibling
-anarchist tendencies without mutualist economics, biological mutualism
-(symbiosis between species), bare mutual aid, personal fundraising, hate, and
-celebration of violence. Unclear posts are rejects.
+The decider keeps posts that practice an in-scope institution. Contract and
+assembly both count. It rejects right-wing or reactionary framing,
+anarcho-capitalism, chaos or entertainment "anarchy", crypto jargon, bare
+mutual aid, charity, state-capacity politics, academic social-ecological
+systems, sectarian communalism, EU confederalism, syndicalist cheerleading
+with no durable institution, insurrection, martyrdom, party war communiqués,
+symbiosis between species, personal fundraising, hate, and offensive use of
+violence. Unclear posts are rejects.
 
 **Drop** when the author is blocklisted (`data/blocklist_handles.txt` /
 `blocklist_dids.txt`), even if the text would otherwise keep.
@@ -78,11 +87,12 @@ celebration of violence. Unclear posts are rejects.
 **Drop** hard negatives / false friends:
 
 - Anarcho-capitalism / ancap / Rothbard–Hoppe / Mises Institute framing
-- Sons of Anarchy, Anarchy Online, “state of anarchy” chaos news
-- DeFi / Web3 / NFT “decentralized” jargon without mutualist values
-- Sibling anarchist tendencies without mutualist economics
-- Bare mutual aid without mutualist-economics framing
-- Personal fundraising wrapped as “mutual aid”
+- Sons of Anarchy, Anarchy Online, "state of anarchy" chaos news
+- DeFi / Web3 / NFT "decentralized" jargon without institutional values
+- Martyrdom, including when an in-scope name is also present
+- Bare mutual aid, charity, and personal fundraising wrapped as "mutual aid"
+- Sectarian communalism, EU confederalism, and social-ecological systems
+  research with no institutional cue
 
 ## Local setup
 
@@ -237,10 +247,10 @@ correctly drops, posts it already keeps, and replies are not false negatives.
 
 ```bash
 uv run python scripts/fn_search.py record \
-  --query "time bank" --family practice \
+  --query "tool library" --family practice \
   --hits 4 --false-negatives 1 \
   --false-negative-id "at://did:plc:example/app.bsky.feed.post/abc" \
-  --notes "clearing house, no mutual-credit phrase"
+  --notes "shared tools, no strong institutional phrase"
 uv run python scripts/fn_search.py record \
   --query "mutual aid" --family bare_term --status blocked
 ```

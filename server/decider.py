@@ -24,12 +24,14 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any, Protocol
 
+from server.scope_text import BIOLOGICAL_EXCLUSION
+
 DEFAULT_MODEL = 'perplexity/pplx-decider-v1.2'
 DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
-PROMPT_VERSION = 'mutualism-keep-v2'
+PROMPT_VERSION = 'institution-keep-v3'
 
 KEEP_PREFIX = 'decision_keep:'
 REJECT_PREFIX = 'decision_reject:'
@@ -42,28 +44,36 @@ _KEEP_QUESTION: dict[str, Any] = {
     'keep': {
         'type': 'noul',
         'instructions': (
-            'Should this Bluesky post be kept in a curated feed of Proudhonian '
-            'mutualism and closely related left-market currents (reciprocity, '
+            'Should this Bluesky post be kept in a curated feed of durable '
+            'non-state institutions — mutual credit, possession, cooperatives, '
+            'commons, assemblies, and confederations — that people can use while '
+            'firms and states still dominate, and whose aim is to reduce dependence '
+            'on both? In scope: Proudhonian and left-market traditions (reciprocity, '
             'occupancy-and-use, mutual credit, free banking, equitable commerce, '
-            'agorism, free-market anti-capitalism, libertarian socialism when '
-            'framed that way, and Kropotkin)? Biological mutualism (symbiosis '
-            'between species) is out of scope.'
+            'agorism, free-market anti-capitalism); Kropotkin on mutual aid and the '
+            'federated commune; Bookchin, libertarian municipalism, and social ecology '
+            'when the post is about communes or assemblies; democratic confederalism '
+            "when the post is about councils, cooperatives, or women's institutions. "
+            'Contract and assembly both belong. ' + BIOLOGICAL_EXCLUSION + ' is out of scope.'
         ),
         'criteria': {
             'true': (
-                'The post substantially celebrates or practices in-scope mutualist '
-                'economics, in a constructive tone. Defiance and non-violent '
-                'resistance are fine. Collective org news without a personal '
-                'hardship pitch is fine.'
+                'The post substantially celebrates or practices an in-scope '
+                'institution, in a constructive tone. Defiance and non-violent '
+                'resistance are fine. Argument between contract and assembly is '
+                'fine. Collective org news without a personal hardship pitch is fine.'
             ),
             'false': (
                 'Off-topic, hostile, unclear, or out of scope. Includes right-wing '
                 'or reactionary framing, scare coverage of socialism or anarchism, '
                 'anarcho-capitalism, chaos or entertainment uses of anarchy, crypto '
-                'or Web3 jargon, sibling anarchist tendencies without mutualist '
-                'economics, biological mutualism (symbiosis between species), '
-                'bare mutual aid, personal fundraising, hate, or celebration '
-                'of violence.'
+                'or Web3 jargon, bare mutual aid, personal fundraising, charity, '
+                'state-capacity or nation-state reform, academic social-ecological '
+                'systems, sectarian communalism, EU confederalism, syndicalist or '
+                'union cheerleading with no durable institution, insurrection, '
+                'armed-struggle footage, martyrdom, party war communiqués, '
+                + BIOLOGICAL_EXCLUSION
+                + ', hate, or offensive use of violence.'
             ),
         },
     }

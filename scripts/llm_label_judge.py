@@ -27,6 +27,7 @@ from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
+from server.scope_text import BIOLOGICAL_EXCLUSION
 
 ROOT = Path(__file__).resolve().parents[1]
 # Prefer repo .env values (same pattern as server/config.py).
@@ -40,44 +41,52 @@ DEFAULT_DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions'
 DEFAULT_OPENAI_MODEL = 'gpt-4o-mini'
 DEFAULT_OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions'
 
-SYSTEM_PROMPT = """\
-You label Bluesky posts for a curated mutualism custom feed that prefers
-high-quality, constructive, memorable posts — not personal fundraising,
-hate, or violence.
+SYSTEM_PROMPT = (
+    """\
+You label Bluesky posts for a curated feed of durable non-state institutions.
+Prefer high-quality, constructive, memorable posts. Personal fundraising,
+hate, and offensive violence stay out.
 
-Mutualism means Proudhonian and closely related left-market currents:
-reciprocity, possession / occupancy-and-use, mutual credit, free banking,
-agorism, free-market anti-capitalism, libertarian socialism when framed that
-way, and Kropotkin. Sibling anarchist tendencies (ancom, syndicalism,
-Bakuninism, Bookchin/social ecology, FNB, IWW, CrimethInc, etc.) are out of
-scope unless the post is substantially about mutualist economics. Bare
-"mutual aid" without mutualist-economics framing is out of scope. Biological
-mutualism (symbiosis between species) is out of scope.
+In scope: Proudhonian and left-market traditions (reciprocity, possession /
+occupancy-and-use, mutual credit, free banking, agorism, free-market
+anti-capitalism); Kropotkin on mutual aid and the federated commune; Bookchin,
+libertarian municipalism, and social ecology when the post is about communes
+or assemblies; democratic confederalism when the post is about councils,
+cooperatives, or women's institutions. Contract and assembly both belong.
+Bare "mutual aid" without one of those institutions is out of scope. """
+    + BIOLOGICAL_EXCLUSION
+    + """ is out of scope.
 
 Return JSON only: {"expected": true|false, "rationale": "<short reason>",
 "confidence": "high"|"medium"|"low"}.
 
-Keep (expected=true) when the post is about or celebrating mutualism /
-left-market mutualist economics, from a clearly aligned org/voice, or
-announces a mutualist event/venue — even if the text never says "mutualism".
-Prefer constructive tone and substance over boilerplate slogans. Defiance
-and non-violent resistance can keep; hate or violence celebration must drop.
+Keep (expected=true) when the post is about or celebrating an in-scope
+institution, from a clearly aligned org/voice, or announces such an event —
+including argument between contract and assembly. Prefer constructive tone
+and substance over boilerplate slogans. Defiance and non-violent resistance
+can keep.
 
 Drop (expected=false) for:
 - Anarcho-capitalism / right-"libertarian" market fundamentalism
 - Chaos / entertainment "anarchy" (Sons of Anarchy, Anarchy Online, sports riots)
-- Crypto/Web3/DeFi "decentralized" jargon without mutualist values
-- Bare ambiguous left or general-anarchist terms with no mutualist signal
-- Sibling anarchist tendencies without mutualist economics
-- Biological mutualism (symbiosis between species)
+- Crypto/Web3/DeFi "decentralized" jargon without institutional values
+- Bare ambiguous left or general-anarchist terms with no institutional signal
+- Syndicalist or union cheerleading with no durable institution
+- State-capacity politics and reforms whose agent is the nation-state
+- Academic social-ecological systems, sectarian communalism, and EU confederalism
+- Insurrection, armed-struggle footage, martyrdom, and party war communiqués
+- """
+    + BIOLOGICAL_EXCLUSION
+    + """
 - Personal money-asks (Venmo/CashApp/GoFundMe/PayPal-me, "I'm short on rent",
-  individual "mutual aid request") even when wrapped in mutualist language
-- Hate speech or celebration / advocacy of violence
+  individual "mutual aid request") even when wrapped in institutional language
+- Hate speech or offensive use of violence
 
 Prefer precision on false friends and solicits. If unsure, set confidence to
 low and lean drop for bare slogans or personal fundraising; lean keep only
-when author/venue strongly implies mutualism without an extractive ask.
+when the institution is clear and the post has no extractive ask.
 """
+)
 
 
 def resolve_api_defaults(
