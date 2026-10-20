@@ -5,7 +5,7 @@ Living backlog for the mutualist Bluesky feed.
 ## Product goals
 
 - **Precision:** Keep out ancap / chaos / speculative-crypto false friends,
-  revolutionary coercion, empty scenetalk, and personal fundraising wrapped as
+  offensive violence, empty scenetalk, and personal fundraising wrapped as
   “mutual aid.”
 - **Recall:** Surface inspiring **proto-anarchist** / decentralized-leftist
   content — including authors who never say “anarchist” — plus allowlisted
@@ -13,8 +13,8 @@ Living backlog for the mutualist Bluesky feed.
 - **Content filter:** The Perplexity decider keep/rejects every regex candidate.
   A soft prior is three decider keeps and no rejections in 30 days.
 - **Tone:** Prefer constructive, respectable, high-wow posts. Governance is to
-  be spread out, humanized, and voluntarized — not abolished as a slogan, and
-  not replaced by state-capacity politics.
+  be spread out and humanized. Contract and assembly both count. State-capacity
+  politics stays out.
 
 ## Active roadmap — proto-anarchist reclaim
 
@@ -37,8 +37,8 @@ Implementation order:
 ## P0 — Ship / harden v1
 
 ### B-001 — Grow allowlist of aligned orgs
-- Curate publishers, IWW branches, Food Not Bombs chapters, infoshops, mutual-aid
-  networks. Screen with `scripts/screen_allowlist_candidates.py`.
+- Curate publishers and organizers of mutual credit, cooperatives, land trusts,
+  assemblies, and similar institutions. Screen with `scripts/screen_allowlist_candidates.py`.
 - Keep DIDs in sync via `scripts/resolve_allowlist_dids.py`.
 - Roadmap expansion: [#13](https://github.com/chriscarrollsmith/mutualist-bluesky-feed/issues/13).
 

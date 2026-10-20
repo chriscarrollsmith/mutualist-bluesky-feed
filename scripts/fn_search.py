@@ -11,7 +11,7 @@ Examples:
     uv run python scripts/fn_search.py summary
     uv run python scripts/fn_search.py plan
     uv run python scripts/fn_search.py record \\
-      --query "time bank" --family practice \\
+      --query "tool library" --family practice \\
       --hits 4 --false-negatives 1 \\
       --false-negative-id at://did:plc:example/app.bsky.feed.post/abc
     uv run python scripts/fn_search.py record \\

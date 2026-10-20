@@ -153,6 +153,45 @@ def test_mutual_aid_with_mutualist_economics_keeps() -> None:
     assert result.matched is True
 
 
+def test_bookchin_and_institutions_keep() -> None:
+    municipal = match_post(
+        "Bookchin's libertarian municipalism treats the city assembly as government."
+    )
+    assert municipal.matched is True
+    assert municipal.reason == 'strong_positive'
+
+    rojava = match_post("The Rojava commune runs a bakery cooperative and a women's council.")
+    assert rojava.matched is True
+    assert rojava.reason.startswith('ambiguous_with_context:')
+
+    critique = match_post('Bookchin rejected armed struggle in favor of the municipal assembly.')
+    assert critique.matched is True
+    assert critique.reason == 'strong_positive_over_negative'
+
+
+def test_institution_collisions_and_offensive_violence_drop() -> None:
+    academic = match_post('Social ecology is an interesting academic field.')
+    assert academic.matched is False
+
+    systems = match_post(
+        'Social-ecological systems research shows how fisheries respond to climate stress.'
+    )
+    assert systems.matched is False
+
+    sectarian = match_post('Communalism is tearing the election apart along religious lines.')
+    assert sectarian.matched is False
+
+    brussels = match_post('EU confederalism is the debate over sovereignty in Brussels.')
+    assert brussels.matched is False
+
+    war = match_post('Rojava forces launched an offensive across the river last night.')
+    assert war.matched is False
+
+    martyrs = match_post('Democratic confederalism honors the martyrs of the offensive.')
+    assert martyrs.matched is False
+    assert martyrs.reason == 'hard_negative'
+
+
 def test_ambiguous_co_op_stays_on_the_regex_floor() -> None:
     from server.decider import FakeDecider
 

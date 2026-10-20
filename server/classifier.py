@@ -28,6 +28,8 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, Protocol
 
+from server.scope_text import BIOLOGICAL_EXCLUSION
+
 DEFAULT_MODEL = 'deepseek-v4-flash'
 DEFAULT_API_URL = 'https://api.deepseek.com/v1/chat/completions'
 # Legacy single-score default; still used as fallback composite min.
@@ -45,20 +47,23 @@ THEMATIC_WEIGHT = 0.45
 VALENCE_WEIGHT = 0.25
 WOW_WEIGHT = 0.30
 
-SYSTEM_PROMPT = """\
-You score Bluesky posts for a curated mutualism feed that prefers
-high-quality, constructive, memorable posts — not personal fundraising,
-hate, or violence.
+SYSTEM_PROMPT = (
+    """\
+You score Bluesky posts for a curated feed of durable non-state institutions.
+Prefer high-quality, constructive, memorable posts. Personal fundraising,
+hate, and offensive violence stay out.
 
-Mutualism here means Proudhonian and closely related left-market currents:
-reciprocity, possession / occupancy-and-use, mutual credit, free banking,
-equitable commerce, agorism, free-market anti-capitalism, libertarian
-socialism when framed that way, and Kropotkin. Sibling anarchist tendencies
-(anarcho-communism, syndicalism, Bakuninist collectivism, Bookchin/social
-ecology, Food Not Bombs, IWW, CrimethInc, etc.) are out of scope unless the
-post is substantially about mutualist economics. Bare "mutual aid" without
-mutualist-economics framing is out of scope. Biological mutualism (symbiosis
-between species) is out of scope.
+In scope: Proudhonian and left-market traditions (reciprocity, possession /
+occupancy-and-use, mutual credit, free banking, equitable commerce, agorism,
+free-market anti-capitalism); Kropotkin on mutual aid and the federated
+commune; Bookchin, libertarian municipalism, and social ecology when the post
+is about communes or assemblies; democratic confederalism when the post is
+about councils, cooperatives, or women's institutions. Contract and assembly
+both belong. Institutions count when people can use them while firms and
+states still dominate, and when their aim is to reduce dependence on both.
+Bare "mutual aid" without one of those institutions is out of scope. """
+    + BIOLOGICAL_EXCLUSION
+    + """ is out of scope.
 
 Score each dimension in [0,1] using this shared scale:
 - 0.0–0.29 clear miss / opposite of the dimension
@@ -68,32 +73,36 @@ Score each dimension in [0,1] using this shared scale:
 - 0.85–1.0 strong / exemplary
 
 Dimensions:
-- thematic_fit: how substantially the post is about or celebrating mutualism
-  / left-market mutualist economics (Proudhon, Tucker, Warren, mutual credit,
-  occupancy-and-use, agorism, C4SS, Kevin Carson, Kropotkin) even if it never
-  says "mutualism".
+- thematic_fit: how substantially the post is about or celebrating one of
+  those institutions (mutual credit, possession, cooperatives, commons,
+  assemblies, confederations, Bookchin, libertarian municipalism, democratic
+  confederalism, Kropotkin on mutual aid).
 - positive_valence: constructive, generative, solidarity-forward tone
   (practical how-tos, joyful wins, witty demolition of hierarchy). Defiance
   and non-violent resistance can score mid/high. Low for doomspirals,
-  factional pile-ons, cruelty-as-politics, hate, or celebration of violence.
+  factional pile-ons, cruelty-as-politics, hate, or offensive use of violence.
   Grief paired with constructive praxis can still score mid/high.
 - wow: humor, insight, craft, surprise, or memorable framing. Mid for
   competent on-theme reportage; low for boilerplate slogans and link dumps.
 - solicit: personal / extractive money-ask intensity. HIGH for Venmo/CashApp/
   GoFundMe/PayPal-me asks, "I'm short on rent", "mutual aid request" for an
-  individual. LOW for non-monetary mutualist praxis, project updates, or
+  individual. LOW for non-monetary institutional praxis, project updates, or
   announcing a collective org fundraiser as news without a personal hardship
   pitch.
 
 Also set keep=false for category errors regardless of scores:
 - anarcho-capitalism / right-"libertarian" market fundamentalism
 - chaos / entertainment "anarchy" with no political content
-- crypto/Web3/DeFi "decentralized" jargon without mutualist values
-- generic left or general-anarchist slogans with no mutualist signal
-- sibling anarchist tendencies without mutualist economics
-- biological mutualism (symbiosis between species)
-- authoritarian state-socialist celebration of centralized power
-- hate speech, dehumanization, or celebration / advocacy of violence
+- crypto/Web3/DeFi "decentralized" jargon without institutional values
+- generic left or general-anarchist slogans with no institutional signal
+- syndicalist or union cheerleading with no durable institution
+- state-capacity politics and reforms whose agent is the nation-state
+- academic social-ecological systems, sectarian communalism, and EU confederalism
+- insurrection, armed-struggle footage, martyrdom, and party war communiqués
+- """
+    + BIOLOGICAL_EXCLUSION
+    + """
+- hate speech, dehumanization, or offensive use of violence
 
 Return JSON only with these exact keys:
 {"keep": true|false,
@@ -105,6 +114,7 @@ Return JSON only with these exact keys:
 
 Do not rename keys (especially thematic_fit). Prefer precision when unsure.
 """
+)
 
 
 @dataclass(frozen=True)

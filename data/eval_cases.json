@@ -573,5 +573,155 @@
     "regression": true,
     "author_handle": "anarchist-ai.bsky.social",
     "author_did": "did:plc:4gtw7ntkwjftnhr5vjw5aojv"
+  },
+  {
+    "id": "tp-bookchin-municipalism",
+    "text": "Bookchin's libertarian municipalism treats the city assembly as a way to govern without the nation-state.",
+    "expected": true,
+    "note": "libertarian municipalism",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "tp-democratic-confederalism",
+    "text": "Democratic confederalism here means neighborhood councils and women's cooperatives, not a party state.",
+    "expected": true,
+    "note": "democratic confederalism institutions",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true
+  },
+  {
+    "id": "tp-worker-cooperative",
+    "text": "Our worker cooperative bought the building so the firm no longer sets the terms.",
+    "expected": true,
+    "note": "worker cooperative as institution",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "tp-community-land-trust",
+    "text": "The community land trust holds the land so occupancy is not a landlord's title.",
+    "expected": true,
+    "note": "community land trust",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true
+  },
+  {
+    "id": "tp-time-bank",
+    "text": "The time bank lets neighbors swap hours without a commercial bank.",
+    "expected": true,
+    "note": "time bank",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "tp-rojava-commune",
+    "text": "The Rojava commune runs a bakery cooperative and a women's council.",
+    "expected": true,
+    "note": "Rojava institutions, not war footage",
+    "signal": "text",
+    "bucket": "ambiguous_with_context",
+    "split": "holdout",
+    "regression": true
+  },
+  {
+    "id": "tp-shop-committee-coop",
+    "text": "The shop committee became a worker cooperative and left the parent firm.",
+    "expected": true,
+    "note": "shop committee as a competing institution",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "tp-bookchin-rejects-armed-struggle",
+    "text": "Bookchin rejected armed struggle in favor of the municipal assembly.",
+    "expected": true,
+    "note": "critique of armed struggle stays",
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true
+  },
+  {
+    "id": "fp-social-ecology-bare",
+    "text": "Social ecology is an interesting academic field.",
+    "expected": false,
+    "note": "social ecology without an institution",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "fp-social-ecological-systems",
+    "text": "Social-ecological systems research shows how fisheries respond to climate stress.",
+    "expected": false,
+    "note": "academic social-ecological systems",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "holdout",
+    "regression": true
+  },
+  {
+    "id": "fp-sectarian-communalism",
+    "text": "Communalism is tearing the election apart along religious lines.",
+    "expected": false,
+    "note": "sectarian communalism",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "fp-eu-confederalism",
+    "text": "EU confederalism is the debate over sovereignty in Brussels.",
+    "expected": false,
+    "note": "EU confederalism",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "holdout",
+    "regression": true
+  },
+  {
+    "id": "fp-lenin-dual-power",
+    "text": "Lenin's dual power meant the soviets seizing the state.",
+    "expected": false,
+    "note": "Leninist dual power",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "fp-rojava-martyrs",
+    "text": "Democratic confederalism honors the martyrs of the offensive.",
+    "expected": false,
+    "note": "martyrdom blocks an otherwise strong phrase",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "dev",
+    "regression": true
+  },
+  {
+    "id": "fp-rojava-offensive",
+    "text": "Rojava forces launched an offensive across the river last night.",
+    "expected": false,
+    "note": "Rojava war footage without an institution",
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "holdout",
+    "regression": true
   }
 ]

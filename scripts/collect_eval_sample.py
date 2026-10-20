@@ -52,6 +52,10 @@ NEAR_MISS_QUERIES = (
     'anarcho-syndicalism',
     'Food Not Bombs',
     'CrimethInc',
+    'communalism election',
+    'social-ecological systems',
+    'EU confederalism',
+    'Rojava martyrs',
 )
 
 EVENT_QUERIES = (
