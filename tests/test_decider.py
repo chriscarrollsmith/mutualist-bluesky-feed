@@ -7,6 +7,7 @@ from collections.abc import Sequence
 import pytest
 from server.decider import (
     _KEEP_QUESTION,
+    PROMPT_VERSION,
     Decision,
     FakeDecider,
     OpenRouterDecider,
@@ -21,6 +22,14 @@ def test_prompt_excludes_biological_mutualism() -> None:
     assert note in keep['instructions'].lower()
     assert 'out of scope' in keep['instructions'].lower()
     assert note in keep['criteria']['false'].lower()
+
+
+def test_prompt_rejects_social_club_invites() -> None:
+    keep = _KEEP_QUESTION['keep']
+    assert PROMPT_VERSION == 'institution-keep-v4'
+    assert 'fandom, roleplay, and adult social-club invites' in keep['instructions'].lower()
+    assert 'vrchat' in keep['criteria']['false'].lower()
+    assert 'roleplay packs' in keep['criteria']['false'].lower()
 
 
 def test_decision_from_payload_thresholds_noul() -> None:
