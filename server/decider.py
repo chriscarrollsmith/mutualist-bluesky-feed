@@ -31,7 +31,7 @@ DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
-PROMPT_VERSION = 'institution-keep-v4'
+PROMPT_VERSION = 'institution-keep-v5'
 
 KEEP_PREFIX = 'decision_keep:'
 REJECT_PREFIX = 'decision_reject:'
@@ -56,7 +56,9 @@ _KEEP_QUESTION: dict[str, Any] = {
             "when the post is about councils, cooperatives, or women's institutions. "
             'Contract and assembly both belong. ' + BIOLOGICAL_EXCLUSION + ' is out of scope. '
             'Fandom, roleplay, and adult social-club invites are out of scope even '
-            'when they name an in-scope ideology.'
+            'when they name an in-scope ideology. '
+            'Engels-style calls to socialize all housing are out of scope, including '
+            'when Proudhon is named only to dismiss tenant ownership.'
         ),
         'criteria': {
             'true': (
@@ -70,7 +72,9 @@ _KEEP_QUESTION: dict[str, Any] = {
                 'or reactionary framing, scare coverage of socialism or anarchism, '
                 'anarcho-capitalism, chaos or entertainment uses of anarchy, crypto '
                 'or Web3 jargon, bare mutual aid, personal fundraising, charity, '
-                'state-capacity or nation-state reform, academic social-ecological '
+                'state-capacity or nation-state reform, Engels-style calls to '
+                'socialize all housing (including when Proudhon is named only to '
+                'dismiss tenant ownership), academic social-ecological '
                 'systems, sectarian communalism, EU confederalism, fandom, roleplay, '
                 'or adult social-club invites (VRChat, roleplay packs, shrine servers), '
                 'syndicalist or '

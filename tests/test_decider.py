@@ -16,6 +16,15 @@ from server.decider import (
 from server.matcher import match_post
 
 
+def test_prompt_rejects_socialize_all_housing_foil() -> None:
+    keep = _KEEP_QUESTION['keep']
+    note = 'socialize all housing'
+    assert note in keep['instructions'].lower()
+    assert 'out of scope' in keep['instructions'].lower()
+    assert note in keep['criteria']['false'].lower()
+    assert 'tenant ownership' in keep['criteria']['false'].lower()
+
+
 def test_prompt_excludes_biological_mutualism() -> None:
     keep = _KEEP_QUESTION['keep']
     note = 'biological mutualism (symbiosis between species)'
@@ -26,7 +35,7 @@ def test_prompt_excludes_biological_mutualism() -> None:
 
 def test_prompt_rejects_social_club_invites() -> None:
     keep = _KEEP_QUESTION['keep']
-    assert PROMPT_VERSION == 'institution-keep-v4'
+    assert PROMPT_VERSION == 'institution-keep-v5'
     assert 'fandom, roleplay, and adult social-club invites' in keep['instructions'].lower()
     assert 'vrchat' in keep['criteria']['false'].lower()
     assert 'roleplay packs' in keep['criteria']['false'].lower()

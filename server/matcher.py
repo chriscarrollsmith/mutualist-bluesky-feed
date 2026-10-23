@@ -17,6 +17,9 @@ Rejects common false positives:
 - Fandom, roleplay, and adult social-club invites that only name an ideology
 - Offensive violence, martyrdom, and armed-struggle celebration
   (defiance and non-violent resistance may still keep)
+- State-socialist calls to socialize all housing, even when Proudhon is
+  named only as the foil (occupancy-and-use, possession, mutual credit,
+  and Kropotkin on the federated commune still keep)
 
 Recall without keywords comes from author allowlists and from soft author
 priors. A prior is three decision-model keeps and no rejections in the window;
@@ -315,6 +318,27 @@ _HARD_NEGATIVE = re.compile(
       | tiny\s+sweethearts
       | communal\s+shrine
       | \bgoddess(?:['’]s)?\s+pack\b
+    )
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+# Engels-style housing slogan. Link cards often name Proudhon in the blurb
+# while the title argues the opposite thesis. A mutualist or Kropotkin frame
+# may quote the slogan and still keep.
+_SOCIALIZE_ALL_HOUSING = re.compile(
+    r'\bsociali[sz]e\s+all\s+housing\b',
+    re.IGNORECASE,
+)
+_SOCIALIZE_ALL_HOUSING_RESCUE = re.compile(
+    r"""
+    (?:
+        occupancy[\s-]and[\s-]use
+      | possession\s+(?:not|vs\.?|versus)\s+property
+      | property\s+is\s+theft
+      | \bkropotkin\b
+      | federated\s+commune
+      | mutual\s+credit
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -697,6 +721,11 @@ def match_post(
 
     if not haystack:
         return MatchResult(False, 'empty')
+
+    if _SOCIALIZE_ALL_HOUSING.search(haystack) and not _SOCIALIZE_ALL_HOUSING_RESCUE.search(
+        haystack
+    ):
+        return MatchResult(False, 'hard_negative')
 
     entity = entities.lookup(haystack)
     strong_hit = _STRONG_POSITIVE.search(haystack)

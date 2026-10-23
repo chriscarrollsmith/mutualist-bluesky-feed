@@ -725,6 +725,17 @@
     "regression": true
   },
   {
+    "id": "fp-2026-10-21-socialize-all-housing",
+    "text": "Socialize All Housing In 1872, the German socialist newspaper Der Volksstaat ran a series of articles on housing. The breakneck growth of industrial cities had brought overcrowding, squalor, and soaring rents for workers. Their author, Arthur Mülberger, drawing on the ideas of the French anarchist Pierre-Joseph Proudhon, offered a simple so",
+    "expected": false,
+    "signal": "text",
+    "bucket": "skyfeed_fp",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "jacobin.com.web.brid.gy",
+    "note": "Served 2026-10-21. Jacobin card title is the state-socialist housing thesis; the clipped blurb names Proudhon only as Mülberger's source."
+  },
+  {
     "id": "fp-2026-10-22-communal-cult-discord",
     "text": "This server is for people who want to build a better world. Our political foundation is communalism, libertarian municipalism, and democratic confederalism. We are here to develop the understanding, solidarity, and organization needed for people to govern their lives together.",
     "expected": false,

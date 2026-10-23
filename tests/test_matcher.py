@@ -189,6 +189,25 @@ def test_social_club_invite_does_not_keep_ideology_namedrop() -> None:
     assert keep.reason == 'strong_positive'
 
 
+def test_socialize_all_housing_drops_proudhon_foil() -> None:
+    jacobin = match_post(
+        'Socialize All Housing. Arthur Mülberger, drawing on Pierre-Joseph Proudhon, '
+        'offered tenants a path to become owners.'
+    )
+    assert jacobin.matched is False
+    assert jacobin.reason == 'hard_negative'
+
+    rebuttal = match_post(
+        'Proudhon rejected the call to socialize all housing in favor of occupancy-and-use.'
+    )
+    assert rebuttal.matched is True
+
+    commune = match_post(
+        'Kropotkin argued the federated commune should socialize all housing as common heritage.'
+    )
+    assert commune.matched is True
+
+
 def test_institution_collisions_and_offensive_violence_drop() -> None:
     academic = match_post('Social ecology is an interesting academic field.')
     assert academic.matched is False
