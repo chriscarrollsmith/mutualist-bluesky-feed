@@ -17,6 +17,7 @@ from server.fn_search import (
     SearchLogEntry,
     SearchStrategy,
     explore_slot_count,
+    is_hashtag_strategy,
     load_catalog,
     load_log,
     normalized_entropy,
@@ -75,7 +76,9 @@ def test_checked_in_catalog_excludes_backfill_presets() -> None:
     catalog = load_catalog()
     assert catalog
     families = {item.family for item in catalog}
-    assert families >= {'bare_term', 'practice', 'figure', 'current', 'event_phrase', 'hashtag'}
+    assert families >= {'bare_term', 'practice', 'figure', 'current', 'event_phrase'}
+    assert 'hashtag' not in families
+    assert all(not is_hashtag_strategy(item.query, item.family) for item in catalog)
     assert all(item.key not in HIGH_PRECISION_QUERIES for item in catalog)
     catalog_by_key = {item.key: item for item in catalog}
     for entry in load_log():
@@ -92,6 +95,36 @@ def test_catalog_queries_are_not_already_strong_keeps() -> None:
         assert result.matched is False, (
             f'{strategy.query!r} ({strategy.family}) already keeps: {result.reason}'
         )
+
+
+def test_catalog_rejects_hashtag_family(tmp_path: Path) -> None:
+    path = tmp_path / 'strategies.json'
+    path.write_text(
+        json.dumps(
+            {
+                'version': 1,
+                'families': [{'id': 'hashtag', 'queries': ['#mutualaid']}],
+            }
+        ),
+        encoding='utf-8',
+    )
+    with pytest.raises(ValueError, match='not a search family'):
+        load_catalog(path)
+
+
+def test_catalog_rejects_leading_hash_query(tmp_path: Path) -> None:
+    path = tmp_path / 'strategies.json'
+    path.write_text(
+        json.dumps(
+            {
+                'version': 1,
+                'families': [{'id': 'bare_term', 'queries': ['#anarchism']}],
+            }
+        ),
+        encoding='utf-8',
+    )
+    with pytest.raises(ValueError, match='starts with #'):
+        load_catalog(path)
 
 
 def test_catalog_rejects_high_precision_preset(tmp_path: Path) -> None:
@@ -210,6 +243,40 @@ def test_exploit_prefers_older_equal_yield_over_a_recent_repeat() -> None:
     assert older_wins > 140
 
 
+def test_hashtag_history_is_not_exploited() -> None:
+    log = [
+        _entry(
+            '#mutualaid',
+            'hashtag',
+            false_negatives=4,
+            hits=4,
+            used_at=NOW - timedelta(days=5),
+        ),
+        _entry(
+            'anarchism',
+            'bare_term',
+            false_negatives=1,
+            hits=1,
+            used_at=NOW - timedelta(days=5),
+        ),
+    ]
+    plan = plan_daily_queries(CATALOG, log, slate_size=4, rng=Random(0), now=NOW)
+    assert any(item.query == 'anarchism' and item.role == 'exploit' for item in plan)
+    assert all(not is_hashtag_strategy(item.query, item.family) for item in plan)
+
+
+def test_checked_in_log_does_not_plan_hashtags() -> None:
+    plan = plan_daily_queries(
+        load_catalog(),
+        load_log(),
+        slate_size=8,
+        rng=Random(20261023),
+        now=datetime(2026, 10, 23, 12, 0, tzinfo=UTC),
+    )
+    assert len(plan) == 8
+    assert all(not is_hashtag_strategy(item.query, item.family) for item in plan)
+
+
 def test_logged_query_outside_the_catalog_can_be_exploited() -> None:
     log = [
         _entry(
@@ -308,6 +375,27 @@ def test_record_keeps_catalog_casing_and_refuses_a_different_family(tmp_path: Pa
             false_negatives=0,
             used_at=NOW,
         )
+
+
+def test_record_refuses_hashtag_query(tmp_path: Path) -> None:
+    catalog_path = tmp_path / 'strategies.json'
+    catalog_path.write_text(
+        json.dumps({'version': 1, 'families': [{'id': 'bare_term', 'queries': ['anarchism']}]})
+        + '\n',
+        encoding='utf-8',
+    )
+    with pytest.raises(ValueError, match='not a search family'):
+        record_search(
+            log_path=tmp_path / 'log.jsonl',
+            catalog_path=catalog_path,
+            query='#mutualaid',
+            family='hashtag',
+            status=STATUS_BLOCKED,
+            hits=0,
+            false_negatives=0,
+            used_at=NOW,
+        )
+    assert not (tmp_path / 'log.jsonl').exists()
 
 
 def test_record_refuses_high_precision_preset(tmp_path: Path) -> None:

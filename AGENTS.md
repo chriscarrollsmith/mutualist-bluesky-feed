@@ -52,7 +52,9 @@ command reference. Dependencies are managed with [uv](https://docs.astral.sh/uv/
   `uv run python scripts/resolve_allowlist_dids.py --handles data/blocklist_handles.txt --output data/blocklist_dids.txt`.
 - The false-negative planner never calls Bluesky. `searchPosts` often returns
   403 from a datacenter IP; record the planned query with `--status blocked`
-  and do not invent a zero. A miss is a post that belongs in the feed and that
+  and do not invent a zero. Do not search or record a hashtag. `searchPosts`
+  returns HTTP 400 for a query that starts with `#`, and the strategy catalog
+  has no hashtag family. A miss is a post that belongs in the feed and that
   the indexer would drop (`match_post` after the reply, archive, blocklist, and
   mute checks). Replies are not misses while `IGNORE_REPLY_POSTS` is set.
   Commit `data/fn_search_strategies.json`, `data/fn_search_log.jsonl`, the eval

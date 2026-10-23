@@ -83,24 +83,6 @@
         "free school",
         "Really Really Free"
       ]
-    },
-    {
-      "id": "hashtag",
-      "queries": [
-        "#mutualaid",
-        "#anarchism",
-        "#anarchy",
-        "#anarchist",
-        "#directaction",
-        "#coop",
-        "#cooperative",
-        "#leftlibertarian",
-        "#libertariansocialism",
-        "#freedmarket",
-        "#countereconomics",
-        "#mutualbanking",
-        "#usufruct"
-      ]
     }
   ]
 }

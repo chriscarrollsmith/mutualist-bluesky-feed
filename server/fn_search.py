@@ -162,6 +162,25 @@ def _reject_high_precision(query: str) -> None:
         )
 
 
+def is_hashtag_strategy(query: str, family: str = '') -> bool:
+    """AppView searchPosts returns HTTP 400 for a query that starts with #."""
+    return family.strip().casefold() == 'hashtag' or query.lstrip().startswith('#')
+
+
+def _reject_hashtag(query: str, family: str = '') -> None:
+    if not is_hashtag_strategy(query, family):
+        return
+    if family.strip().casefold() == 'hashtag':
+        raise ValueError(
+            'hashtag is not a search family. AppView searchPosts returns '
+            'HTTP 400 InvalidRequest for a query that starts with #.'
+        )
+    raise ValueError(
+        f'{query!r} is not an AppView searchPosts strategy. '
+        'A query that starts with # returns HTTP 400 InvalidRequest.'
+    )
+
+
 def load_catalog(path: Path | None = None) -> tuple[SearchStrategy, ...]:
     catalog_path = path or DEFAULT_CATALOG_PATH
     payload = json.loads(catalog_path.read_text(encoding='utf-8'))
@@ -175,6 +194,7 @@ def load_catalog(path: Path | None = None) -> tuple[SearchStrategy, ...]:
         family_id = str(family.get('id') or '').strip()
         if not family_id:
             raise ValueError(f'{catalog_path} contains a family with no id')
+        _reject_hashtag('', family_id)
         queries = family.get('queries')
         if not isinstance(queries, list) or not queries:
             raise ValueError(f'family {family_id!r} has no queries')
@@ -183,6 +203,7 @@ def load_catalog(path: Path | None = None) -> tuple[SearchStrategy, ...]:
             if not text:
                 raise ValueError(f'family {family_id!r} contains an empty query')
             _reject_high_precision(text)
+            _reject_hashtag(text, family_id)
             key = normalize_query(text)
             if key in seen:
                 raise ValueError(f'duplicate strategy query {text!r}')
@@ -384,7 +405,9 @@ def _pick_exploit(
     candidates = [
         item
         for item in stats_by_key.values()
-        if item.key not in chosen and item.key not in HIGH_PRECISION_QUERIES
+        if item.key not in chosen
+        and item.key not in HIGH_PRECISION_QUERIES
+        and not is_hashtag_strategy(item.query, item.family)
     ]
     weights = [_exploit_weight(item, now=now) for item in candidates]
     picked = _weighted_sample(rng, candidates, weights, count)
@@ -415,7 +438,11 @@ def _pick_explore(
     counts: Counter[str],
     chosen: set[str],
 ) -> list[PlannedQuery]:
-    remaining = [item for item in catalog if item.key not in chosen]
+    remaining = [
+        item
+        for item in catalog
+        if item.key not in chosen and not is_hashtag_strategy(item.query, item.family)
+    ]
     picked: list[PlannedQuery] = []
     for _ in range(count):
         by_family: dict[str, list[SearchStrategy]] = {}
@@ -557,6 +584,7 @@ def remember_strategy(catalog_path: Path, strategy: SearchStrategy) -> bool:
     Returns True when the file changed.
     """
     _reject_high_precision(strategy.query)
+    _reject_hashtag(strategy.query, strategy.family)
     payload = _catalog_payload(catalog_path)
     families = payload.get('families')
     if not isinstance(families, list):
@@ -605,6 +633,7 @@ def record_search(
     if not text or not family_id:
         raise ValueError('query and family are required')
     _reject_high_precision(text)
+    _reject_hashtag(text, family_id)
 
     catalog = load_catalog(catalog_path)
     known = next((item for item in catalog if item.key == normalize_query(text)), None)
