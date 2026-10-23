@@ -169,6 +169,26 @@ def test_bookchin_and_institutions_keep() -> None:
     assert critique.reason == 'strong_positive_over_negative'
 
 
+def test_social_club_invite_does_not_keep_ideology_namedrop() -> None:
+    drop = match_post(
+        'Our political foundation is communalism, libertarian municipalism, '
+        'and democratic confederalism.',
+        alt_text=(
+            'Come join your wolf goddess’s pack. This 18+ community hangs out '
+            'in VRChat. Join the Discord server — a little communal shrine.'
+        ),
+    )
+    assert drop.matched is False
+    assert drop.reason == 'hard_negative'
+
+    keep = match_post(
+        "Bookchin's libertarian municipalism treats the city assembly as a way "
+        'to govern without the nation-state.'
+    )
+    assert keep.matched is True
+    assert keep.reason == 'strong_positive'
+
+
 def test_socialize_all_housing_drops_proudhon_foil() -> None:
     jacobin = match_post(
         'Socialize All Housing. Arthur Mülberger, drawing on Pierre-Joseph Proudhon, '

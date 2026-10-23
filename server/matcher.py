@@ -14,6 +14,7 @@ Rejects common false positives:
 - Bare ambiguous terms without institutional context
 - Bare mutual aid and charity
 - Personal fundraising / extractive money asks
+- Fandom, roleplay, and adult social-club invites that only name an ideology
 - Offensive violence, martyrdom, and armed-struggle celebration
   (defiance and non-violent resistance may still keep)
 - State-socialist calls to socialize all housing, even when Proudhon is
@@ -255,6 +256,10 @@ _INSTITUTION_CUE = re.compile(
 # "Free-market anarchism" is NOT a hard negative: left-wing market anarchists
 # use that phrase. Ancap is caught via Rothbard/Hoppe/Mises/voluntaryism/
 # property-rights anarchism / explicit ancap labels instead.
+#
+# VRChat, roleplay packs, and shrine invites are the same kind of collision:
+# an in-scope ideology name does not make a fandom or adult social club
+# into a commune, assembly, or cooperative.
 _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
     r"""
     (?:
@@ -272,6 +277,10 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | property[\s-]rights\s+anarch
       | \bmartyrs?\b
       | \bmartyrdom\b
+      | \bvrchat\b
+      | tiny\s+sweethearts
+      | communal\s+shrine
+      | \bgoddess(?:['’]s)?\s+pack\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -305,6 +314,10 @@ _HARD_NEGATIVE = re.compile(
       | armed\s+struggle
       | people'?s\s+war
       | \binsurrectionary\b
+      | \bvrchat\b
+      | tiny\s+sweethearts
+      | communal\s+shrine
+      | \bgoddess(?:['’]s)?\s+pack\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,

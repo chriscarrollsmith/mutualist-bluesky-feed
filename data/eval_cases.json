@@ -734,5 +734,17 @@
     "regression": true,
     "author_handle": "jacobin.com.web.brid.gy",
     "note": "Served 2026-10-21. Jacobin card title is the state-socialist housing thesis; the clipped blurb names Proudhon only as Mülberger's source."
+  },
+  {
+    "id": "fp-2026-10-22-communal-cult-discord",
+    "text": "This server is for people who want to build a better world. Our political foundation is communalism, libertarian municipalism, and democratic confederalism. We are here to develop the understanding, solidarity, and organization needed for people to govern their lives together.",
+    "expected": false,
+    "signal": "text",
+    "bucket": "precision_gate",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "lexithewulf.bsky.social",
+    "alt_text": "All my tiny sweethearts, come join your wolf goddess’s pack~ ♡ Communal Cult is my 18+, Black-owned, 2SLGBTQIA+ inclusive community! We’re openly progressive and communalist. Come make friends, find some VRChat company, and help us build a little den where we look after each other. Join the Communal Cult Discord Server! This is Lexi the Wulf’s little communal shrine, a shared den where the whole pack gathers.",
+    "note": "VRChat roleplay Discord name-drops libertarian municipalism and democratic confederalism"
   }
 ]
