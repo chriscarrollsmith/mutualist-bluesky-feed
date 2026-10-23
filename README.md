@@ -206,7 +206,9 @@ not call Bluesky. `searchPosts` is unauthenticated
 `since` 24 hours ago). Page with `cursor` when a query needs more than one page.
 The client already lives in `scripts/backfill_gap.py` as `iter_search_posts`.
 A datacenter IP often gets 403; record that attempt as blocked and do not invent
-a zero.
+a zero. A query that starts with `#` is not a strategy: `searchPosts` returns
+HTTP 400 `InvalidRequest`, so the catalog has no hashtag family. Leave the old
+blocked rows in the log and do not plan or record another one.
 
 Do not spend the day on the high-precision backfill presets (`mutualism`,
 `Proudhon`, and the rest of `DEFAULT_SEARCH_QUERIES` in `scripts/backfill_gap.py`).
@@ -228,7 +230,7 @@ stable. `--seed` and `--now` override it. The slate mixes:
   `0.25`.
 - **explore** — the least-used query from the least-used family in
   `data/fn_search_strategies.json`. Families are coarse recall hypotheses
-  (`bare_term`, `practice`, `figure`, `current`, `event_phrase`, `hashtag`),
+  (`bare_term`, `practice`, `figure`, `current`, `event_phrase`),
   because entropy is computed over families.
 
 With no completed miss yet, the whole slate is explore. After that,
