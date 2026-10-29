@@ -7,6 +7,9 @@ Jetstream-shaped event, and runs ``server.indexer.handle_event``.
 
 Does **not** touch ``SubscriptionState``. Safe to re-run (URI ``on_conflict_ignore``).
 
+Search paging follows a cursor only after a Bluesky session (``HANDLE`` /
+``PASSWORD``). Without one, each query keeps its first page and stops.
+
 Examples:
 
     # Dry-run the recent gap against a local DB copy
@@ -39,9 +42,17 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from server.allowlists import load_allowlist_dids  # noqa: E402
+from server.appview_search import (  # noqa: E402
+    DEFAULT_API_HOST,
+    DEFAULT_USER_AGENT,
+    UnauthenticatedCursorError,
+    appview_request,
+    create_session,
+    search_posts_params,
+    search_posts_url,
+)
 
-DEFAULT_API_HOST = 'https://api.bsky.app'
-USER_AGENT = 'mutualist-bluesky-feed-backfill/0.1 (+https://github.com/chriscarrollsmith/mutualist-bluesky-feed)'
+USER_AGENT = DEFAULT_USER_AGENT
 
 # High-precision mutualist queries for AppView search (latest sort).
 # Kept in sync with server.fn_search.HIGH_PRECISION_QUERIES. The daily
@@ -131,8 +142,13 @@ def api_url(host: str, xrpc: str, params: dict[str, Any]) -> str:
     return base + '?' + urllib.parse.urlencode(params)
 
 
-def default_fetcher(url: str, *, timeout: float = 30.0) -> JsonObject:
-    request = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+def default_fetcher(
+    url: str,
+    *,
+    timeout: float = 30.0,
+    access_token: str | None = None,
+) -> JsonObject:
+    request = appview_request(url, access_token=access_token, user_agent=USER_AGENT)
     try:
         with urllib.request.urlopen(request, timeout=timeout) as resp:
             return json.loads(resp.read().decode('utf-8'))
@@ -223,22 +239,24 @@ def iter_search_posts(
     fetcher: Fetcher,
     pause_s: float = 0.05,
     max_pages: int = 20,
+    access_token: str | None = None,
 ) -> Iterator[JsonObject]:
-    """Page searchPosts (latest) bounded by since/until query params + filter."""
+    """Page searchPosts (latest) bounded by since/until query params + filter.
+
+    Page 1 is unauthenticated. A later page is requested only when
+    ``access_token`` is set; otherwise ``UnauthenticatedCursorError`` is raised
+    after the posts already yielded.
+    """
     cursor: str | None = None
-    since_param = since.replace(tzinfo=UTC).isoformat().replace('+00:00', 'Z')
-    until_param = until.replace(tzinfo=UTC).isoformat().replace('+00:00', 'Z')
     for _ in range(max_pages):
-        params: dict[str, Any] = {
-            'q': query,
-            'limit': 100,
-            'sort': 'latest',
-            'since': since_param,
-            'until': until_param,
-        }
-        if cursor:
-            params['cursor'] = cursor
-        payload = fetcher(api_url(api_host, 'app.bsky.feed.searchPosts', params))
+        params = search_posts_params(
+            query,
+            since=since,
+            until=until,
+            cursor=cursor,
+            access_token=access_token,
+        )
+        payload = fetcher(search_posts_url(api_host, params))
         batch = extract_search_posts(payload)
         if not batch:
             break
@@ -365,6 +383,7 @@ def collect_posts(
     fetcher: Fetcher,
     search_queries: tuple[str, ...],
     actors: Iterable[str],
+    access_token: str | None = None,
 ) -> list[JsonObject]:
     by_uri: dict[str, JsonObject] = {}
 
@@ -393,11 +412,14 @@ def collect_posts(
                     until=until,
                     api_host=api_host,
                     fetcher=fetcher,
+                    access_token=access_token,
                 ):
                     uri = post.get('uri')
                     if isinstance(uri, str) and uri:
                         by_uri.setdefault(uri, post)
-            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            except UnauthenticatedCursorError as exc:
+                print(f'warn: {query!r}: {exc}', file=sys.stderr)
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, ValueError) as exc:
                 print(f'warn: search failed for {query!r}: {exc}', file=sys.stderr)
 
     return list(by_uri.values())
@@ -426,6 +448,30 @@ def dump_posts_jsonl(path: Path, posts: Iterable[JsonObject]) -> int:
             handle.write(json.dumps(post, ensure_ascii=False) + '\n')
             count += 1
     return count
+
+
+def session_access_token() -> str | None:
+    """Open a Bluesky session when HANDLE and PASSWORD are set.
+
+    Paging ``searchPosts`` requires the access token. Missing or rejected
+    credentials leave the token empty so the caller keeps page 1 only.
+    """
+    from dotenv import load_dotenv
+
+    load_dotenv(override=True)
+    handle = os.environ.get('HANDLE')
+    password = os.environ.get('PASSWORD')
+    if not handle or not password:
+        print('warn: HANDLE/PASSWORD unset; searchPosts will not page', file=sys.stderr)
+        return None
+    try:
+        return create_session(handle, password)
+    except urllib.error.HTTPError as exc:
+        print(
+            f'warn: createSession HTTP {exc.code}; searchPosts will not page',
+            file=sys.stderr,
+        )
+        return None
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -527,14 +573,22 @@ def main(argv: list[str] | None = None) -> int:
     else:
         if args.source in {'authors', 'both'}:
             print(f'allowlist actors: {len(actors)}', file=sys.stderr)
+        access_token = None
+        if args.source in {'search', 'both'}:
+            access_token = session_access_token()
+
+        def fetcher(url: str) -> JsonObject:
+            return default_fetcher(url, access_token=access_token)
+
         posts = collect_posts(
             source=args.source,
             since=since,
             until=until,
             api_host=args.api_host,
-            fetcher=default_fetcher,
+            fetcher=fetcher,
             search_queries=queries,
             actors=actors,
+            access_token=access_token,
         )
         print(f'candidates: {len(posts)}', file=sys.stderr)
         if args.dump_jsonl is not None:

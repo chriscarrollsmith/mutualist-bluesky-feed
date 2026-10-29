@@ -50,12 +50,16 @@ command reference. Dependencies are managed with [uv](https://docs.astral.sh/uv/
   recall.
 - After editing `data/blocklist_handles.txt`, refresh DIDs with
   `uv run python scripts/resolve_allowlist_dids.py --handles data/blocklist_handles.txt --output data/blocklist_dids.txt`.
-- The false-negative planner never calls Bluesky. `searchPosts` often returns
-  403 from a datacenter IP; record the planned query with `--status blocked`
-  and do not invent a zero. Do not search or record a hashtag. `searchPosts`
-  returns HTTP 400 for a query that starts with `#`, and the strategy catalog
-  has no hashtag family. A miss is a post that belongs in the feed and that
-  the indexer would drop (`match_post` after the reply, archive, blocklist, and
-  mute checks). Replies are not misses while `IGNORE_REPLY_POSTS` is set.
-  Commit `data/fn_search_strategies.json`, `data/fn_search_log.jsonl`, the eval
-  case, and the matcher change together.
+- `scripts/fn_search.py` `plan`, `summary`, and `record` never call Bluesky.
+  `search` fetches one unauthenticated `searchPosts` page per query and does
+  not send `cursor`. An unauthenticated cursor is HTTP 403 "Request forbidden
+  by administrative rules." Record that first page as `ok`. Use `--status
+  blocked` only when the first page itself fails, and do not invent a zero.
+  A leading `#` is stripped before the request (`searchPosts` returns HTTP 400
+  otherwise). Do not plan or record a hashtag family. Paging belongs to
+  `scripts/backfill_gap.py`, which opens a session (`HANDLE` / `PASSWORD`)
+  before it follows a cursor. A miss is a post that belongs in the feed and
+  that the indexer would drop (`match_post` after the reply, archive,
+  blocklist, and mute checks). Replies are not misses while
+  `IGNORE_REPLY_POSTS` is set. Commit `data/fn_search_strategies.json`,
+  `data/fn_search_log.jsonl`, the eval case, and the matcher change together.
