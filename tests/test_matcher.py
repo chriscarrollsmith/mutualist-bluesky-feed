@@ -189,6 +189,27 @@ def test_social_club_invite_does_not_keep_ideology_namedrop() -> None:
     assert keep.reason == 'strong_positive'
 
 
+def test_commercial_peoples_bank_earnings_drop() -> None:
+    earnings = match_post(
+        'Peoples Bank turns $1.4 million profit in third quarter https://ift.tt/x1GHMqB'
+    )
+    assert earnings.matched is False
+    assert earnings.reason == 'hard_negative'
+
+    dividends = match_post("People's Bank declared a dividend for shareholders this morning.")
+    assert dividends.matched is False
+    assert dividends.reason == 'hard_negative'
+
+    institution = match_post(
+        "Proudhon's People's Bank issued mutual credit, not a profit every quarter."
+    )
+    assert institution.matched is True
+
+    bare = match_post("The People's Bank is a mutual credit desk for the neighborhood.")
+    assert bare.matched is True
+    assert bare.reason == 'strong_positive'
+
+
 def test_socialize_all_housing_drops_proudhon_foil() -> None:
     jacobin = match_post(
         'Socialize All Housing. Arthur Mülberger, drawing on Pierre-Joseph Proudhon, '

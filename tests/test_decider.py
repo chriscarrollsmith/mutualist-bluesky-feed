@@ -33,9 +33,25 @@ def test_prompt_excludes_biological_mutualism() -> None:
     assert note in keep['criteria']['false'].lower()
 
 
+def test_prompt_rejects_commercial_peoples_bank_earnings() -> None:
+    keep = _KEEP_QUESTION['keep']
+    assert PROMPT_VERSION == 'institution-keep-v6'
+    instructions = keep['instructions'].lower()
+    false_criteria = keep['criteria']['false'].lower()
+    assert "people's bank" in instructions
+    assert 'peoples bank' in instructions
+    assert 'quarterly profit' in instructions
+    assert 'out of scope' in instructions
+    assert "proudhon's bank of the people" in instructions
+    assert 'mutual credit stay in scope' in instructions
+    assert "people's bank" in false_criteria
+    assert 'peoples bank' in false_criteria
+    assert 'not about mutual credit' in false_criteria
+
+
 def test_prompt_rejects_social_club_invites() -> None:
     keep = _KEEP_QUESTION['keep']
-    assert PROMPT_VERSION == 'institution-keep-v5'
+    assert PROMPT_VERSION == 'institution-keep-v6'
     assert 'fandom, roleplay, and adult social-club invites' in keep['instructions'].lower()
     assert 'vrchat' in keep['criteria']['false'].lower()
     assert 'roleplay packs' in keep['criteria']['false'].lower()
