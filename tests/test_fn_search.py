@@ -481,3 +481,121 @@ def test_cli_plan_and_blocked_record(tmp_path: Path, capsys: pytest.CaptureFixtu
     plan = json.loads(capsys.readouterr().out)
     assert len(plan['queries']) == 3
     assert {item['role'] for item in plan['queries']} == {'explore'}
+
+
+def test_cli_search_one_page_strips_hash_and_does_not_follow_cursor(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    seen: list[str] = []
+
+    def fake(url: str, **_kwargs: object) -> dict[str, object]:
+        seen.append(url)
+        return {
+            'posts': [
+                {
+                    'uri': 'at://did:plc:x/app.bsky.feed.post/1',
+                    'author': {'did': 'did:plc:x', 'handle': 'a.bsky.social'},
+                    'record': {
+                        'text': 'a free school',
+                        'createdAt': '2026-10-28T12:00:00Z',
+                        'reply': {'parent': {'uri': 'at://parent'}},
+                    },
+                }
+            ],
+            'cursor': 'next-page',
+        }
+
+    monkeypatch.setattr('scripts.fn_search.fetch_json', fake)
+    code = fn_search_main(
+        [
+            'search',
+            '--query',
+            '#free school',
+            '--since',
+            '2026-10-28T00:00:00Z',
+            '--until',
+            '2026-10-29T00:00:00Z',
+            '--limit',
+            '5',
+        ]
+    )
+    assert code == 0
+    assert len(seen) == 1
+    assert 'cursor=' not in seen[0]
+    assert 'q=free+school' in seen[0]
+    assert 'q=%23' not in seen[0]
+    captured = capsys.readouterr()
+    row = json.loads(captured.out)
+    assert row['query'] == '#free school'
+    assert row['query_sent'] == 'free school'
+    assert row['stripped_hash'] is True
+    assert row['status'] == 'ok'
+    assert row['auth'] == 'none'
+    assert row['pages'] == 1
+    assert row['fetched'] == 1
+    assert row['truncated'] is True
+    assert row['posts'][0]['reply'] is True
+    assert 'cursor' not in row
+
+
+def test_cli_search_records_first_page_http_error(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    import io
+    import urllib.error
+    from email.message import Message
+
+    def fake(url: str, **_kwargs: object) -> dict[str, object]:
+        raise urllib.error.HTTPError(
+            url,
+            403,
+            'Forbidden',
+            hdrs=Message(),
+            fp=io.BytesIO(b'Request forbidden by administrative rules.'),
+        )
+
+    monkeypatch.setattr('scripts.fn_search.fetch_json', fake)
+    code = fn_search_main(
+        [
+            'search',
+            '--query',
+            'free school',
+            '--since',
+            '2026-10-28T00:00:00Z',
+            '--until',
+            '2026-10-29T00:00:00Z',
+        ]
+    )
+    assert code == 0
+    row = json.loads(capsys.readouterr().out)
+    assert row['status'] == 'blocked'
+    assert row['http'] == 403
+    assert row['pages'] == 0
+    assert row['fetched'] == 0
+    assert 'administrative rules' in row['error']
+
+
+def test_cli_search_refuses_high_precision_before_fetch(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    def fake(_url: str, **_kwargs: object) -> dict[str, object]:
+        raise AssertionError('high-precision query must not be fetched')
+
+    monkeypatch.setattr('scripts.fn_search.fetch_json', fake)
+    query = next(item for item in sorted(HIGH_PRECISION_QUERIES) if not item.startswith('#'))
+    code = fn_search_main(
+        [
+            'search',
+            '--query',
+            query,
+            '--since',
+            '2026-10-28T00:00:00Z',
+            '--until',
+            '2026-10-29T00:00:00Z',
+        ]
+    )
+    assert code == 2
+    assert 'high-precision' in capsys.readouterr().err

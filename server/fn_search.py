@@ -14,8 +14,10 @@ posts the matcher already keeps. A day's slate mixes
   distribution over families does not collapse and untried queries stay in rotation
 
 False-negative counts are recorded after review. A blocked ``searchPosts`` call
-is logged so the attempt is not forgotten, and it is left out of the yield and
-entropy statistics.
+is a first page that did not return. It is logged so the attempt is not
+forgotten, and it is left out of the yield and entropy statistics. The daily
+fetch does not send ``cursor``; a cursor the AppView withholds is not a blocked
+search.
 """
 
 from __future__ import annotations

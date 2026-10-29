@@ -200,15 +200,34 @@ uv run python scripts/audit_indexed_feed.py --source feed --feed "$FEED_URI" --l
 ```
 
 Recall is measured by asking the public AppView `searchPosts` for posts the
-matcher would drop. `scripts/fn_search.py` is the planner and the log. It does
-not call Bluesky. `searchPosts` is unauthenticated
-(`GET https://api.bsky.app/xrpc/app.bsky.feed.searchPosts`, `sort=latest`,
-`since` 24 hours ago). Page with `cursor` when a query needs more than one page.
-The client already lives in `scripts/backfill_gap.py` as `iter_search_posts`.
-A datacenter IP often gets 403; record that attempt as blocked and do not invent
-a zero. A query that starts with `#` is not a strategy: `searchPosts` returns
-HTTP 400 `InvalidRequest`, so the catalog has no hashtag family. Leave the old
-blocked rows in the log and do not plan or record another one.
+matcher would drop. `scripts/fn_search.py` plans the slate, fetches one page,
+and records the judgment. `plan`, `summary`, and `record` do not call Bluesky.
+`search` does.
+
+The daily fetch is one unauthenticated page:
+
+```
+GET https://api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=...&sort=latest&limit=100&since=...&until=...
+```
+
+`since` is 24 hours ago, both timestamps UTC. Do not send `cursor`. The AppView
+answers an unauthenticated cursor with HTTP 403 and the body "Request forbidden
+by administrative rules." That is its pagination rule. A first page is a
+completed search even when the response includes a cursor. `hits` counts the
+posts on that page.
+
+`scripts/backfill_gap.py` is the client that follows cursors. It does that only
+after `com.atproto.server.createSession` with `HANDLE` and `PASSWORD`, and it
+sends `Authorization: Bearer` on the paged requests. Without those, backfill
+keeps the first page and stops.
+
+A leading `#` is not sent. `searchPosts` returns HTTP 400 `InvalidRequest` for
+it. `search` strips one leading `#` and the recorded query is the remaining
+text. The catalog has no hashtag family. Leave the old blocked hashtag rows in
+the log.
+
+Use `--status blocked` only when that first page itself fails. Do not record a
+zero for a request that did not return a page.
 
 Do not spend the day on the high-precision backfill presets (`mutualism`,
 `Proudhon`, and the rest of `DEFAULT_SEARCH_QUERIES` in `scripts/backfill_gap.py`).
@@ -219,9 +238,12 @@ misses” and the planner learns the wrong lesson. `HIGH_PRECISION_QUERIES` in
 ```bash
 uv run python scripts/fn_search.py summary
 uv run python scripts/fn_search.py plan
+uv run python scripts/fn_search.py search --plan
 ```
 
-`plan` prints a slate of 8. The seed is the UTC date, so a rerun the same day is
+`search --plan` prints one JSON object per query and does not write the log.
+`truncated: true` means another page existed and was not fetched. Record
+`query_sent` after judging the posts. `plan` prints a slate of 8. The seed is the UTC date, so a rerun the same day is
 stable. `--seed` and `--now` override it. The slate mixes:
 
 - **exploit** — queries that have already produced false negatives, including
@@ -254,7 +276,8 @@ uv run python scripts/fn_search.py record \
   --false-negative-id "at://did:plc:example/app.bsky.feed.post/abc" \
   --notes "shared tools, no strong institutional phrase"
 uv run python scripts/fn_search.py record \
-  --query "mutual aid" --family bare_term --status blocked
+  --query "mutual aid" --family bare_term --status blocked \
+  --notes "first page failed"
 ```
 
 Recording appends one JSON object to `data/fn_search_log.jsonl`. On `ok`, when
