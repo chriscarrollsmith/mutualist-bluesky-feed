@@ -344,6 +344,37 @@ _SOCIALIZE_ALL_HOUSING_RESCUE = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
+# Commercial and central banks often use the name "People's Bank" / "Peoples Bank".
+# A quarterly profit report is not Proudhon's Banque du Peuple. Mutual credit,
+# free banking, or Proudhon in the same post may still discuss profit and keep.
+_COMMERCIAL_PEOPLES_BANK = re.compile(
+    r"""
+    (?:
+        people'?s\s+bank\b.{0,120}\bprofit\b.{0,40}\bquarter\b
+      | \bprofit\b.{0,40}\bquarter\b.{0,120}people'?s\s+bank\b
+      | people'?s\s+bank\b.{0,120}\b(?:earnings|net\s+income|shareholders?|dividends?)\b
+      | \b(?:earnings|net\s+income|shareholders?|dividends?)\b.{0,120}people'?s\s+bank\b
+    )
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+_COMMERCIAL_PEOPLES_BANK_RESCUE = re.compile(
+    r"""
+    (?:
+        \bproudhon\b
+      | mutual\s+credit
+      | mutual\s+bank
+      | banque\s+du\s+peuple
+      | william\s+b\.?\s+greene
+      | occupancy[\s-]and[\s-]use
+      | cost\s+the\s+limit\s+of\s+price
+      | equitable\s+commerce
+      | \bfree\s+banking\b
+    )
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
 # Upcoming-event phrasing unlocks high-confidence mutualist venues/projects.
 _EVENT_CUE = re.compile(
     r"""
@@ -723,6 +754,11 @@ def match_post(
         return MatchResult(False, 'empty')
 
     if _SOCIALIZE_ALL_HOUSING.search(haystack) and not _SOCIALIZE_ALL_HOUSING_RESCUE.search(
+        haystack
+    ):
+        return MatchResult(False, 'hard_negative')
+
+    if _COMMERCIAL_PEOPLES_BANK.search(haystack) and not _COMMERCIAL_PEOPLES_BANK_RESCUE.search(
         haystack
     ):
         return MatchResult(False, 'hard_negative')

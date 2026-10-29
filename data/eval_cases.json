@@ -746,5 +746,16 @@
     "author_handle": "lexithewulf.bsky.social",
     "alt_text": "All my tiny sweethearts, come join your wolf goddess’s pack~ ♡ Communal Cult is my 18+, Black-owned, 2SLGBTQIA+ inclusive community! We’re openly progressive and communalist. Come make friends, find some VRChat company, and help us build a little den where we look after each other. Join the Communal Cult Discord Server! This is Lexi the Wulf’s little communal shrine, a shared den where the whole pack gathers.",
     "note": "VRChat roleplay Discord name-drops libertarian municipalism and democratic confederalism"
+  },
+  {
+    "id": "fp-2026-10-29-peoples-bank-earnings",
+    "text": "Peoples Bank turns $1.4 million profit in third quarter https://ift.tt/x1GHMqB",
+    "expected": false,
+    "signal": "text",
+    "bucket": "skyfeed_fp",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "porcellato.bsky.social",
+    "note": "Served 2026-10-28. Finward Bancorp quarterly earnings for the commercial bank Peoples Bank, not Proudhon's People's Bank."
   }
 ]

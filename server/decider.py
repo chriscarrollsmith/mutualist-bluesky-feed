@@ -31,7 +31,7 @@ DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
-PROMPT_VERSION = 'institution-keep-v5'
+PROMPT_VERSION = 'institution-keep-v6'
 
 KEEP_PREFIX = 'decision_keep:'
 REJECT_PREFIX = 'decision_reject:'
@@ -58,7 +58,10 @@ _KEEP_QUESTION: dict[str, Any] = {
             'Fandom, roleplay, and adult social-club invites are out of scope even '
             'when they name an in-scope ideology. '
             'Engels-style calls to socialize all housing are out of scope, including '
-            'when Proudhon is named only to dismiss tenant ownership.'
+            'when Proudhon is named only to dismiss tenant ownership. '
+            "A commercial or central bank that only shares the name People's Bank "
+            'or Peoples Bank is out of scope, including quarterly profit and earnings '
+            "reports. Proudhon's Bank of the People and mutual credit stay in scope."
         ),
         'criteria': {
             'true': (
@@ -74,7 +77,10 @@ _KEEP_QUESTION: dict[str, Any] = {
                 'or Web3 jargon, bare mutual aid, personal fundraising, charity, '
                 'state-capacity or nation-state reform, Engels-style calls to '
                 'socialize all housing (including when Proudhon is named only to '
-                'dismiss tenant ownership), academic social-ecological '
+                'dismiss tenant ownership), commercial or central-bank earnings '
+                "under the name People's Bank or Peoples Bank (profit, dividends, "
+                "shareholders) when the post is not about mutual credit or Proudhon's "
+                'Bank of the People, academic social-ecological '
                 'systems, sectarian communalism, EU confederalism, fandom, roleplay, '
                 'or adult social-club invites (VRChat, roleplay packs, shrine servers), '
                 'syndicalist or '
