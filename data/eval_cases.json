@@ -757,5 +757,28 @@
     "regression": true,
     "author_handle": "porcellato.bsky.social",
     "note": "Served 2026-10-28. Finward Bancorp quarterly earnings for the commercial bank Peoples Bank, not Proudhon's People's Bank."
+  },
+  {
+    "id": "fn-2026-10-31-canberra-food-coop",
+    "text": "🥕From dividing bulk food orders at Kingston railway station in 1976 to celebrating 50 years this Saturday, the Canberra Food Co-op has come a long way. Australia's longest-running food cooperative has been bringing Canberrans together for half a century.  https://ow.ly/ExN95101Wzk",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "aleighmp.bsky.social",
+    "note": "False negative 2026-10-31. Canberra Food Co-op fiftieth anniversary: a member food cooperative dividing bulk orders, not a video-game co-op."
+  },
+  {
+    "id": "fn-2026-10-31-cosocial-nonprofit-coop",
+    "text": "[some-subscribed-rss] New Post: CoSocialism Update, by Tim Bray https://www.tbray.org/ongoing/When/202x/2026/10/29/CoSocial-AGM",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "some-rss-feeds.bsky.social",
+    "alt_text": "Teaser:\n\nWhat if social media was a nonprofit co-op, free of ads and trolls? Tim Bray shares an update on CoSocial, the Canadian Mastodon experiment that’s trying exactly that. After their recent AGM, Bray reflects on the surprising lessons from two years of running a self-funding, self-governing social network—includi",
+    "note": "False negative 2026-10-31. Card for CoSocial, a self-governing nonprofit Mastodon co-op. The co-op phrase is in the link description."
   }
 ]
