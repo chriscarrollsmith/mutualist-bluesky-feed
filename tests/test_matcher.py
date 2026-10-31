@@ -263,6 +263,45 @@ def test_ambiguous_co_op_stays_on_the_regex_floor() -> None:
     assert result.reason == 'ambiguous_no_context:co-op'
 
 
+def test_food_and_nonprofit_coops_are_strong_and_game_co_op_stays_dropped() -> None:
+    food = match_post(
+        'The Canberra Food Co-op has been a food cooperative for fifty years, '
+        'dividing bulk orders among members.'
+    )
+    assert food.matched is True
+    assert food.reason == 'strong_positive'
+
+    nonprofit = match_post(
+        'Link title only.',
+        alt_text=(
+            'What if social media was a nonprofit co-op? CoSocial is a '
+            'self-funding, self-governing Mastodon cooperative.'
+        ),
+    )
+    assert nonprofit.matched is True
+    assert nonprofit.reason == 'strong_positive'
+
+    game = match_post('Loot-shooter chaos with online co-op for 2-4 players.')
+    assert game.matched is False
+    assert game.reason == 'ambiguous_no_context:co-op'
+
+    supermarket = match_post(
+        "Hilltop honey beat Rowse, Aldi, Co-op and Sainsbury's in a taste test."
+    )
+    assert supermarket.matched is False
+
+    snark = match_post(
+        'The worker run co-op game dev laid off workers and called it a labor victory.'
+    )
+    assert snark.matched is False
+    assert snark.reason == 'ambiguous_no_context:co-op'
+
+    cooperation = match_post(
+        'Nonprofit cooperation between the two agencies improved the grant process.'
+    )
+    assert cooperation.matched is False
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
