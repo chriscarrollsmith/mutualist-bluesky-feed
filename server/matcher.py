@@ -99,6 +99,7 @@ _STRONG_POSITIVE = re.compile(
       | platform\s+cooperatives?
       | platform\s+co[\s-]?ops?
       | food\s+co[\s-]?(?:operatives?|ops?)\b
+      | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
       | community\s+currenc(?:y|ies)
     )
@@ -198,6 +199,7 @@ _MUTUALIST_CONTEXT = re.compile(
       | platform\s+cooperatives?
       | platform\s+co[\s-]?ops?
       | food\s+co[\s-]?(?:operatives?|ops?)\b
+      | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
       | community\s+currenc(?:y|ies)
     )
