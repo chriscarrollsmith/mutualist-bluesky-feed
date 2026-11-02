@@ -39,7 +39,8 @@ Decision order:
 
 ```
 blocklist → allowlist → out-of-scope entity → hard negatives → in-scope entity / strong regex →
-event+venue → (ambiguous + context) → soft prior → Perplexity decider → drop
+event+venue → (ambiguous + context) → soft prior → core decider →
+spirit surface → spirit decider → drop
 ```
 
 A later post with the same words as one already indexed is dropped before the
@@ -74,6 +75,16 @@ still drop.
 - Soft-prior authors using a bare ambiguous term
 - Event phrasing + an in-scope venue or project (`mutualist reading circle`,
   `Really Really Free Market`, …)
+
+**Spirit lane.** A post the core floor drops still reaches the decider when it
+names cohousing or a housing co-op, a repair cafe, a tool library, a community
+fridge, or commoning. Personal money-asks stay dropped. With the decider
+disabled the post stays dropped, so offline eval does not keep this surface.
+The spirit call asks four questions. Keep when spirit is at least 0.58 and
+lift is at least 0.64, and either voice is at least 0.70 or account is at
+least 0.70. Voice is a person inside the practice. Account is a plain
+explanation of how it works and why someone would join or start it. A
+timeout or a bad payload drops the post.
 
 **Soft prior:** three decider keeps and no decider rejections in the last
 `SOFT_PRIOR_WINDOW_DAYS` (30). A prior lets bare ambiguous terms through to the

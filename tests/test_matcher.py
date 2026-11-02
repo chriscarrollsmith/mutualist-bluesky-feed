@@ -1,4 +1,5 @@
 import json
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
@@ -9,6 +10,7 @@ from server.allowlists import (
     load_blocklist_dids,
     load_blocklist_handles,
 )
+from server.decider import Decision, SpiritDecision, UnavailableDecider
 from server.matcher import extract_alt_text, is_opaque_record_embed, match_post
 
 ALL_CASES = json.loads(
@@ -356,3 +358,128 @@ def test_is_opaque_record_embed_jetstream_shape() -> None:
     }
     assert is_opaque_record_embed(embed)
     assert extract_alt_text(embed) == ''
+
+
+class _SpiritScript:
+    """Spirit-lane double. Core ``decide`` is unused and would be a test bug."""
+
+    def __init__(self, decision: SpiritDecision | None) -> None:
+        self.decision = decision
+        self.calls = 0
+
+    def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None:
+        del haystack, images
+        raise AssertionError('core decide called on a spirit-only double')
+
+    def decide_spirit(
+        self, haystack: str, *, images: Sequence[str] | None = None
+    ) -> SpiritDecision | None:
+        del haystack, images
+        self.calls += 1
+        return self.decision
+
+
+def _spirit(
+    *,
+    spirit: float = 0.9,
+    voice: float = 0.9,
+    account: float = 0.9,
+    lift: float = 0.9,
+) -> SpiritDecision:
+    return SpiritDecision(spirit=spirit, voice=voice, account=account, lift=lift)
+
+
+def test_spirit_surface_stays_dropped_without_a_decider() -> None:
+    repair = match_post('The sewing team at the repair cafe fixed a coat and a shoe.')
+    assert repair.matched is False
+    assert repair.reason == 'no_match'
+    housing = match_post('One challenge of living in co-op housing is individual preference.')
+    assert housing.matched is False
+    assert housing.reason == 'ambiguous_no_context:co-op'
+
+
+def test_spirit_voice_and_account_paths_keep() -> None:
+    scene = match_post(
+        'I woke up out of sorts, walked the cohousing field, and felt human again.',
+        decider=_SpiritScript(_spirit(voice=0.99, account=0.40)),
+    )
+    assert scene.matched is True
+    assert scene.reason == 'decision_keep:spirit_voice:0.990'
+
+    explainer = match_post(
+        'In cohousing it is easy to connect at common meals and work days.',
+        decider=_SpiritScript(_spirit(voice=0.05, account=0.96)),
+    )
+    assert explainer.matched is True
+    assert explainer.reason == 'decision_keep:spirit_account:0.960'
+
+
+def test_spirit_gate_rejects_theme_lift_and_thin_paths() -> None:
+    metaphor = match_post(
+        'A shared compute cluster is akin to a tool library.',
+        decider=_SpiritScript(_spirit(spirit=0.08, voice=0.19, account=0.20, lift=0.18)),
+    )
+    assert metaphor.matched is False
+    assert metaphor.reason == 'decision_reject:spirit_theme:0.080'
+
+    complaint = match_post(
+        'My housing co-op meetings are often a circus.',
+        decider=_SpiritScript(_spirit(spirit=0.70, voice=0.95, account=0.57, lift=0.47)),
+    )
+    assert complaint.matched is False
+    assert complaint.reason == 'decision_reject:spirit_lift:0.470'
+
+    fragment = match_post(
+        'The community fridge even had this amazing microwave.',
+        decider=_SpiritScript(_spirit(spirit=0.90, voice=0.14, account=0.66, lift=0.66)),
+    )
+    assert fragment.matched is False
+    assert fragment.reason == 'decision_reject:spirit_path:0.660'
+
+
+def test_spirit_solicit_does_not_call_the_decider() -> None:
+    script = _SpiritScript(_spirit())
+    result = match_post(
+        'Please donate to my GoFundMe so I can stock the community fridge.',
+        decider=script,
+    )
+    assert result.matched is False
+    assert result.reason == 'solicit_cue_unscored:spirit'
+    assert script.calls == 0
+
+
+def test_spirit_lane_does_not_override_core_or_out_of_scope() -> None:
+    from server.decider import FakeDecider
+
+    core = match_post(
+        'Mutual credit clearing at the repair cafe beats landlord title.',
+        decider=FakeDecider(keep=True, score=0.88),
+    )
+    assert core.matched is True
+    assert core.reason == 'decision_keep:strong_positive:0.880'
+
+    blocked = match_post(
+        'Anarcho-capitalism is the real repair cafe.',
+        decider=_SpiritScript(_spirit()),
+    )
+    assert blocked.matched is False
+    assert blocked.reason.startswith('entity_out_of_scope:')
+
+
+def test_unavailable_decider_drops_spirit_candidate() -> None:
+    result = match_post(
+        'The sewing team at the repair cafe fixed a coat and a shoe.',
+        decider=UnavailableDecider(),
+    )
+    assert result.matched is False
+    assert result.reason == 'decision_unscored:spirit'
+
+
+def test_spirit_surface_word_order() -> None:
+    script = _SpiritScript(_spirit(voice=0.2, account=0.91))
+    spaced = match_post(
+        'A housing co op where neighbors share food and tools.',
+        decider=script,
+    )
+    assert spaced.matched is True
+    assert spaced.reason == 'decision_keep:spirit_account:0.910'

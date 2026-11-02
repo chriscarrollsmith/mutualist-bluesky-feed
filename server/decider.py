@@ -32,6 +32,11 @@ DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
 PROMPT_VERSION = 'institution-keep-v6'
+SPIRIT_PROMPT_VERSION = 'spirit-account-v1'
+SPIRIT_MIN = 0.58
+VOICE_MIN = 0.70
+ACCOUNT_MIN = 0.70
+LIFT_MIN = 0.64
 
 KEEP_PREFIX = 'decision_keep:'
 REJECT_PREFIX = 'decision_reject:'
@@ -93,11 +98,126 @@ _KEEP_QUESTION: dict[str, Any] = {
     }
 }
 
+# Second lane for practices the core floor drops. A post must clear spirit and
+# lift, then either voice (a person inside the practice) or account (a plain
+# explanation of how it works and why someone would join or start it).
+_SPIRIT_QUESTIONS: dict[str, Any] = {
+    'spirit': {
+        'type': 'noul',
+        'instructions': (
+            'Is this Bluesky post spiritually mutualist, even if it never names '
+            'Proudhon or anarchism? A mutualist spirit here means '
+            'people meeting needs through a lived practice that reduces dependence '
+            'on firms, landlords, or the state: cooperative or cohousing life, a '
+            'tool library, a repair cafe, a community fridge or community pantry '
+            'used as a commons, or commoning. The practice has to be the subject. '
+            'A metaphor does not count (a software tool library, a personal book '
+            "library, 'community' as an audience). Out of scope: personal "
+            'fundraising, charity appeals, crime or disaster news about a fridge '
+            'or building, state housing policy, party campaigns, award blurbs, '
+            'academic theory with no lived practice, slogans, and pure event logistics.'
+        ),
+        'criteria': {
+            'true': (
+                'A real mutualist-spirited practice is what the post is about: '
+                'someone living in it, doing it, or showing how it works.'
+            ),
+            'false': (
+                'False friend, news brief, policy, fundraising, charity appeal, '
+                'academic aside, slogan, or the practice is only a metaphor.'
+            ),
+        },
+    },
+    'voice': {
+        'type': 'noul',
+        'instructions': (
+            'Is a particular person present in this post? A human voice means a '
+            "scene, a decision, a body at work, a named day's labor, or someone "
+            'thinking on the page. First person helps but is not required if a '
+            "specific person's action is shown. Press releases, award blurbs, "
+            'hour changes, ticket links, slogan cards, headline-plus-URL, and '
+            'organization marketing are not a human voice.'
+        ),
+        'criteria': {
+            'true': 'A particular person and a concrete moment are in the post.',
+            'false': (
+                'Institutional copy, a flyer, a headline, a statistic with no person, or a slogan.'
+            ),
+        },
+    },
+    'account': {
+        'type': 'noul',
+        'instructions': (
+            'Does this Bluesky post carry a mutualist-spirited practice to a reader '
+            'who does not already live it? The practices are cooperative housing, '
+            'cohousing, a tool library, a repair cafe, a community fridge, or commoning. '
+            'Yes when a person is shown inside the practice, or when the post explains '
+            'in plain language what the practice is like, how it works, or why someone '
+            'would take part, start one, or trust it. A link plus a real sentence of '
+            'explanation counts. No when the post is only a time, place, or hour change; '
+            'a headline that something opened, closed, burned, or broke ground; a grant, '
+            'award, or funding notice; a slogan shorter than a thought; a complaint; '
+            'or a promotional shout-out that never says how the practice works.'
+        ),
+        'criteria': {
+            'true': (
+                'A scene of the practice, or a plain explanation of what it is like '
+                'and why it is worth joining or starting.'
+            ),
+            'false': (
+                'Logistics, news headline, grant or award notice, slogan, complaint, '
+                'or promo that does not explain the practice.'
+            ),
+        },
+    },
+    'lift': {
+        'type': 'noul',
+        'instructions': (
+            'Is this post positively inflected and value-additive for a reader who '
+            'already follows a feed of mutualist institutions? Positively inflected '
+            'means constructive, warm, or defiant without cruelty. Grief beside '
+            'ongoing practice can pass. Value-additive means the reader comes away '
+            'with a picture of the practice, a method, or a felt reason to trust it. '
+            'Doom, pile-ons, cynicism, irony with nothing left over, duplicate '
+            'talking points, and mundane mentions that teach nothing are out.'
+        ),
+        'criteria': {
+            'true': (
+                "Constructive and worth a stranger's time. The reader learns or feels the practice."
+            ),
+            'false': 'Thin, cruel, cynical, doom-soaked, or a restatement with no residue.',
+        },
+    },
+}
+
 
 @dataclass(frozen=True)
 class Decision:
     keep: bool
     score: float
+
+
+@dataclass(frozen=True)
+class SpiritDecision:
+    """Four spirit-lane scores. ``label`` is the matcher reason suffix."""
+
+    spirit: float
+    voice: float
+    account: float
+    lift: float
+
+    def admission(self) -> tuple[bool, str]:
+        """Return whether the post clears the spirit lane, and a reason suffix."""
+        if self.spirit < SPIRIT_MIN:
+            return False, f'spirit_theme:{self.spirit:.3f}'
+        if self.lift < LIFT_MIN:
+            return False, f'spirit_lift:{self.lift:.3f}'
+        if self.voice >= VOICE_MIN:
+            return True, f'spirit_voice:{self.voice:.3f}'
+        if self.account >= ACCOUNT_MIN:
+            return True, f'spirit_account:{self.account:.3f}'
+        best = max(self.voice, self.account)
+        return False, f'spirit_path:{best:.3f}'
 
 
 class DecisionBackend(Protocol):
@@ -164,6 +284,30 @@ def decision_from_payload(payload: dict[str, Any], *, keep_min: float) -> Decisi
     return Decision(score >= keep_min, score)
 
 
+def spirit_from_payload(payload: dict[str, Any]) -> SpiritDecision:
+    """Parse spirit, voice, account, and lift. Raises ValueError if any is unusable."""
+    answers = payload.get('answers')
+    if not isinstance(answers, dict):
+        raise ValueError('decision response missing answers')
+    scores: dict[str, float] = {}
+    for key in ('spirit', 'voice', 'account', 'lift'):
+        node = answers.get(key)
+        if not isinstance(node, dict):
+            raise ValueError(f'decision response missing {key}')
+        if node.get('type') != 'noul':
+            raise ValueError(f'decision {key} answer is not noul')
+        score = float(node['noul'])
+        if score < 0.0 or score > 1.0:
+            raise ValueError(f'decision {key} noul out of range')
+        scores[key] = score
+    return SpiritDecision(
+        spirit=scores['spirit'],
+        voice=scores['voice'],
+        account=scores['account'],
+        lift=scores['lift'],
+    )
+
+
 @dataclass
 class OpenRouterDecider:
     """Live OpenRouter decider with a small in-process cache."""
@@ -176,10 +320,13 @@ class OpenRouterDecider:
     max_text_chars: int = DEFAULT_MAX_TEXT_CHARS
     _judge: JudgeFn | None = None
     _cache: dict[str, Decision | None] | None = None
+    _spirit_cache: dict[str, SpiritDecision | None] | None = None
 
     def __post_init__(self) -> None:
         if self._cache is None:
             self._cache = {}
+        if self._spirit_cache is None:
+            self._spirit_cache = {}
 
     def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None:
         text = (haystack or '').strip()
@@ -195,7 +342,11 @@ class OpenRouterDecider:
         if cache_key in self._cache:
             return self._cache[cache_key]
         try:
-            payload = self._judge(clipped, urls) if self._judge else self._call_api(clipped, urls)
+            payload = (
+                self._judge(clipped, urls)
+                if self._judge
+                else self._call_api(clipped, urls, _KEEP_QUESTION)
+            )
             decision = decision_from_payload(payload, keep_min=self.keep_min)
         except (
             urllib.error.URLError,
@@ -210,11 +361,52 @@ class OpenRouterDecider:
         self._cache[cache_key] = decision
         return decision
 
-    def _call_api(self, text: str, images: Sequence[str]) -> dict[str, Any]:
+    def decide_spirit(
+        self, haystack: str, *, images: Sequence[str] | None = None
+    ) -> SpiritDecision | None:
+        """Score a non-core practice. A network or payload failure declines."""
+        text = (haystack or '').strip()
+        urls = [part['image_url']['url'] for part in image_parts(images)]
+        if not text and not urls:
+            return None
+        clipped = text[: self.max_text_chars]
+        image_tag = hashlib.sha256('\n'.join(urls).encode()).hexdigest() if urls else ''
+        cache_key = hashlib.sha256(
+            f'{self.model}|{SPIRIT_PROMPT_VERSION}|{clipped}|{image_tag}'.encode()
+        ).hexdigest()
+        assert self._spirit_cache is not None
+        if cache_key in self._spirit_cache:
+            return self._spirit_cache[cache_key]
+        try:
+            payload = (
+                self._judge(clipped, urls)
+                if self._judge
+                else self._call_api(clipped, urls, _SPIRIT_QUESTIONS)
+            )
+            decision = spirit_from_payload(payload)
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            json.JSONDecodeError,
+            KeyError,
+            TypeError,
+            ValueError,
+        ):
+            self._spirit_cache[cache_key] = None
+            return None
+        self._spirit_cache[cache_key] = decision
+        return decision
+
+    def _call_api(
+        self,
+        text: str,
+        images: Sequence[str],
+        questions: dict[str, Any],
+    ) -> dict[str, Any]:
         body = {
             'model': self.model,
             'state': decision_state(text, images),
-            'questions': _KEEP_QUESTION,
+            'questions': questions,
         }
         request = urllib.request.Request(
             self.api_url,
@@ -238,6 +430,12 @@ class UnavailableDecider:
     """Enabled filter with no client. ``decide`` declines so callers fail closed."""
 
     def decide(self, haystack: str, *, images: Sequence[str] | None = None) -> Decision | None:
+        del haystack, images
+        return None
+
+    def decide_spirit(
+        self, haystack: str, *, images: Sequence[str] | None = None
+    ) -> SpiritDecision | None:
         del haystack, images
         return None
 
