@@ -26,7 +26,10 @@ priors. A prior is three decision-model keeps and no rejections in the window;
 regex matches do not earn one. Author blocklists drop an account even when the
 text would otherwise keep. When a decision model is enabled, it keep/rejects every candidate that
 passes this floor (see ``server/decider.py``). Bare ambiguous terms stay
-dropped unless a soft prior lets them through to that filter.
+dropped unless a soft prior lets them through to that filter. A second lane
+rescues posts the core floor drops when they name cohousing or a housing
+co-op, a repair cafe, a tool library, a community fridge, or commoning.
+That lane runs only while a decider is active, and it fails closed otherwise.
 """
 
 from __future__ import annotations
@@ -41,6 +44,7 @@ from server.decider import (
     REJECT_PREFIX,
     UNSCORED_PREFIX,
     DecisionBackend,
+    SpiritDecision,
     get_default_decider,
 )
 from server.post_images import image_data_urls
@@ -469,6 +473,24 @@ _SOLICIT_CUE = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
+# Practices the core floor drops. With a decider they get the spirit questions;
+# without one they stay dropped, so offline eval does not keep the whole surface.
+_SPIRIT_SURFACE = re.compile(
+    r"""
+    (?:
+        housing\s+co[\s-]?ops?\b
+      | housing\s+cooperatives?\b
+      | co[\s-]?ops?\s+housing\b
+      | co[\s-]?housing\b
+      | repair\s+caf[eé]s?\b
+      | tool\s+librar(?:y|ies)\b
+      | community\s+fridges?\b
+      | \bcommoning\b
+    )
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
 _HANDLE_MENTION = re.compile(r'(?<![\w.])@[\w.-]+', flags=re.UNICODE)
 
 _EMBED_TEXT_MAX = 320
@@ -691,6 +713,41 @@ def _content_filter(
     return MatchResult(False, f'{REJECT_PREFIX}{provisional.reason}:{decision.score:.3f}')
 
 
+def _spirit_filter(
+    haystack: str,
+    *,
+    decider: DecisionBackend,
+    embed: object | None,
+    author_did: str | None,
+) -> MatchResult:
+    """Keep a non-core practice only when the spirit lane clears. Fail closed."""
+    if looks_like_solicit(haystack, embed=embed):
+        return MatchResult(False, 'solicit_cue_unscored:spirit')
+    method = getattr(decider, 'decide_spirit', None)
+    if not callable(method):
+        return MatchResult(False, f'{UNSCORED_PREFIX}spirit')
+    images = image_data_urls(embed, author_did=author_did) or None
+    decision = method(haystack, images=images)
+    if not isinstance(decision, SpiritDecision):
+        return MatchResult(False, f'{UNSCORED_PREFIX}spirit')
+    keep, label = decision.admission()
+    prefix = KEEP_PREFIX if keep else REJECT_PREFIX
+    return MatchResult(keep, f'{prefix}{label}')
+
+
+def _maybe_spirit(
+    haystack: str,
+    *,
+    decider: DecisionBackend | None,
+    embed: object | None,
+    author_did: str | None,
+) -> MatchResult | None:
+    """Return a spirit-lane result, or None to keep the core drop reason."""
+    if decider is None or _SPIRIT_SURFACE.search(haystack) is None:
+        return None
+    return _spirit_filter(haystack, decider=decider, embed=embed, author_did=author_did)
+
+
 def match_post(
     text: str,
     *,
@@ -712,13 +769,16 @@ def match_post(
 
     Decision order: blocklist → allowlist → out-of-scope entity → hard
     negative / in-scope entity / strong regex → event+venue →
-    ambiguous+context → soft prior → ambiguous leftover → drop.
+    ambiguous+context → soft prior → spirit surface → drop.
 
     When a decision model is active, it keep/rejects every candidate that
     passes the regex floor, including soft-prior ambiguous terms. Bare
-    ambiguous terms with no prior stay dropped. Pass ``decider`` to inject
-    one. ``use_default_decider`` is the indexer path: a disabled filter
-    leaves the regex floor in place and still drops solicit-shaped keeps.
+    ambiguous terms with no prior stay dropped, unless the text names a
+    spirit-lane practice (cohousing, housing co-op, repair cafe, tool
+    library, community fridge, commoning). That lane fails closed without
+    a decider. Pass ``decider`` to inject one. ``use_default_decider`` is
+    the indexer path: a disabled filter leaves the regex floor in place and
+    still drops solicit-shaped keeps.
 
     ``embed`` is the raw Bluesky embed object (Jetstream or AppView). Opaque
     quote refs paired with mutual-aid language are solicit-shaped even when
@@ -834,6 +894,12 @@ def match_post(
                 haystack, prior, decider=backend, embed=embed, author_did=author_did
             )
 
+        spirit = _maybe_spirit(haystack, decider=backend, embed=embed, author_did=author_did)
+        if spirit is not None:
+            return spirit
         return MatchResult(False, f'ambiguous_no_context:{term}')
 
+    spirit = _maybe_spirit(haystack, decider=backend, embed=embed, author_did=author_did)
+    if spirit is not None:
+        return spirit
     return MatchResult(False, 'no_match')

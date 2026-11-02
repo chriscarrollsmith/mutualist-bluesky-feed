@@ -3,15 +3,20 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from typing import Any
 
 import pytest
 from server.decider import (
     _KEEP_QUESTION,
+    _SPIRIT_QUESTIONS,
     PROMPT_VERSION,
+    SPIRIT_PROMPT_VERSION,
     Decision,
     FakeDecider,
     OpenRouterDecider,
+    SpiritDecision,
     decision_from_payload,
+    spirit_from_payload,
 )
 from server.matcher import match_post
 
@@ -215,6 +220,67 @@ def test_match_post_without_decider_does_not_fetch_images(monkeypatch: pytest.Mo
     )
     assert result.matched is True
     assert result.reason == 'strong_positive'
+
+
+def test_spirit_questions_name_the_explainer_path() -> None:
+    assert SPIRIT_PROMPT_VERSION == 'spirit-account-v1'
+    account = _SPIRIT_QUESTIONS['account']
+    assert 'plain language' in account['instructions']
+    assert 'broke ground' in account['instructions']
+    assert 'grant' in account['criteria']['false']
+    assert set(_SPIRIT_QUESTIONS) == {'spirit', 'voice', 'account', 'lift'}
+
+
+def test_spirit_from_payload_and_admission() -> None:
+    payload = {
+        'answers': {
+            'spirit': {'type': 'noul', 'noul': 0.92},
+            'voice': {'type': 'noul', 'noul': 0.05},
+            'account': {'type': 'noul', 'noul': 0.96},
+            'lift': {'type': 'noul', 'noul': 0.86},
+        }
+    }
+    decision = spirit_from_payload(payload)
+    assert decision == SpiritDecision(spirit=0.92, voice=0.05, account=0.96, lift=0.86)
+    assert decision.admission() == (True, 'spirit_account:0.960')
+
+    with pytest.raises(ValueError, match='missing voice'):
+        spirit_from_payload({'answers': {'spirit': {'type': 'noul', 'noul': 0.9}}})
+
+
+def test_openrouter_decider_sends_spirit_questions(monkeypatch: pytest.MonkeyPatch) -> None:
+    import json
+
+    captured: list[dict[str, Any]] = []
+
+    class _Response:
+        def read(self) -> bytes:
+            return (
+                b'{"answers":{"spirit":{"type":"noul","noul":0.9},'
+                b'"voice":{"type":"noul","noul":0.2},'
+                b'"account":{"type":"noul","noul":0.91},'
+                b'"lift":{"type":"noul","noul":0.8}}}'
+            )
+
+        def __enter__(self) -> _Response:
+            return self
+
+        def __exit__(self, *_args: object) -> bool:
+            return False
+
+    def fake_urlopen(request, timeout: float) -> _Response:
+        del timeout
+        captured.append(json.loads(request.data.decode()))
+        return _Response()
+
+    monkeypatch.setattr('server.decider.urllib.request.urlopen', fake_urlopen)
+    decider = OpenRouterDecider(api_key='test', timeout_s=8)
+    first = decider.decide_spirit('In cohousing, common meals make neighbors easy to find.')
+    second = decider.decide_spirit('In cohousing, common meals make neighbors easy to find.')
+    assert first is not None and first.admission()[0] is True
+    assert second == first
+    assert len(captured) == 1
+    assert set(captured[0]['questions']) == {'spirit', 'voice', 'account', 'lift'}
 
 
 def test_unavailable_decider_drops_candidate() -> None:
