@@ -42,6 +42,13 @@ blocklist → allowlist → out-of-scope entity → hard negatives → in-scope 
 event+venue → (ambiguous + context) → soft prior → Perplexity decider → drop
 ```
 
+A later post with the same words as one already indexed is dropped before the
+decider runs. The stored hash is the post text after whitespace is collapsed
+and compatibility characters are folded. Case and punctuation still count.
+Empty text has no hash. The earliest indexed copy is the one the feed serves.
+Likes on a later copy stay on that copy's URI and are not added to the indexed
+post. `DEDUPE_IDENTICAL_POSTS=false` indexes every copy.
+
 Anything that passes the regex floor is a candidate. With `DECISION_ENABLED=true`,
 `perplexity/pplx-decider-v1.2` (OpenRouter Decisions API) keep/rejects that
 candidate. Keep when the yes-probability (`noul`) is at least `DECISION_KEEP_MIN`
