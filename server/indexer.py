@@ -11,6 +11,12 @@ from server import config
 from server.author_priors import author_has_soft_prior, record_decision
 from server.database import Post, db, prune_old_posts, utc_now
 from server.decider import KEEP_PREFIX, REJECT_PREFIX
+from server.dedupe import (
+    content_fingerprint,
+    forget_fingerprints,
+    is_indexed_duplicate,
+    remember_fingerprint,
+)
 from server.logger import logger
 from server.matcher import extract_alt_text, match_post
 
@@ -94,8 +100,13 @@ def handle_event(event: dict[str, Any]) -> None:
         return
 
     if operation == 'delete':
+        row = Post.get_or_none(Post.uri == uri)
+        if row is None:
+            return
+        content_hash = row.content_hash
         deleted = Post.delete().where(Post.uri == uri).execute()
         if deleted:
+            forget_fingerprints([content_hash])
             logger.debug('deleted %s', uri)
         return
 
@@ -119,6 +130,11 @@ def handle_event(event: dict[str, Any]) -> None:
         logger.debug('muted %s', uri)
         return
 
+    fingerprint = content_fingerprint(text) if config.DEDUPE_IDENTICAL_POSTS else None
+    if is_indexed_duplicate(fingerprint):
+        logger.info('skipped duplicate %s hash=%s', uri, fingerprint)
+        return
+
     langs = record.get('langs') or []
     if not isinstance(langs, list):
         langs = []
@@ -137,6 +153,10 @@ def handle_event(event: dict[str, Any]) -> None:
         embed=embed,
         use_default_decider=True,
     )
+    # A copy that arrived while this post was in the decider keeps the first row.
+    if result.matched and is_indexed_duplicate(fingerprint):
+        logger.info('skipped duplicate %s hash=%s', uri, fingerprint)
+        return
     if result.reason.startswith(REJECT_PREFIX):
         record_decision(author_did, kept=False)
     if not result.matched:
@@ -158,9 +178,14 @@ def handle_event(event: dict[str, Any]) -> None:
                 created_at=created_at,
                 like_count=0,
                 repost_count=0,
+                content_hash=fingerprint,
             )
     except peewee.IntegrityError:
+        if fingerprint and _other_row_has_hash(uri, fingerprint):
+            remember_fingerprint(fingerprint)
+            logger.info('skipped duplicate %s hash=%s', uri, fingerprint)
         return
+    remember_fingerprint(fingerprint)
     if result.reason.startswith(KEEP_PREFIX):
         record_decision(author_did, kept=True)
 
@@ -168,11 +193,21 @@ def handle_event(event: dict[str, Any]) -> None:
     _maybe_prune()
 
 
+def _other_row_has_hash(uri: str, fingerprint: str) -> bool:
+    return Post.select().where((Post.content_hash == fingerprint) & (Post.uri != uri)).exists()
+
+
 def purge_blocklisted_posts() -> int:
     """Delete indexed posts whose author is on the production blocklist."""
     if not config.BLOCKLIST_DIDS:
         return 0
+    expired = Post.select(Post.content_hash).where(
+        (Post.author_did << list(config.BLOCKLIST_DIDS)) & Post.content_hash.is_null(False)
+    )
+    expired_hashes = [row.content_hash for row in expired if row.content_hash]
     deleted = Post.delete().where(Post.author_did << list(config.BLOCKLIST_DIDS)).execute()
+    if expired_hashes:
+        forget_fingerprints(expired_hashes)
     if deleted:
         logger.info('purged %s posts from blocklisted authors', deleted)
     return deleted

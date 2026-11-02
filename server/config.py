@@ -39,6 +39,8 @@ FEED_URI: str = _feed_uri
 
 IGNORE_ARCHIVED_POSTS = _get_bool_env_var(os.environ.get('IGNORE_ARCHIVED_POSTS', 'true'))
 IGNORE_REPLY_POSTS = _get_bool_env_var(os.environ.get('IGNORE_REPLY_POSTS', 'true'))
+# Skip a post when an indexed row already has the same normalized text.
+DEDUPE_IDENTICAL_POSTS = _get_bool_env_var(os.environ.get('DEDUPE_IDENTICAL_POSTS', 'true'))
 POST_RETENTION_DAYS = int(os.environ.get('POST_RETENTION_DAYS', '7'))
 # Soft priors: this many decider keeps, and zero rejections, in the window
 # unlock bare ambiguous terms. Regex matches do not count. See author_priors.py.
@@ -90,6 +92,7 @@ logger.info(
     'config loaded hostname=%s service_did=%s allowlist_dids=%d allowlist_handles=%d '
     'blocklist_dids=%d blocklist_handles=%d '
     'soft_prior_min_keeps=%d soft_prior_window_days=%d ranking_mode=%s muted_keywords=%d '
+    'dedupe_identical=%s '
     'decision_enabled=%s decision_model=%s decision_images=%s openrouter_key=%s '
     'decision_keep_min=%.2f '
     'classifier_enabled=%s classifier_model=%s deepseek_key=%s '
@@ -104,6 +107,7 @@ logger.info(
     SOFT_PRIOR_WINDOW_DAYS,
     RANKING_MODE,
     len(MUTED_KEYWORDS),
+    DEDUPE_IDENTICAL_POSTS,
     DECISION_ENABLED,
     DECISION_MODEL,
     images_enabled(),

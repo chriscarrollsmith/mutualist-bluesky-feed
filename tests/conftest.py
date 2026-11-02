@@ -1,4 +1,5 @@
 import os
+from collections.abc import Iterator
 
 import pytest
 
@@ -22,6 +23,16 @@ def _decision_filter_off(monkeypatch: pytest.MonkeyPatch) -> None:
     from server.decider import clear_decider_cache
 
     clear_decider_cache()
+
+
+@pytest.fixture(autouse=True)
+def _reset_dedupe_cache() -> Iterator[None]:
+    """Each test reloads indexed text hashes from its own database rows."""
+    from server.dedupe import clear_seen_fingerprints
+
+    clear_seen_fingerprints()
+    yield
+    clear_seen_fingerprints()
 
 
 def pytest_configure(config: pytest.Config) -> None:
