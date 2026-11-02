@@ -780,5 +780,17 @@
     "author_handle": "some-rss-feeds.bsky.social",
     "alt_text": "Teaser:\n\nWhat if social media was a nonprofit co-op, free of ads and trolls? Tim Bray shares an update on CoSocial, the Canadian Mastodon experiment that’s trying exactly that. After their recent AGM, Bray reflects on the surprising lessons from two years of running a self-funding, self-governing social network—includi",
     "note": "False negative 2026-10-31. Card for CoSocial, a self-governing nonprofit Mastodon co-op. The co-op phrase is in the link description."
+  },
+  {
+    "id": "fn-2026-11-01-upper-valley-grocery-coop",
+    "text": "vtdigger.org/2026/10/31/u...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "dc2daylight.bsky.social",
+    "alt_text": "Upper Valley’s member-owned co-op battles rising food prices - VTDigger The grocery cooperative is struggling to stick to its roots and keep prices affordable.",
+    "note": "False negative 2026-11-01. Link card for the Upper Valley member-owned grocery cooperative. The cooperative phrase is in the card, not a video-game co-op."
   }
 ]

@@ -296,10 +296,30 @@ def test_food_and_nonprofit_coops_are_strong_and_game_co_op_stays_dropped() -> N
     assert snark.matched is False
     assert snark.reason == 'ambiguous_no_context:co-op'
 
+    grocery = match_post(
+        'vtdigger.org/2026/10/31/u...',
+        alt_text=(
+            'Upper Valley’s member-owned co-op battles rising food prices - VTDigger '
+            'The grocery cooperative is struggling to stick to its roots and '
+            'keep prices affordable.'
+        ),
+    )
+    assert grocery.matched is True
+    assert grocery.reason == 'strong_positive'
+
+    grocery_coop = match_post('The neighborhood grocery co-op kept member prices below the chain.')
+    assert grocery_coop.matched is True
+    assert grocery_coop.reason == 'strong_positive'
+
     cooperation = match_post(
         'Nonprofit cooperation between the two agencies improved the grant process.'
     )
     assert cooperation.matched is False
+
+    grocery_cooperation = match_post(
+        'Grocery cooperation between the two chains improved the supply contract.'
+    )
+    assert grocery_cooperation.matched is False
 
 
 def test_extract_alt_text_clips_external_description() -> None:
