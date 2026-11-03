@@ -792,5 +792,27 @@
     "author_handle": "dc2daylight.bsky.social",
     "alt_text": "Upper Valley’s member-owned co-op battles rising food prices - VTDigger The grocery cooperative is struggling to stick to its roots and keep prices affordable.",
     "note": "False negative 2026-11-01. Link card for the Upper Valley member-owned grocery cooperative. The cooperative phrase is in the card, not a video-game co-op."
+  },
+  {
+    "id": "fp-2026-11-03-community-fridge-errand",
+    "text": "Out running errands. Leftover Hween snacks to the community fridge and someone was very happy for cheesies! Then stopped at Humble Pie and got one for now and one for later, then happened upon someone looking for food at an intersection, so they got my extra fresh hot pie and were happy for that!",
+    "expected": false,
+    "signal": "text",
+    "bucket": "skyfeed_fp",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "goodmorninghfx.bsky.social",
+    "note": "Served 2026-11-02. Personal errand diary: a leftover drop-off at a community fridge, then a pie purchase given to a stranger. Street charity, not the commons as the subject."
+  },
+  {
+    "id": "fn-2026-11-03-inference-cooperative-charter",
+    "text": "Democracy isn't just for governments. We govern our AI use together according to a cooperative charter: https://git.inference.coop/co-op/docs/src/branch/main/charter.md\n\nWhat policies would you want around this technology?",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "inference.coop",
+    "note": "False negative 2026-11-03. Member cooperative describing its governing charter. Not a cooperative charter school."
   }
 ]
