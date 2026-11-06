@@ -105,6 +105,14 @@ _STRONG_POSITIVE = re.compile(
       | food\s+co[\s-]?(?:operatives?|ops?)\b
       | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
+      | worker[\s-]owned\s+co[\s-]?(?:operatives?|ops?)\b
+      | farming\s+cooperatives?\b
+      | coop[eé]ratives?\s+agricoles?\b
+      | loomio\s+co[\s-]?(?:operatives?|ops?)\b
+      | (?:became|become)\s+(?:a\s+)?homeowners?\s+at\s+
+        (?:[\w'’-]+\s+){0,5}co[\s-]?ops?\b
+      | volunteer\s+labou?r\s+shifts?.{0,80}co[\s-]?ops?\b
+      | coop[eé]ratives?.{0,60}conseil\s+d['’]administration
       | community\s+currenc(?:y|ies)
     )
     """,
@@ -205,6 +213,14 @@ _MUTUALIST_CONTEXT = re.compile(
       | food\s+co[\s-]?(?:operatives?|ops?)\b
       | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
+      | worker[\s-]owned\s+co[\s-]?(?:operatives?|ops?)\b
+      | farming\s+cooperatives?\b
+      | coop[eé]ratives?\s+agricoles?\b
+      | loomio\s+co[\s-]?(?:operatives?|ops?)\b
+      | (?:became|become)\s+(?:a\s+)?homeowners?\s+at\s+
+        (?:[\w'’-]+\s+){0,5}co[\s-]?ops?\b
+      | volunteer\s+labou?r\s+shifts?.{0,80}co[\s-]?ops?\b
+      | coop[eé]ratives?.{0,60}conseil\s+d['’]administration
       | community\s+currenc(?:y|ies)
     )
     """,

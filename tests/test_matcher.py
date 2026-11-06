@@ -324,6 +324,82 @@ def test_food_and_nonprofit_coops_are_strong_and_game_co_op_stays_dropped() -> N
     assert grocery_cooperation.matched is False
 
 
+def test_worker_owned_farming_and_housing_coops_are_strong() -> None:
+    worker_owned = match_post(
+        'workers in the charity rating industry should transform their workplace '
+        'into a worker-owned cooperative'
+    )
+    assert worker_owned.matched is True
+    assert worker_owned.reason == 'strong_positive'
+
+    workplace = match_post(
+        'sometimes i forget i work with a "worker-owned cooperative of abolitionists" '
+        'and the mission statement is longer than the shift'
+    )
+    assert workplace.matched is True
+    assert workplace.reason == 'strong_positive'
+
+    owned_company = match_post(
+        'The worker-owned company laid off staff and called the remaining shop a team.'
+    )
+    assert owned_company.matched is False
+
+    farming = match_post(
+        'High point was visiting the Burin Land and Farming Cooperative in Palestine, '
+        'which works on local food sovereignty.'
+    )
+    assert farming.matched is True
+    assert farming.reason == 'strong_positive'
+
+    farming_game = match_post('Stardew farming co-op with four friends until the asteroid hits.')
+    assert farming_game.matched is False
+
+    agricole = match_post(
+        'Face à la crise du maïs à Kananga, une coopérative agricole lance sa récolte '
+        'sur le marché au prix social.'
+    )
+    assert agricole.matched is True
+    assert agricole.reason == 'strong_positive'
+
+    loomio = match_post(
+        'A retrospective of my time supporting the founding of the Loomio Cooperative.'
+    )
+    assert loomio.matched is True
+    assert loomio.reason == 'strong_positive'
+
+    loomio_tool = match_post('We ran the book club poll on Loomio and closed it at nine.')
+    assert loomio_tool.matched is False
+
+    homeowner = match_post(
+        'Each put down $10,000 and became a homeowner at C Street Co-op, '
+        'about $800 a month against $1,400 rent.'
+    )
+    assert homeowner.matched is True
+    assert homeowner.reason == 'strong_positive'
+
+    game = match_post('Loot-shooter chaos with online co-op for 2-4 players.')
+    assert game.matched is False
+
+    shifts = match_post(
+        'Here are the next set of volunteer labour shifts available at Karma Co-op '
+        'for store opening, closing and cashier duty.'
+    )
+    assert shifts.matched is True
+    assert shifts.reason == 'strong_positive'
+
+    producers = match_post(
+        'Les producteurs d’oignon de Pitoa se sont regroupés autour de Riskou Djarné, '
+        'une coopérative créée en 2015 avec conseil d’administration.'
+    )
+    assert producers.matched is True
+    assert producers.reason == 'strong_positive'
+
+    cooperation = match_post(
+        'Worker-owned cooperation between the two agencies improved the grant process.'
+    )
+    assert cooperation.matched is False
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
