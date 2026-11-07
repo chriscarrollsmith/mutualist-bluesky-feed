@@ -814,5 +814,93 @@
     "regression": true,
     "author_handle": "inference.coop",
     "note": "False negative 2026-11-03. Member cooperative describing its governing charter. Not a cooperative charter school."
+  },
+  {
+    "id": "fn-2026-11-06-c-street-coop",
+    "text": "Six single adults. One lot in Springfield, Oregon. Six homes they own for about $800 a month.\n\nIn a town where average rent runs $1,400, each put down $10,000 and became a homeowner at C Street Co-op.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "faircompanies.com",
+    "note": "False negative 2026-11-06. Shared-lot housing cooperative: six adults became homeowners at C Street Co-op below market rent. Not a video-game co-op."
+  },
+  {
+    "id": "fn-2026-11-06-karma-member-labor",
+    "text": "Here are the next set of volunteer labour shifts available at Karma Co-op for store opening, closing and cashier duty. Sign up to help the store run smoothly and get access to your 5% monthly shopping discount.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "karmacooptoronto.bsky.social",
+    "note": "False negative 2026-11-06. Member-labor shifts at Karma Co-op, a member-owned food store. The name does not say food co-op."
+  },
+  {
+    "id": "fn-2026-11-06-worker-owned-cooperative",
+    "text": "workers in the charity rating industry should transform their workplace into a worker-owned cooperative",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "cooljeaniusbot.bsky.social",
+    "note": "False negative 2026-11-06. Worker-owned cooperative is the same institution as worker cooperative. The hyphenated form was ambiguous."
+  },
+  {
+    "id": "fn-2026-11-06-worker-owned-workplace",
+    "text": "sometimes i forget i work with a \"worker-owned cooperative of abolitionists committed to decolonizing the educational ecosystem through a justice-focused approach\" and im like damn im really on the front lines of woke 3 huh",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "pwincesstrixie.bsky.social",
+    "note": "False negative 2026-11-06. A worker inside a worker-owned cooperative. Irony about the mission statement does not make the institution out of scope."
+  },
+  {
+    "id": "fn-2026-11-06-burin-farming-cooperative",
+    "text": "High point was visiting the Burin Land and Farming Cooperative in Palestine, which works on local food sovereignty. Their cofounder was dragged away by IDF a couple of days ago, no telling when he’ll be released. Sign this petition demanding his immediate release: www.change.org/p/release-gh...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "shaneburley.bsky.social",
+    "note": "False negative 2026-11-06. A land and farming cooperative practicing food sovereignty. The petition is non-violent resistance, not a personal fundraiser."
+  },
+  {
+    "id": "fn-2026-11-06-loomio-cooperative",
+    "text": "Finally finished a new #Disintermedia blog post I've been working on in bits and spurts for a couple of weeks. A retrospective of my time supporting the founding of the Loomio Cooperative, and participating in the development community around it, in the heady years after the GFC and the global",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "strypey.mastodon.nzoss.nz.ap.brid.gy",
+    "note": "False negative 2026-11-06. Founding retrospective of the Loomio Cooperative. A bare Loomio mention without the cooperative stays dropped."
+  },
+  {
+    "id": "fn-2026-11-06-cooperative-agricole",
+    "text": "Kasaï Central: Face à la crise du maïs à Kananga, une coopérative agricole lance sa récolte sur le marché au prix social",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "afropages.bsky.social",
+    "note": "False negative 2026-11-06. An agricultural cooperative selling maize at a social price. The accented coopérative agricole phrase was a no-match."
+  },
+  {
+    "id": "fn-2026-11-06-pitoa-producers-cooperative",
+    "text": "Face à ces difficultés, les producteurs d’oignon de Pitoa se sont regroupés autour de Riskou Djarné, une coopérative créée en 2015 avec conseil d’administration.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "agripreneurs-af.bsky.social",
+    "note": "False negative 2026-11-06. Onion producers formed a cooperative with a board. Accented coopérative plus conseil d'administration was a no-match."
   }
 ]
