@@ -32,7 +32,7 @@ DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
 PROMPT_VERSION = 'institution-keep-v6'
-SPIRIT_PROMPT_VERSION = 'spirit-account-v1'
+SPIRIT_PROMPT_VERSION = 'spirit-account-v2'
 SPIRIT_MIN = 0.58
 VOICE_MIN = 0.70
 ACCOUNT_MIN = 0.70
@@ -110,21 +110,27 @@ _SPIRIT_QUESTIONS: dict[str, Any] = {
             'people meeting needs through a lived practice that reduces dependence '
             'on firms, landlords, or the state: cooperative or cohousing life, a '
             'tool library, a repair cafe, a community fridge or community pantry '
-            'used as a commons, or commoning. The practice has to be the subject. '
-            'A metaphor does not count (a software tool library, a personal book '
-            "library, 'community' as an audience). Out of scope: personal "
-            'fundraising, charity appeals, crime or disaster news about a fridge '
-            'or building, state housing policy, party campaigns, award blurbs, '
-            'academic theory with no lived practice, slogans, and pure event logistics.'
+            'used as a commons, or commoning. The practice has to be the subject '
+            'of the post, not one stop in a personal diary. A metaphor does not '
+            'count (a software tool library, a personal book library, '
+            "'community' as an audience). Out of scope: personal fundraising, "
+            'charity appeals, handing food you just bought to a stranger, an '
+            'errand list that mentions dropping leftovers at a community fridge '
+            'among other stops, crime or disaster news about a fridge or building, '
+            'state housing policy, party campaigns, award blurbs, academic theory '
+            'with no lived practice, slogans, and pure event logistics.'
         ),
         'criteria': {
             'true': (
                 'A real mutualist-spirited practice is what the post is about: '
-                'someone living in it, doing it, or showing how it works.'
+                'someone living in it, doing the shared work, or showing how the '
+                'arrangement works.'
             ),
             'false': (
                 'False friend, news brief, policy, fundraising, charity appeal, '
-                'academic aside, slogan, or the practice is only a metaphor.'
+                'street charity, a personal errand log, a leftover drop-off '
+                'mentioned in passing, academic aside, slogan, or the practice '
+                'is only a metaphor.'
             ),
         },
     },
@@ -179,13 +185,18 @@ _SPIRIT_QUESTIONS: dict[str, Any] = {
             'ongoing practice can pass. Value-additive means the reader comes away '
             'with a picture of the practice, a method, or a felt reason to trust it. '
             'Doom, pile-ons, cynicism, irony with nothing left over, duplicate '
-            'talking points, and mundane mentions that teach nothing are out.'
+            'talking points, and mundane mentions that teach nothing are out. '
+            'Warmth alone is not lift: a thank-you for snacks, cheesies, or a pie, '
+            'with no picture of how the shared arrangement works, teaches nothing.'
         ),
         'criteria': {
             'true': (
                 "Constructive and worth a stranger's time. The reader learns or feels the practice."
             ),
-            'false': 'Thin, cruel, cynical, doom-soaked, or a restatement with no residue.',
+            'false': (
+                'Thin, cruel, cynical, doom-soaked, a restatement with no residue, '
+                'or a warm errand anecdote that never shows how the practice works.'
+            ),
         },
     },
 }

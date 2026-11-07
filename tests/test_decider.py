@@ -223,11 +223,18 @@ def test_match_post_without_decider_does_not_fetch_images(monkeypatch: pytest.Mo
 
 
 def test_spirit_questions_name_the_explainer_path() -> None:
-    assert SPIRIT_PROMPT_VERSION == 'spirit-account-v1'
+    assert SPIRIT_PROMPT_VERSION == 'spirit-account-v2'
     account = _SPIRIT_QUESTIONS['account']
     assert 'plain language' in account['instructions']
     assert 'broke ground' in account['instructions']
     assert 'grant' in account['criteria']['false']
+    spirit = _SPIRIT_QUESTIONS['spirit']
+    assert 'personal diary' in spirit['instructions']
+    assert 'errand list' in spirit['instructions']
+    assert 'street charity' in spirit['criteria']['false']
+    lift = _SPIRIT_QUESTIONS['lift']
+    assert 'Warmth alone is not lift' in lift['instructions']
+    assert 'errand anecdote' in lift['criteria']['false']
     assert set(_SPIRIT_QUESTIONS) == {'spirit', 'voice', 'account', 'lift'}
 
 

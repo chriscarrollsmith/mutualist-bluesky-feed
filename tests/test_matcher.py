@@ -323,6 +323,23 @@ def test_food_and_nonprofit_coops_are_strong_and_game_co_op_stays_dropped() -> N
     )
     assert grocery_cooperation.matched is False
 
+    charter = match_post(
+        'Democracy is not only for governments. We govern our AI use together '
+        'according to a cooperative charter: '
+        'https://git.inference.coop/co-op/docs/src/branch/main/charter.md '
+        'What policies would you want around this technology?'
+    )
+    assert charter.matched is True
+    assert charter.reason == 'strong_positive'
+
+    charter_school = match_post('The Cooperative Charter School announced a bake sale for Friday.')
+    assert charter_school.matched is False
+
+    charter_academy = match_post(
+        'Families toured the Cooperative Charter Academy before the open house.'
+    )
+    assert charter_academy.matched is False
+
 
 def test_worker_owned_farming_and_housing_coops_are_strong() -> None:
     worker_owned = match_post(

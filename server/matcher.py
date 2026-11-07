@@ -105,6 +105,7 @@ _STRONG_POSITIVE = re.compile(
       | food\s+co[\s-]?(?:operatives?|ops?)\b
       | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
+      | \bco-?operative\s+charters?\b(?!\s+(?:schools?|academ(?:y|ies)|campus)\b)
       | worker[\s-]owned\s+co[\s-]?(?:operatives?|ops?)\b
       | farming\s+cooperatives?\b
       | coop[eé]ratives?\s+agricoles?\b
@@ -213,6 +214,7 @@ _MUTUALIST_CONTEXT = re.compile(
       | food\s+co[\s-]?(?:operatives?|ops?)\b
       | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
+      | \bco-?operative\s+charters?\b(?!\s+(?:schools?|academ(?:y|ies)|campus)\b)
       | worker[\s-]owned\s+co[\s-]?(?:operatives?|ops?)\b
       | farming\s+cooperatives?\b
       | coop[eé]ratives?\s+agricoles?\b
