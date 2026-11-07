@@ -98,16 +98,20 @@ _STRONG_POSITIVE = re.compile(
       | neighborhood\s+assembl(?:y|ies)
       | community\s+land\s+trusts?
       | \btime[\s-]?banks?\b
-      | worker\s+cooperatives?
-      | worker\s+co[\s-]?ops?
-      | platform\s+cooperatives?
-      | platform\s+co[\s-]?ops?
+      | worker(?:s['’]?)?\s+cooperatives?\b
+      | worker(?:s['’]?)?\s+co[\s-]?ops?\b
+      | platform\s+cooperatives?\b
+      | platform\s+co[\s-]?ops?\b
+      | \bplatformco-?ops?\b
+      | (?:soft|sott)ware\s+co[\s-]?(?:operatives?|ops?)\b
+      | faire\s+(?:vos|ses|mes)\s+courses.{0,80}coop[eé]rative\b
+      | coop[eé]rative\s+qui\s+r[eé]habilite\s+des\s+appartements\b
       | food\s+co[\s-]?(?:operatives?|ops?)\b
       | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
       | \bco-?operative\s+charters?\b(?!\s+(?:schools?|academ(?:y|ies)|campus)\b)
       | worker[\s-]owned\s+co[\s-]?(?:operatives?|ops?)\b
-      | farming\s+cooperatives?\b
+      | farming(?:\s+\w+){0,1}\s+cooperatives?\b
       | coop[eé]ratives?\s+agricoles?\b
       | loomio\s+co[\s-]?(?:operatives?|ops?)\b
       | (?:became|become)\s+(?:a\s+)?homeowners?\s+at\s+
@@ -207,16 +211,20 @@ _MUTUALIST_CONTEXT = re.compile(
       | neighborhood\s+assembl
       | community\s+land\s+trusts?
       | \btime[\s-]?banks?\b
-      | worker\s+cooperatives?
-      | worker\s+co[\s-]?ops?
-      | platform\s+cooperatives?
-      | platform\s+co[\s-]?ops?
+      | worker(?:s['’]?)?\s+cooperatives?\b
+      | worker(?:s['’]?)?\s+co[\s-]?ops?\b
+      | platform\s+cooperatives?\b
+      | platform\s+co[\s-]?ops?\b
+      | \bplatformco-?ops?\b
+      | (?:soft|sott)ware\s+co[\s-]?(?:operatives?|ops?)\b
+      | faire\s+(?:vos|ses|mes)\s+courses.{0,80}coop[eé]rative\b
+      | coop[eé]rative\s+qui\s+r[eé]habilite\s+des\s+appartements\b
       | food\s+co[\s-]?(?:operatives?|ops?)\b
       | grocery\s+co[\s-]?(?:operatives?|ops?)\b
       | non[\s-]?profit\s+co[\s-]?(?:operatives?|ops?)\b
       | \bco-?operative\s+charters?\b(?!\s+(?:schools?|academ(?:y|ies)|campus)\b)
       | worker[\s-]owned\s+co[\s-]?(?:operatives?|ops?)\b
-      | farming\s+cooperatives?\b
+      | farming(?:\s+\w+){0,1}\s+cooperatives?\b
       | coop[eé]ratives?\s+agricoles?\b
       | loomio\s+co[\s-]?(?:operatives?|ops?)\b
       | (?:became|become)\s+(?:a\s+)?homeowners?\s+at\s+
@@ -263,7 +271,7 @@ _INSTITUTION_CUE = re.compile(
       | women'?s\s+(?:council|assembl|cooperative|co[\s-]?op)
       | community\s+land\s+trusts?
       | \btime[\s-]?banks?\b
-      | worker\s+co(?:operatives?|[\s-]?ops?)
+      | worker(?:s['’]?)?\s+co(?:operatives?|[\s-]?ops?)\b
       | platform\s+co(?:operatives?|[\s-]?ops?)
       | community\s+currenc
       | \bbookchin\b
