@@ -417,6 +417,95 @@ def test_worker_owned_farming_and_housing_coops_are_strong() -> None:
     assert cooperation.matched is False
 
 
+def test_plural_workers_software_and_french_coops_are_strong() -> None:
+    workers = match_post('To me Socialism is just another word for Workers cooperative.')
+    assert workers.matched is True
+    assert workers.reason == 'strong_positive'
+
+    workers_apostrophe = match_post("The workers' co-op bought the lathe with member shares.")
+    assert workers_apostrophe.matched is True
+    assert workers_apostrophe.reason == 'strong_positive'
+
+    software = match_post(
+        'Hey folks! I was wondering if any oomfs know about running a sottware cooperative? '
+        'Legal / social / financial structure, day to day, how to get started, whatever.'
+    )
+    assert software.matched is True
+    assert software.reason == 'strong_positive'
+
+    software_hyphen = match_post('We are starting a software co-op for the studio tools.')
+    assert software_hyphen.matched is True
+    assert software_hyphen.reason == 'strong_positive'
+
+    software_cooperation = match_post(
+        'The agencies signed a software cooperation agreement and a grant.'
+    )
+    assert software_cooperation.matched is False
+
+    shop = match_post(
+        'Vous voulez faire vos courses dans une coopérative engagée '
+        'au centre ville de Strasbourg ? Venez vous renseigner au magasin Coopalim'
+    )
+    assert shop.matched is True
+    assert shop.reason == 'strong_positive'
+
+    platform = match_post(
+        'One of our members is Platformcoops in Germany. '
+        'We design and support cooperative systems that redistribute ownership.'
+    )
+    assert platform.matched is True
+    assert platform.reason == 'strong_positive'
+
+    platform_agreement = match_post(
+        'The ministries signed a platform cooperation agreement on data sharing.'
+    )
+    assert platform_agreement.matched is False
+
+    rehab = match_post(
+        'Portrait de ce Stéphanois, qui préside une coopérative qui réhabilite des appartements '
+        'pour les mettre à disposition des plus fragiles.'
+    )
+    assert rehab.matched is True
+    assert rehab.reason == 'strong_positive'
+
+    farming = match_post(
+        'Ghassan Najjar, co-founder of Burin’s Land and Farming Agricultural Cooperative, '
+        'was arrested for peaceful activism to protect the olive harvest.'
+    )
+    assert farming.matched is True
+    assert farming.reason == 'strong_positive'
+
+    inference = match_post(
+        'A bit of a milestone!',
+        alt_text='101 members of the Inference Cooperative!',
+    )
+    assert inference.matched is True
+    assert inference.reason == 'entity_in_scope:inference_cooperative'
+
+    milestone_alone = match_post('A bit of a milestone!')
+    assert milestone_alone.matched is False
+
+    supermarket = match_post(
+        'The Co-op was originally membership owned and members used to get a divi. '
+        'If it is still member owned it might be an alternative to the big guys.'
+    )
+    assert supermarket.matched is False
+
+    invest = match_post(
+        'La coopérative TyGAMES c’est pour très bientôt ! '
+        'Il faudrait encore 23 parts sociales souscrites. Investir. Rejoindre la coopérative.'
+    )
+    assert invest.matched is False
+
+    research = match_post(
+        'The hemp industry applied for a government grant to set up a Cooperative Research Centre.'
+    )
+    assert research.matched is False
+
+    game = match_post('EXIT: The Game — Family Game Cooperative Game Puzzle a Day Escape Room')
+    assert game.matched is False
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
