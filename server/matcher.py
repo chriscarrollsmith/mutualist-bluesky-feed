@@ -119,6 +119,17 @@ _STRONG_POSITIVE = re.compile(
       | volunteer\s+labou?r\s+shifts?.{0,80}co[\s-]?ops?\b
       | coop[eé]ratives?.{0,60}conseil\s+d['’]administration
       | community\s+currenc(?:y|ies)
+      | \bmondragon\b
+      | farmer\s+cooperatives?\b
+      | processing\s+cooperatives?\b
+      | bookshop\s+co-?operatives?\b
+      | (?<!social\s)media\s+co-?ops?\b
+      | artists?\s+cooperative\s+galler(?:y|ies)\b
+      | co-?op\s+art\s+galler(?:y|ies)\b
+      | cooperative\s+umbrella\s+orgs?\b
+      | non[\s-]?profit/co-?operatives?\b
+      | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}family\s+farms\b
+      | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -232,6 +243,17 @@ _MUTUALIST_CONTEXT = re.compile(
       | volunteer\s+labou?r\s+shifts?.{0,80}co[\s-]?ops?\b
       | coop[eé]ratives?.{0,60}conseil\s+d['’]administration
       | community\s+currenc(?:y|ies)
+      | \bmondragon\b
+      | farmer\s+cooperatives?\b
+      | processing\s+cooperatives?\b
+      | bookshop\s+co-?operatives?\b
+      | (?<!social\s)media\s+co-?ops?\b
+      | artists?\s+cooperative\s+galler(?:y|ies)\b
+      | co-?op\s+art\s+galler(?:y|ies)\b
+      | cooperative\s+umbrella\s+orgs?\b
+      | non[\s-]?profit/co-?operatives?\b
+      | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}family\s+farms\b
+      | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
