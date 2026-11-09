@@ -1141,5 +1141,89 @@
     "regression": true,
     "author_handle": "inference.coop",
     "note": "False negative 2026-11-08. Inference Cooperative members discussing a trial tier before membership. The link is git.inference.coop."
+  },
+  {
+    "id": "fn-2026-11-09-coop-movement",
+    "text": "I had no idea that the White Poppy movement came about in 1933... www.co-operativeheritage.coop/Blog/the-co-...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "alt_text": "The Co-op Movement and the White Poppy A CHT Blog Post Written by our Archivist about the Co-operative Association with the White Poppy to mark Remembrance Day.",
+    "note": "Co-operative Heritage Trust on the co-op movement and the white poppy."
+  },
+  {
+    "id": "fn-2026-11-09-cooperative-newsrooms",
+    "text": "The Garlic and Roses team is excited to be participating in the Media Accelerator Program through Start.coop for worker-led and cooperative newsrooms\n\nThe cooperative model can serve our readers and communities better than media owned by billionaires\n\nJoin the movement, support cooperative media",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "Worker-led cooperative newsrooms, not a media co-op byline."
+  },
+  {
+    "id": "fn-2026-11-09-galician-book-cooperative",
+    "text": "Avec seulement 45 m², cette librairie remporte un prix national - ActuaLitté.com",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "alt_text": "Cette coopérative galicienne, qui partage ses locaux avec une salle de cinéma, ne dispose que de 45 m² consacrés à la vente de livres.",
+    "note": "NUMAX, a Galician bookshop cooperative."
+  },
+  {
+    "id": "fn-2026-11-09-dairy-cooperative",
+    "text": "Challenge Butter — the West Coast's stick — is owned by dairy farmers. Its parent, California Dairies, is a co-op of about 300 dairies handling 40 percent of California's milk. $4.1 billion in sales, and the owners milk cows.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "Producer cooperative of dairies. The family-farms phrase did not cover dairies."
+  },
+  {
+    "id": "fn-2026-11-09-senior-cooperative",
+    "text": "À 73 ans, elle a opté pour l'indépendance et la convivialité.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "alt_text": "Aurora, 73 ans, résidente d'une coopérative pour seniors : « Dans une maison de retraite, tout est organisé. Cela a ses avantages, mais ici, ce n'est pas comme ça »",
+    "note": "A resident explaining life in a senior housing cooperative."
+  },
+  {
+    "id": "fn-2026-11-09-community-cooperatives",
+    "text": "L'assessore regionale Baruffi: \"Queste realtà non sono solo laboratori di innovazione sociale, ma veri e propri motori di sviluppo economico\"",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "alt_text": "Dalla Regione 360mila euro per sostenere le cooperative di comunità: \"Investiamo sul futuro dei borghi montani\"",
+    "note": "Italian community cooperatives funded as local economic institutions."
+  },
+  {
+    "id": "fn-2026-11-09-wine-cooperative",
+    "text": "Le Chai des Vignerons, la cave coopérative de Lézignan-Corbières, enregistre enfin une récolte normale",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "A winemakers' cave coopérative reporting its harvest."
+  },
+  {
+    "id": "fn-2026-11-09-member-not-employee",
+    "text": "I'm being threatened with an OSHA violation at the co-op I pay to be a member of because I ate food at the same table I was working at. I'm not an employee and there is no boss. Only one person works here as the studio manager and it ain't me.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "Membership dues, not employment, at a studio co-op."
   }
 ]

@@ -602,6 +602,91 @@ def test_named_cooperative_forms_from_the_floor_are_strong() -> None:
     assert cooperative_adj.matched is False
 
 
+def test_cooperative_forms_missed_on_2026_11_09() -> None:
+    movement = match_post(
+        'I had no idea that the White Poppy movement came about in 1933... '
+        'www.co-operativeheritage.coop/Blog/the-co-operative-association'
+    )
+    assert movement.matched is True
+    assert movement.reason == 'strong_positive'
+
+    movement_alt = match_post(
+        'A note on remembrance.',
+        alt_text=(
+            'The Co-op Movement and the White Poppy. '
+            'The Co-operative Association with the White Poppy.'
+        ),
+    )
+    assert movement_alt.matched is True
+    assert movement_alt.reason == 'strong_positive'
+
+    newsroom = match_post(
+        'Start.coop is running an accelerator for worker-led and cooperative newsrooms. '
+        'The cooperative model can serve readers better than media owned by billionaires.'
+    )
+    assert newsroom.matched is True
+    assert newsroom.reason == 'strong_positive'
+
+    bookshop = match_post(
+        'NUMAX a reçu un prix.',
+        alt_text=(
+            'Cette coopérative galicienne, qui partage ses locaux avec une salle de cinéma, '
+            'ne dispose que de 45 m² consacrés à la vente de livres.'
+        ),
+    )
+    assert bookshop.matched is True
+    assert bookshop.reason == 'strong_positive'
+
+    dairies = match_post(
+        'California Dairies is a co-op of about 300 dairies. The owners milk cows.'
+    )
+    assert dairies.matched is True
+    assert dairies.reason == 'strong_positive'
+
+    seniors = match_post(
+        'Elle a opté pour l’indépendance.',
+        alt_text=(
+            "Aurora, 73 ans, résidente d'une coopérative pour seniors : "
+            'ici, ce n’est pas une maison de retraite.'
+        ),
+    )
+    assert seniors.matched is True
+    assert seniors.reason == 'strong_positive'
+
+    communities = match_post(
+        'La Regione investe sui borghi.',
+        alt_text='360mila euro per sostenere le cooperative di comunità nei borghi montani.',
+    )
+    assert communities.matched is True
+    assert communities.reason == 'strong_positive'
+
+    cave = match_post(
+        'Le Chai des Vignerons, la cave coopérative de Lézignan-Corbières, '
+        'enregistre enfin une récolte normale.'
+    )
+    assert cave.matched is True
+    assert cave.reason == 'strong_positive'
+
+    member = match_post(
+        'OSHA threatened me at the co-op I pay to be a member of. '
+        "I'm not an employee and there is no boss."
+    )
+    assert member.matched is True
+    assert member.reason == 'strong_positive'
+
+    pledge = match_post(
+        'The owner of Bloomin’ Farm Cooperative is asking 7,000 people to pledge $500 '
+        'each so the community will form a cooperative and keep the land.'
+    )
+    assert pledge.matched is False
+
+    supermarket = match_post('The local Co-op put the chicken breast in a security box.')
+    assert supermarket.matched is False
+
+    heist = match_post('French cooperative bank Crédit Mutuel Arkéa was targeted in a cyberattack.')
+    assert heist.matched is False
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
