@@ -1225,5 +1225,148 @@
     "split": "holdout",
     "regression": true,
     "note": "Membership dues, not employment, at a studio co-op."
+  },
+  {
+    "id": "fn-2026-11-10-dairy-farms",
+    "text": "The store-brand butter in a lot of Midwest carts — the sticks under the grocer's own label — comes from Foremost Farms, a Wisconsin co-op owned by hundreds of dairy farms across seven states.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "A dairy-farm co-op behind store-brand butter."
+  },
+  {
+    "id": "fn-2026-11-10-cooperatives-uk",
+    "text": "Considering if a co-op is right for you? Join Co-operatives UK online on 1st December to find out more about co-ops, the benefits they offer and how to get a co-op business off the ground.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "Co-operatives UK explaining how to start a co-op."
+  },
+  {
+    "id": "fn-2026-11-10-cws-ironworks",
+    "text": "1953 advert for the Co-op's Progress flush-action washing machine manufactured at the CWS Keighley Ironworks at a time when the Co-op had numerous production and manufacturing sites.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "Co-operative Wholesale Society manufacturing its own appliances."
+  },
+  {
+    "id": "fn-2026-11-10-fair-wages",
+    "text": "Green, toxin-free cleaning from a Pioneer Valley co-op that pays fair wages. Meet GreenLove Eco Cleaning.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "alt_text": "GreenLove Eco Cleaning is a socially responsible cooperative business committed to providing high-quality jobs and high-quality green cleaning services.",
+    "note": "A cooperative cleaning business that pays fair wages."
+  },
+  {
+    "id": "fn-2026-11-10-solar-bulk",
+    "text": "A free Sanibel solar co-op is offering education, evaluations, and bulk-purchase savings for residents who want backup power.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "A solar co-op organized as group education and bulk purchase."
+  },
+  {
+    "id": "fn-2026-11-10-community-co-op",
+    "text": "Homeless by GSA: The housing association bankrupting a community co-op",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "A community co-op facing a housing association."
+  },
+  {
+    "id": "fn-2026-11-10-coop-platforms",
+    "text": "Why Don’t Artists Join Together in Co-Op Platforms? Most of the money in the creative economy goes to corporations and intermediaries.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "An argument for artist co-op platforms."
+  },
+  {
+    "id": "fn-2026-11-10-librairie",
+    "text": "A l'occasion des 50 ans de la librairie, une lecture musicale au sein de notre librairie coopérative.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "A cooperative bookshop marking fifty years."
+  },
+  {
+    "id": "fn-2026-11-10-voting-members",
+    "text": "Lani and Mae are now full voting members of the cooperative and will help continue to shape Northsky.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "New voting members of a worker cooperative."
+  },
+  {
+    "id": "fn-2026-11-10-farms-cooperative",
+    "text": "Revitalizing Birmingham: Black Farmers Launch Grocery Store After Decades in Food Despair",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "alt_text": "Fountain Heights Farms Cooperative opens a grocery store in Birmingham, Alabama, after nearly 70 years of food scarcity in the neighborhood.",
+    "note": "A farms cooperative opening a grocery."
+  },
+  {
+    "id": "fn-2026-11-10-scop-ti",
+    "text": "Les salarié·es de Scop-Ti, près de Marseille, autogèrent leur usine de thé depuis 2014, après une longue lutte face au géant Unilever.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "alt_text": "Société coopérative ouvrière provençale de thés et infusions (Scop-Ti)",
+    "note": "Workers self-managing a tea factory as a SCOP."
+  },
+  {
+    "id": "fn-2026-11-10-network-of-coops",
+    "text": "After getting turned away by employers and landlords, the founders of ChiFresh Kitchen built a network of co-ops to provide jobs and homes.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "A network of co-ops for jobs and homes."
+  },
+  {
+    "id": "fn-2026-11-10-worker-owner",
+    "text": "Jean Pham, a worker-owner of Underpainting Collective, a cooperative school of fine art, says anyone can learn to draw and paint.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "note": "Worker-owners of a cooperative school of fine art."
+  },
+  {
+    "id": "fn-2026-11-10-baugemeinschaft",
+    "text": "Building cooperative: This will be a house that suits everyone. https://www.zeit.de/geld/2026-11/baugemeinschaft-hausbau-hauskauf-grundriss-ausstattung-wohnung",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "note": "A German Baugemeinschaft, a building cooperative for a shared house."
   }
 ]

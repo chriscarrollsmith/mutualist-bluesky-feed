@@ -687,6 +687,136 @@ def test_cooperative_forms_missed_on_2026_11_09() -> None:
     assert heist.matched is False
 
 
+def test_cooperative_forms_missed_on_2026_11_10() -> None:
+    dairy = match_post(
+        'The store-brand butter comes from Foremost Farms, a Wisconsin co-op '
+        'owned by hundreds of dairy farms across seven states.'
+    )
+    assert dairy.matched is True
+    assert dairy.reason == 'strong_positive'
+
+    apex = match_post(
+        'Join Co-operatives UK online to find out more about co-ops, the benefits '
+        'they offer and how to get a co-op business off the ground.'
+    )
+    assert apex.matched is True
+    assert apex.reason == 'strong_positive'
+
+    wholesale = match_post(
+        "1953 advert for the Co-op's Progress washing machine manufactured at the "
+        'CWS Keighley Ironworks.'
+    )
+    assert wholesale.matched is True
+    assert wholesale.reason == 'strong_positive'
+
+    bookshop = match_post(
+        'Lecture musicale au sein de notre librairie coopérative, pour les 50 ans de la librairie.'
+    )
+    assert bookshop.matched is True
+    assert bookshop.reason == 'strong_positive'
+
+    members = match_post(
+        "They're now full voting members of the cooperative and will help shape Northsky."
+    )
+    assert members.matched is True
+    assert members.reason == 'strong_positive'
+
+    farms = match_post(
+        'Black farmers open a grocery store.',
+        alt_text=(
+            'Fountain Heights Farms Cooperative opens a grocery store in Birmingham '
+            'after nearly 70 years of food scarcity.'
+        ),
+    )
+    assert farms.matched is True
+    assert farms.reason == 'strong_positive'
+
+    scop = match_post(
+        'Les salarié·es de Scop-Ti, près de Marseille, autogèrent leur usine de thé depuis 2014.'
+    )
+    assert scop.matched is True
+    assert scop.reason == 'strong_positive'
+
+    jobs = match_post(
+        'The founders of ChiFresh Kitchen built a network of co-ops to provide jobs and homes.'
+    )
+    assert jobs.matched is True
+    assert jobs.reason == 'strong_positive'
+
+    school = match_post(
+        'Jean Pham, a worker-owner of Underpainting Collective, a cooperative school of fine art.'
+    )
+    assert school.matched is True
+    assert school.reason == 'strong_positive'
+
+    platforms = match_post(
+        'Why Don’t Artists Join Together in Co-Op Platforms? '
+        'Most of the money in the creative economy goes to corporations and intermediaries.'
+    )
+    assert platforms.matched is True
+    assert platforms.reason == 'strong_positive'
+
+    hoax = match_post(
+        'Apple Corps is going to do Imagine Multimedia. There was a vote after '
+        "Paul and Ringo's apparent deaths.",
+        alt_text=(
+            'Why Don’t Artists Join Together in Co-Op Platforms? '
+            'Most of the money in the creative economy goes to corporations.'
+        ),
+    )
+    assert hoax.matched is False
+    assert hoax.reason == 'hard_negative'
+
+    house = match_post(
+        'Building cooperative: This will be a house that suits everyone. '
+        'https://www.zeit.de/geld/2026-11/baugemeinschaft-hausbau'
+    )
+    assert house.matched is True
+    assert house.reason == 'strong_positive'
+
+    cleaning = match_post(
+        'Green, toxin-free cleaning from a Pioneer Valley co-op that pays fair wages.'
+    )
+    assert cleaning.matched is True
+    assert cleaning.reason == 'strong_positive'
+
+    solar = match_post(
+        'A free Sanibel solar co-op is offering education, evaluations, and '
+        'bulk-purchase savings for residents who want backup power.'
+    )
+    assert solar.matched is True
+    assert solar.reason == 'strong_positive'
+
+    community = match_post('Homeless by GSA: The housing association bankrupting a community co-op')
+    assert community.matched is True
+    assert community.reason == 'strong_positive'
+
+    shares = match_post('Buy shares in our solar co-op. The offer closes Friday.')
+    assert shares.matched is False
+
+    kickstarter = match_post(
+        "We're a worker-cooperative founded by veteran gamedevs on socialist principles, "
+        "and we're launching on Kickstarter next Tuesday."
+    )
+    assert kickstarter.matched is False
+
+    benefit = match_post(
+        'We’ll be playing some new songs at this benefit for our children’s place, '
+        'a co-op preschool in Burbank.'
+    )
+    assert benefit.matched is False
+
+    pledge = match_post(
+        'Sun Prairie farm owner seeks 7,000 pledges to turn farm into full cooperative.'
+    )
+    assert pledge.matched is False
+
+    merger = match_post(
+        'The CMA has approved plans for Southern Co-op and The Co-operative Group to join forces.'
+    )
+    assert merger.matched is False
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
