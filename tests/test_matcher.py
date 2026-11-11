@@ -817,6 +817,78 @@ def test_cooperative_forms_missed_on_2026_11_10() -> None:
     assert merger.matched is False
 
 
+def test_cooperative_forms_missed_on_2026_11_11() -> None:
+    cases = [
+        'Discover how a member-owned co-op built the Seattle REI flagship.',
+        'The co-op has no ad inventory to fill: member dues fund the service.',
+        'Bison dip is made by a co-op. Upstate Niagara is owned by about 230 family dairy farms.',
+        'Brighton and Hove Energy Services Co-op is opening a solar communities programme.',
+        'Berkshire Co-op operating in the red for third year, finances in dire straits.',
+        'Learn how we can help your co-op build a stronger financial foundation.',
+        'lmao wait wft ace hardware is a co-op???',
+        'We are now accepting bookings for the West Village Rehearsal Co-Op (WVRC).',
+        'A Sabby co-op member with a monthly subscription should update payment.',
+        'Wisconsin Food Hub Cooperative is bringing locally grown produce into school cafeterias.',
+        'The county distributed tools to 50 Savings and Credit Cooperative Societies.',
+        'Organic Valley operates as a farmer-owned cooperative rather than a corporation.',
+        'Voxeurop is the first publication managed by a European press cooperative.',
+        'VGS is a publishing cooperative managed by a voluntary board of directors.',
+        'Adieux au patronat: gestion ouvrière dans une usine reprise en coopérative.',
+        'Frédéric Mauduit, nouveau président de la coopérative Sherpa.',
+        'If we have private equity should we not have cooperative equity?',
+        'Jersey Homesteads was a cooperative community planned for garment workers.',
+        'ICA helps bring cooperative practice closer together.',
+        "C'est une coopérative qui réfléchit, investit, et innove.",
+        'La coopérative a racheté une station service dont le propriétaire partait.',
+        'Can a cooperative model help university spin-outs scale?',
+        'Début de chantier pour la coopérative d’habitation La Solidarité.',
+        'My new local pub is a gem. It is a cooperative, and the beer is local.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    emilia = match_post(
+        '',
+        alt_text=(
+            "Cooperative, un valore aggiunto per l'Emilia-Romagna. "
+            "I risultati dell'indagine dell'Osservatorio regionale sulla Cooperazione."
+        ),
+    )
+    assert emilia.matched is True
+    assert emilia.reason == 'strong_positive'
+
+    party = match_post('Friendsgiving dinner at the West Village Rehearsal Co-Op from 5 to 8.')
+    assert party.matched is False
+
+    renters = match_post(
+        'Workers get first dibs to turn it into a cooperative, and generous grants '
+        'from the state. Euthanise the renters already.'
+    )
+    assert renters.matched is False
+
+    extension = match_post(
+        'As a Master Gardener with Cooperative Extension, I am appalled that the '
+        'county removed Extension funding.'
+    )
+    assert extension.matched is False
+
+    tools = match_post(
+        'What would it take for newcomers to actually join and use cooperative tools online?'
+    )
+    assert tools.matched is False
+
+    electric = match_post('The rural electric co-op is raising the kilowatt rate this winter.')
+    assert electric.matched is False
+
+    hockey = match_post('The school board will seek legal advice on a boys hockey co-op.')
+    assert hockey.matched is False
+
+    dues_only = match_post('Reminder: member dues for the chess club are due Friday.')
+    assert dues_only.matched is False
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {

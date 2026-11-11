@@ -156,6 +156,31 @@ _STRONG_POSITIVE = re.compile(
       | socially\s+responsible\s+cooperative\s+business\b
       | solar\s+co-?ops?\b.{0,160}\bbulk[\s-]purchase
       | community\s+co-?ops?\b
+      | member-owned\s+co-?ops?\b
+      | co-?ops?\b.{0,80}\bmember\s+dues\b
+      | co-?op\b.{0,180}\bfamily\s+dairy\s+farms\b
+      | energy\s+services\s+co-?op\b
+      | co-?op\s+operating\s+in\s+the\s+red\b
+      | co-?op\s+build\s+a\s+stronger\s+financial\s+foundation\b
+      | ace\s+hardware\s+is\s+a\s+co-?op\b
+      | rehearsal\s+co-?op\s+\(wvrc\)
+      | co-?op\s+member\s+with\s+a\s+monthly\s+subscription\b
+      | food\s+hub\s+cooperatives?\b
+      | savings\s+and\s+credit\s+cooperative\b
+      | farmer-owned\s+cooperatives?\b
+      | press\s+cooperatives?\b
+      | publishing\s+cooperatives?\b
+      | reprise\s+en\s+coop[eé]rative\b
+      | pr[eé]sident\s+de\s+la\s+coop[eé]rative\b
+      | cooperative\s+equity\b
+      | cooperative\s+community\s+planned\b
+      | bring\s+cooperative\s+practice\b
+      | coop[eé]rative\s+qui\s+r[eé]fl[eé]chit\b
+      | coop[eé]rative\s+a\s+rachet[eé]\b
+      | osservatorio\s+regionale\s+sulla\s+cooperazione\b
+      | cooperative\s+model\s+help\s+university\b
+      | coop[eé]rative\s+d['’]habitation\b
+      | \blocal\s+pub\b.{0,80}\bcooperative\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
