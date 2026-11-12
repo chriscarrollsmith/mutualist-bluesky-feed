@@ -889,6 +889,53 @@ def test_cooperative_forms_missed_on_2026_11_11() -> None:
     assert dues_only.matched is False
 
 
+def test_cooperative_forms_missed_on_2026_11_12() -> None:
+    cases = [
+        'Four reporters started a co-op after their papers closed.',
+        "That's how the Co-op started. Pooling saved money, then they opened a storefront.",
+        'I am glad to see a co-op emerging around the ATmosphere.',
+        'They are going to build Assembly as a co-op.',
+        'Software to start and run a co-op or other democratic workplace.',
+        'Governance software forged in co-op principles.',
+        'Introducing the Atmosphere Community Cooperative, governed by its members.',
+        'Edinburgh Community Solar Co-operative owns and operates the panels.',
+        'Lock in your co-op shifts early or you will be sorting potatoes.',
+        'Who we are: a member-governed home. Atmosphere Co-op.',
+        "L'Alliance coopérative internationale ouvre PortailCoop.",
+        "La coopérative foncière eclOOre mobilise l'épargne citoyenne.",
+        'French cooperative law solved this with the titre participatif.',
+        'A cooperative software initiative that helps shops collectively own their booking tools.',
+        'Jersey Homesteads was planned as a cooperative community for garment workers.',
+        'Come to the workshop, and join our co-op.',
+        'Honoured to support as the cooperative gets set up.',
+        'Really Really Free Market: Clothing Swap 11/15',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+
+    drops = [
+        'Luma Island adds four-player cross-platform co-op on December 2.',
+        'I started a co-op game server for the weekend.',
+        'The co-op shifts to a new map after the boss.',
+        'Join our co-op game tonight.',
+        (
+            'The zoning code cannot be changed to support the Community Land Trust, '
+            'which I support, unless staff support the changes, which I do not support #a2council'
+        ),
+        'Atmosphere Community Cooperative has been verified by @bsky.app.',
+        'The really really free market archive needs a new index.',
+        'The rural electric co-op is raising the kilowatt rate this winter.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+    platform = match_post('Our platform co-op shares surplus with the workers who build it.')
+    assert platform.matched is True
+    assert platform.reason == 'strong_positive'
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
