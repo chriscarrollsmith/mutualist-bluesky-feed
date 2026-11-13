@@ -330,7 +330,11 @@ def test_food_and_nonprofit_coops_are_strong_and_game_co_op_stays_dropped() -> N
         'What policies would you want around this technology?'
     )
     assert charter.matched is True
-    assert charter.reason == 'strong_positive'
+    assert charter.reason == 'entity_in_scope:inference_cooperative'
+
+    charter_phrase = match_post('We govern our AI use together according to a cooperative charter.')
+    assert charter_phrase.matched is True
+    assert charter_phrase.reason == 'strong_positive'
 
     charter_school = match_post('The Cooperative Charter School announced a bake sale for Friday.')
     assert charter_school.matched is False
@@ -504,6 +508,98 @@ def test_plural_workers_software_and_french_coops_are_strong() -> None:
 
     game = match_post('EXIT: The Game — Family Game Cooperative Game Puzzle a Day Escape Room')
     assert game.matched is False
+
+
+def test_named_cooperative_forms_from_the_floor_are_strong() -> None:
+    mondragon = match_post(
+        "Spain's Mondragon cooperative group employs over 71,000 people. "
+        'Built around worker cooperation, not billionaire ownership.'
+    )
+    assert mondragon.matched is True
+    assert mondragon.reason == 'strong_positive'
+
+    farmers = match_post(
+        'Farmer cooperatives must be prepared for crises, not only for bigger markets.'
+    )
+    assert farmers.matched is True
+    assert farmers.reason == 'strong_positive'
+
+    processor = match_post(
+        'Glacier Processing Cooperative is upgrading its plant to better serve producers.'
+    )
+    assert processor.matched is True
+    assert processor.reason == 'strong_positive'
+
+    bookshop = match_post(
+        'our bookshop cooperative had its AGM and voted to become a not-for-profit '
+        'so the surplus keeps a bookshop in the area'
+    )
+    assert bookshop.matched is True
+    assert bookshop.reason == 'strong_positive'
+
+    media = match_post(
+        '1 hour webinar about the project',
+        alt_text=('Media co-ops: How journalists and news organizations are building together'),
+    )
+    assert media.matched is True
+    assert media.reason == 'strong_positive'
+
+    social_media = match_post('Our social media co-op campaign ships the app on Friday.')
+    assert social_media.matched is False
+
+    gallery = match_post(
+        'Sylvia Sleigh painted the members of the longest running all-female '
+        'artists cooperative gallery in the US.'
+    )
+    assert gallery.matched is True
+    assert gallery.reason == 'strong_positive'
+
+    joined = match_post("I've officially become a member of a co-op art gallery.")
+    assert joined.matched is True
+    assert joined.reason == 'strong_positive'
+
+    umbrella = match_post(
+        'Are there any cooperative umbrella orgs that offer benefits and payroll '
+        'to enrolled freelancer members?'
+    )
+    assert umbrella.matched is True
+    assert umbrella.reason == 'strong_positive'
+
+    lab = match_post('Wish we can start our own non-profit/cooperative lab testing service in BC.')
+    assert lab.matched is True
+    assert lab.reason == 'strong_positive'
+
+    farms = match_post(
+        'Knouse Foods is a co-op of just over 100 family farms — 15,000 acres of apples.'
+    )
+    assert farms.matched is True
+    assert farms.reason == 'strong_positive'
+
+    trades = match_post(
+        'Maçonnerie, couverture, plomberie, électricité…',
+        alt_text='Huit entreprises s’unissent en coopérative',
+    )
+    assert trades.matched is True
+    assert trades.reason == 'strong_positive'
+
+    inference = match_post(
+        'Could universities join the co-op on their own terms? '
+        'https://git.inference.coop/co-op/support/issues/32'
+    )
+    assert inference.matched is True
+    assert inference.reason == 'entity_in_scope:inference_cooperative'
+
+    bare = match_post('Could universities join the co-op on their own terms?')
+    assert bare.matched is False
+
+    purchase = match_post('Council authorized a cooperative purchase agreement with Motorola.')
+    assert purchase.matched is False
+
+    heist = match_post('French cooperative bank Crédit Mutuel Arkéa was targeted in a cyberattack.')
+    assert heist.matched is False
+
+    cooperative_adj = match_post("You've been very cooperative.")
+    assert cooperative_adj.matched is False
 
 
 def test_extract_alt_text_clips_external_description() -> None:

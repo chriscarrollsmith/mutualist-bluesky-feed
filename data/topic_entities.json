@@ -10,7 +10,7 @@
     {
       "id": "inference_cooperative",
       "scope": "in_scope",
-      "surfaces": ["inference cooperative"]
+      "surfaces": ["inference cooperative", "inference.coop"]
     },
     {
       "id": "mutualism", // pragma: allowlist secret
