@@ -31,7 +31,7 @@ DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
-PROMPT_VERSION = 'institution-keep-v6'
+PROMPT_VERSION = 'institution-keep-v7'
 SPIRIT_PROMPT_VERSION = 'spirit-account-v2'
 SPIRIT_MIN = 0.58
 VOICE_MIN = 0.70
@@ -73,7 +73,9 @@ _KEEP_QUESTION: dict[str, Any] = {
                 'The post substantially celebrates or practices an in-scope '
                 'institution, in a constructive tone. Defiance and non-violent '
                 'resistance are fine. Argument between contract and assembly is '
-                'fine. Collective org news without a personal hardship pitch is fine.'
+                'fine. Collective org news without a personal hardship pitch is fine. '
+                'A co-op explaining that member dues fund the service is in scope, '
+                'including when the contrast is an ad-funded platform.'
             ),
             'false': (
                 'Off-topic, hostile, unclear, or out of scope. Includes right-wing '
