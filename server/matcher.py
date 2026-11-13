@@ -139,6 +139,23 @@ _STRONG_POSITIVE = re.compile(
       | cave\s+coop[eé]rative\b
       | co-?ops?\b.{0,40}\bpay\s+to\s+be\s+a\s+members?\b
       | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
+      | co-?op\s+owned\s+by\s+(?:[\w'’-]+\s+){0,8}dairy\s+farms\b
+      | co-?operatives\s+uk\b
+      | \bcws\b
+      | co-?operative\s+home\s+magazine\b
+      | librairie\s+coop[eé]rative\b
+      | voting\s+members?\s+of\s+the\s+cooperative\b
+      | \bfarms?\s+cooperatives?\s+opens?\b
+      | coop[eé]rative\s+ouvri[eè]re\b
+      | autog[eè]rent\s+leur\s+usine\b
+      | network\s+of\s+co-?ops\b
+      | worker-owners?\b
+      | co-?op\s+platforms\b
+      | \bbaugemeinschaft\b
+      | co-?ops?\s+that\s+pays?\s+fair\s+wages\b
+      | socially\s+responsible\s+cooperative\s+business\b
+      | solar\s+co-?ops?\b.{0,160}\bbulk[\s-]purchase
+      | community\s+co-?ops?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -335,7 +352,8 @@ _INSTITUTION_CUE = re.compile(
 #
 # VRChat, roleplay packs, and shrine invites are the same kind of collision:
 # an in-scope ideology name does not make a fandom or adult social club
-# into a commune, assembly, or cooperative.
+# into a commune, assembly, or cooperative. A death hoax in the post's own
+# words is not rescued by an in-scope link card.
 _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
     r"""
     (?:
@@ -357,6 +375,7 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | tiny\s+sweethearts
       | communal\s+shrine
       | \bgoddess(?:['’]s)?\s+pack\b
+      | apparent\s+deaths
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -394,6 +413,7 @@ _HARD_NEGATIVE = re.compile(
       | tiny\s+sweethearts
       | communal\s+shrine
       | \bgoddess(?:['’]s)?\s+pack\b
+      | apparent\s+deaths
     )
     """,
     re.IGNORECASE | re.VERBOSE,
