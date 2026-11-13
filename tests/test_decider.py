@@ -40,7 +40,7 @@ def test_prompt_excludes_biological_mutualism() -> None:
 
 def test_prompt_rejects_commercial_peoples_bank_earnings() -> None:
     keep = _KEEP_QUESTION['keep']
-    assert PROMPT_VERSION == 'institution-keep-v7'
+    assert PROMPT_VERSION == 'institution-keep-v8'
     instructions = keep['instructions'].lower()
     false_criteria = keep['criteria']['false'].lower()
     assert "people's bank" in instructions
@@ -56,15 +56,27 @@ def test_prompt_rejects_commercial_peoples_bank_earnings() -> None:
 
 def test_prompt_keeps_member_dues_against_ad_platforms() -> None:
     keep = _KEEP_QUESTION['keep']
-    assert PROMPT_VERSION == 'institution-keep-v7'
+    assert PROMPT_VERSION == 'institution-keep-v8'
     true_criteria = keep['criteria']['true'].lower()
     assert 'member dues fund the service' in true_criteria
     assert 'ad-funded platform' in true_criteria
 
 
+def test_prompt_rejects_share_offers_and_land_trust_name_drops() -> None:
+    keep = _KEEP_QUESTION['keep']
+    assert PROMPT_VERSION == 'institution-keep-v8'
+    instructions = keep['instructions'].lower()
+    false_criteria = keep['criteria']['false'].lower()
+    assert 'share offer is out of scope' in instructions
+    assert 'bipartisan building reform' in instructions
+    assert 'holds land for occupancy stays in scope' in instructions
+    assert 'co-operative share offer' in false_criteria
+    assert 'bipartisan building reform' in false_criteria
+
+
 def test_prompt_rejects_social_club_invites() -> None:
     keep = _KEEP_QUESTION['keep']
-    assert PROMPT_VERSION == 'institution-keep-v7'
+    assert PROMPT_VERSION == 'institution-keep-v8'
     assert 'fandom, roleplay, and adult social-club invites' in keep['instructions'].lower()
     assert 'vrchat' in keep['criteria']['false'].lower()
     assert 'roleplay packs' in keep['criteria']['false'].lower()

@@ -101,7 +101,7 @@ _STRONG_POSITIVE = re.compile(
       | worker(?:s['’]?)?\s+cooperatives?\b
       | worker(?:s['’]?)?\s+co[\s-]?ops?\b
       | platform\s+cooperatives?\b
-      | (?<![\w-])platform\s+co[\s-]?ops?\b
+      | (?<![\w-])platform\s+co[\s-]?ops?\b(?!\s+(?:puzzle|game|games|mode|gameplay)\b)
       | \bplatformco-?ops?\b
       | (?:soft|sott)ware\s+co[\s-]?(?:operatives?|ops?)\b
       | faire\s+(?:vos|ses|mes)\s+courses.{0,80}coop[eé]rative\b
@@ -202,6 +202,27 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+software\s+initiative
       | join\s+our\s+co-?op\b(?!\s+game\b)
       | cooperative\s+gets\s+set\s+up
+      | really\s+really\s+free\s+markets?\b(?!\s+archive\b)
+      | oldest\s+continuing\s+co-?ops?\b
+      | save\s+our\s+co-?ops?\b
+      | multi-stakeholder\s+co-?operatives?\b
+      | owned\s+by\s+the\s+taxi\s+drivers\b
+      | run\s+their\s+own\s+co-?op\b
+      | customer-owned\s+co-?ops?\b
+      | co-?op\s+wind\s?farms?\b
+      | cooperative\s+wholesale\s+society\b
+      | loose\s+co-?op\b
+      | form\s+a\s+co-?op\b(?!\s+(?:team|party|lobby|group|mode|game)\b)
+      | cooperative\s+movement\b
+      | cooperative\s+villages?\b
+      | artists?\s+cooperatives?\b
+      | computer\s+cooperatives?\b
+      | credit\s+cooperative\s+societ(?:y|ies)\b
+      | journalist-owned\s+cooperatives?\b
+      | \bconfcooperative\b
+      | cooperative\s+roots\b
+      | world\s+cooperative\s+monitor\b
+      | lieu\s+de\s+vie\s+de\s+la\s+coop
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -297,7 +318,7 @@ _MUTUALIST_CONTEXT = re.compile(
       | worker(?:s['’]?)?\s+cooperatives?\b
       | worker(?:s['’]?)?\s+co[\s-]?ops?\b
       | platform\s+cooperatives?\b
-      | (?<![\w-])platform\s+co[\s-]?ops?\b
+      | (?<![\w-])platform\s+co[\s-]?ops?\b(?!\s+(?:puzzle|game|games|mode|gameplay)\b)
       | \bplatformco-?ops?\b
       | (?:soft|sott)ware\s+co[\s-]?(?:operatives?|ops?)\b
       | faire\s+(?:vos|ses|mes)\s+courses.{0,80}coop[eé]rative\b
@@ -424,6 +445,9 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | apparent\s+deaths
       | \#a2council\b
       | has\s+been\s+verified\s+by\s+@
+      | \bshare\s+offers?\b
+      | bipartisan.{0,200}community\s+land\s+trusts?
+      | brought\s+up\s+community\s+land\s+trusts?
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -464,6 +488,9 @@ _HARD_NEGATIVE = re.compile(
       | apparent\s+deaths
       | \#a2council\b
       | has\s+been\s+verified\s+by\s+@
+      | \bshare\s+offers?\b
+      | bipartisan.{0,200}community\s+land\s+trusts?
+      | brought\s+up\s+community\s+land\s+trusts?
     )
     """,
     re.IGNORECASE | re.VERBOSE,

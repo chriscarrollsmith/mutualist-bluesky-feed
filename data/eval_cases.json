@@ -1891,5 +1891,360 @@
     "regression": true,
     "author_handle": "verified.evil.gay",
     "note": "A verification notice is not the cooperative."
+  },
+  {
+    "id": "fn-2026-11-13-rrfm-favorite",
+    "text": "The Really Really Free Market is one of my favorite things in LA and the I Dream of a Los Angeles anti-41.18 zine vending machine from @katiemcvay.cryptoanarchy.network brought me so much joy!!",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "glennmrobinson.bsky.social",
+    "note": "A Really Really Free Market the poster lives with in LA.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-rrfm-scenes",
+    "text": "Some scenes from the Really Really Free Market:",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "lastreetcare.bsky.social",
+    "note": "Scenes from a Really Really Free Market.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-finland-co-op",
+    "text": "The Finland Co-op, Minnesota’s oldest continuing co-op since 1913\n\nhttps://www.byteseu.com/2517735/\n\nJust a few miles from Lake Superior, off of Highway 61 you’ll find the Finland Co-op, Minnesota’s oldest continuing Cooperative since 1913. Just a few miles from Lake Superior, you’ll find the …",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "byteseu.bsky.social",
+    "alt_text": "The Finland Co-op, Minnesota's oldest continuing co-op since 1913 - Bytes Europe Just a few miles from Lake Superior, off of Highway 61 you'll find the Finland Co-op, Minnesota's oldest continuing Cooperative since 1913.",
+    "note": "Minnesota’s oldest continuing co-op, open since 1913.",
+    "langs": [
+      "en-US",
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-save-our-co-op",
+    "text": "Surrey ACORN holds a Save Our Co-op, Save Our Homes Day of Action acorncanada.org/news/surrey-...\n#ACORN #Occupy #BC #Surrey #Canada",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "druidchief.bsky.social",
+    "alt_text": "Surrey ACORN 'Save Our Co-Op, Save Our Homes' Action! ACORN held an Action calling on new Mayor McCallum to play a leading role in ensuring that BC restore plans to build a new co-op to replace the Mayflower Co-op as it is slated for redevelopment.",
+    "note": "A day of action to save the Mayflower housing co-op from redevelopment.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-multi-stakeholder",
+    "text": "As a multi-stakeholder co-operative, all of the funds that go toward running New Feeling and paying our writers fairly comes from our subscribers. \n\nIf you've enjoyed our work, consider joining the co-op today! \n\nwww.newfeeling.ca#/portal",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "newfeelingcoop.bsky.social",
+    "alt_text": "New Feeling A cooperative of music journalists and community enthusiastically covering the sounds across so-called Canada.",
+    "note": "A multi-stakeholder co-operative of music journalists funded by subscribers.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-taxi-drivers",
+    "text": "Hey if you’re in Ireland you should be using Tap a Taxi for your taxi needs. Fuck uber/lyft/freenow. Just used it for the first time. Just as easy as the other apps but the drivers get more money and you pay less fees. It’s owned by the taxi drivers!\n\napps.apple.com/app/id675991...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "michaeltremmel.bsky.social",
+    "alt_text": "Tap a Taxi: Ireland Rides App - App Store Download Tap a Taxi: Ireland Rides by Tap a Taxi Co Op on the App Store. See screenshots, ratings and reviews, user tips, and more apps like Tap a Taxi: Ireland…",
+    "note": "A taxi app owned by the drivers, against Uber.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-fishers-co-op",
+    "text": "In its early decades Apollo Bay was reached almost only by sea. Its fishermen still run their own co-op, as they have since 1948.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "greatwideopen-blog.bsky.social",
+    "alt_text": "Apollo Bay: Harbour Town Between the Otways and the Sea Apollo Bay on the Great Ocean Road: a fishing harbour, a long beach and the Otways rainforest behind, with where to stay and where to eat.",
+    "note": "Apollo Bay fishers have run their own co-op since 1948."
+  },
+  {
+    "id": "fn-2026-11-13-customer-owned",
+    "text": "I put my money where my mouth is and designed/built a \"social\" platform that is (a) members only and (b) has no public exposure, so it's kinda like \"old internet.\"\n\nTo innoculate against the future, I want to make it a customer-owned co-op. Anyone with xp w/that structure want to help me out?",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "andymoore.bsky.social",
+    "note": "A members-only social platform the builder wants to make a customer-owned co-op.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-windfarm",
+    "text": "Our co-op windfarm has been spinning idle for most of the month",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "jfparis.rouge.eu.org.ap.brid.gy",
+    "alt_text": "Last 10 days generation stats for our share of the Kirk Hill wind farm. Power generated is much lower than the p50 forecast",
+    "note": "A member reporting generation from their co-op windfarm.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-cws",
+    "text": "The mighty Balloon Street goods entrance to the Cooperative Wholesale Society office and warehouse, #Manchester. Early 20th century, when the Co-Op was at the peak of its powers. (That part of town is effectively the 'Co-Op Quarter'.)\n\n📷 My own\n\n#AdoorableThursday #Thursgate #Lancashire",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "stelingard.bsky.social",
+    "alt_text": "A large double gate and doorway, set into a very large building. A frieze above reads 'COOPERATIVE WHOLESALE SOCy Ltd.' The street visible in front is cobbled and has tram tracks.",
+    "note": "The Cooperative Wholesale Society warehouse at the peak of the co-op movement.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-loose-co-op",
+    "text": "When I was in college, I organized eight families into a loose co-op. Went to the Farmers Market Saturday mornings to buy the best fruits & vegetables I could find. Came home & sorted them into equal portions. Got my produce free for my labor. Was a wonderful privilege and taught my kids so much.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "wyliecat.bsky.social",
+    "note": "A family buying club: produce from the farmers market, free for the labor of sorting.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-form-a-co-op",
+    "text": "This is the thing about the idea of government run grocery stores: it's a silly, redundant idea, because if people want a non-profit grocery store in their area, all they have to do is form a co-op. You don't actually have to wait for the government to do it for you. You have agency.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "mrjohnmuller.bsky.social",
+    "note": "A non-profit grocery is something neighbors form as a co-op, without waiting on the state.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-cooperative-movement",
+    "text": "popularresistance.org/platform-lau...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "charleskeener.bsky.social",
+    "alt_text": "New Platform To ‘Build Knowledge For A Stronger Cooperative Movement’ - PopularResistance.Org Co-operative researchers, educators, practitioners and organisations have access to a new tool that aims to support access to, and the sharing of, knowledge and research on co-operatives.  PortailCoop is a digital platform developed and managed by the Institut international des coopératives Alphonse-et-Dorimène-Desjard",
+    "note": "A platform for research on the cooperative movement.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-confcooperative",
+    "text": "Si è aperta oggi nell’ex chiesa di San Giacomo la prima edizione del Festival dell’Economia Sociale promosso dalla Fondazione Economia Sociale ETS, costituita da Confcooperative, E-Ius e Fondazione Terzjus. Un sistema di economia reale che vede protagonisti: cooperative, organizzazioni del Terzo...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "mm-romagna-news.bsky.social",
+    "alt_text": "Gardini: “Forlì capitale dell’economia sociale” Si è aperta oggi nell’ex chiesa di San Giacomo la prima edizione del Festival dell’Economia Sociale promosso dalla Fondazione Economia Sociale ETS, costituita da Confcooperative, E-Ius e Fondazione Terzjus. Un sistema di economia reale che vede protagonisti: cooperative, organizzazioni del Terzo settore, enti sportivi",
+    "note": "A social-economy festival opened by Confcooperative."
+  },
+  {
+    "id": "fn-2026-11-13-cooperative-village",
+    "text": "Welcome to the ecovillage of Hjortshøj !\n\nWe believe that the cooperative village of Hjortshøj, since its creation in 1992, has been and remains a living laboratory for a sustainable way of life, and therefore a source of inspiration for society as a whole for a sustainable future.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "self-management.bsky.social",
+    "alt_text": "English 1 | [company_name]",
+    "note": "The cooperative village of Hjortshøj, a living laboratory since 1992.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-cooperative-roots",
+    "text": "🎉 80 years of Wakefern Food Corp.!\n\nPFMA Corporate Leadership Sponsor and Member Wakefern celebrated its cooperative roots, family-owned businesses and commitment to communities at its annual meeting. 💙\n\n🔗 http://spr.ly/6184BH93qe",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "pafoodmerchants.bsky.social",
+    "note": "Wakefern, a retailer-owned cooperative, marking its cooperative roots."
+  },
+  {
+    "id": "fn-2026-11-13-ica",
+    "text": "Want a quick overview of what ICA works on?\n\nPolicy & advocacy, cultural heritage, World Cooperative Monitor, #coops4dev🌍, Cooperative Identity, ICETT, CM50, stories.coop and G20 engagement — all linked from one page.\n\nExplore “Our work” here: www.ica.coop/en/our-work",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "icacoop.bsky.social",
+    "note": "The International Cooperative Alliance describing the World Cooperative Monitor.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-artists-cooperative",
+    "text": "Book clocks to fork bugs, the Cambridge Artists Cooperative crafts a highly shoppable store of creative works",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "csindie.bsky.social",
+    "alt_text": "Book clocks to fork bugs, the Cambridge Artists Cooperative crafts a highly shoppable store of creative works The Cambridge Artists Cooperative began on Harvard Square’s Brattle Street in 1987 as a seasonal holiday store called Christmas Secrets. It was a success, and members decided to try it as a year-round business, renaming it and moving to a new space. This turned out to be...\n\n\nThe post Book clocks to fork bugs, the Camb",
+    "note": "The Cambridge Artists Cooperative shop of member works."
+  },
+  {
+    "id": "fn-2026-11-13-journalist-owned",
+    "text": "That's why you should subscribe to e.g. @theflytrapmedia.com @hellgatenyc.com and our journalist-owned cooperative at @flaminghydra.com, offering proudly diverse perspectives on news and culture\n\nTry free posts here: flaminghydra.com/free",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "mariabustillos.com",
+    "alt_text": "Flaming Hydrant - Flaming Hydra Share these stories freely, no paywall! If you love them, please subscribe to Flaming Hydra to receive more each weekday.",
+    "note": "A journalist-owned cooperative publication.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-credit-society",
+    "text": "The credit cooperative society enables the coming together of individuals with the purpose of saving and obtaining cheap loans through collective effort. Website; peatix.com/user/3068479...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "credit-society.bsky.social",
+    "alt_text": "Marketing cooperative society Marketing cooperative societies are groups owned by their members who assist the producers...",
+    "note": "A credit cooperative society for pooled savings and cheap loans.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-computer-cooperative",
+    "text": "De-Google Together is a monthly workshop hosted by Bunk Computer Cooperative. The goal of the workshop is to sit down and do the tedious work of actually breaking up with big tech.\n#DeGoogle #Asheville #BDS",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "peasantsrevolt.bsky.social",
+    "alt_text": "De-Google Together Hang out and get help while doing the tedious work of actually breaking up with big tech.",
+    "note": "A workshop hosted by Bunk Computer Cooperative to leave Google.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-13-lieu-de-vie",
+    "text": "\"le quatrième lieu de vie de la coopérative Habitats des possibles\"",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "rainette-3.bsky.social",
+    "note": "A living place of the cooperative Habitats des possibles.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fp-2026-11-13-bipartisan-land-trust",
+    "text": "This all seems really smart. I think a not necessarily easy, but clear bipartisan win is massive building reform. And they even brought up community land trusts!",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "wesburdine.bsky.social",
+    "note": "Bipartisan building reform that only name-drops community land trusts.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fp-2026-11-13-share-offer",
+    "text": "Edinburgh Community Solar Co-operative launches new share offer",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "euwatch.live",
+    "alt_text": "Edinburgh Community Solar Co-operative launches new share offer The co-op aims to raise £1.13 million to install solar panels on public and community buildings in Edinburgh",
+    "note": "A community solar co-operative share offer.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fp-2026-11-13-platform-co-op-game",
+    "text": "SONIC PICO PARK (PlayStation 5) – Review | MKAU Gaming \n\nReviewed By: @knucklesamwich.bsky.social \n\nLINK: www.mkaugaming.com/all-review-l...\n\n#SonicPicoPark #Playstation5 #Review",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "mkaugaming.bsky.social",
+    "alt_text": "SONIC PICO PARK (PlayStation 5) - Review | MKAU Gaming In 2019, Pico Park emerged on Nintendo Switch and PC as a unique 2D side-scrolling platform co-op puzzle game where 2 to 8 players work together to solve",
+    "note": "A platform co-op puzzle game, not a platform cooperative.",
+    "langs": [
+      "en"
+    ]
   }
 ]
