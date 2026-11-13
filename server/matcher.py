@@ -129,6 +129,15 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+umbrella\s+orgs?\b
       | non[\s-]?profit/co-?operatives?\b
       | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}family\s+farms\b
+      | co-?op\s+movement\b
+      | co-?operativeheritage\.coop\b
+      | cooperative\s+newsrooms?\b
+      | coop[eé]rative.{0,160}vente\s+de\s+livres
+      | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}dairies\b
+      | coop[eé]rative\s+pour\s+seniors\b
+      | cooperative\s+di\s+comunit[aà]\b
+      | cave\s+coop[eé]rative\b
+      | co-?ops?\b.{0,40}\bpay\s+to\s+be\s+a\s+members?\b
       | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
     )
     """,
@@ -253,6 +262,15 @@ _MUTUALIST_CONTEXT = re.compile(
       | cooperative\s+umbrella\s+orgs?\b
       | non[\s-]?profit/co-?operatives?\b
       | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}family\s+farms\b
+      | co-?op\s+movement\b
+      | co-?operativeheritage\.coop\b
+      | cooperative\s+newsrooms?\b
+      | coop[eé]rative.{0,160}vente\s+de\s+livres
+      | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}dairies\b
+      | coop[eé]rative\s+pour\s+seniors\b
+      | cooperative\s+di\s+comunit[aà]\b
+      | cave\s+coop[eé]rative\b
+      | co-?ops?\b.{0,40}\bpay\s+to\s+be\s+a\s+members?\b
       | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
     )
     """,
