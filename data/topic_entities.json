@@ -8,6 +8,11 @@
       "surfaces": ["center for a stateless society", "c4ss"]
     },
     {
+      "id": "inference_cooperative",
+      "scope": "in_scope",
+      "surfaces": ["inference cooperative"]
+    },
+    {
       "id": "mutualism", // pragma: allowlist secret
       "scope": "in_scope",
       "surfaces": ["proudhonian mutualism"] // pragma: allowlist secret

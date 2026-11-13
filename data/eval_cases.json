@@ -902,5 +902,95 @@
     "regression": true,
     "author_handle": "agripreneurs-af.bsky.social",
     "note": "False negative 2026-11-06. Onion producers formed a cooperative with a board. Accented coopérative plus conseil d'administration was a no-match."
+  },
+  {
+    "id": "fn-2026-11-07-software-cooperative",
+    "text": "Hey folks! I was wondering if any oomfs know about (or know a gal/guy who knows about) running a sottware cooperative?\nLegal / social / financial structure, day to day, how to get started, whatever. :)",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "arcades.agency",
+    "note": "False negative 2026-11-07. A question about the legal and financial structure of running a software cooperative. The post misspells software as sottware."
+  },
+  {
+    "id": "fn-2026-11-07-coopalim-courses",
+    "text": "Vous avez visité nos nouveaux locaux ? C’EST TOUT BIEN RANGÉ ET GRAND 🤩\n\nVous voulez faire vos courses dans une coopérative engagée au centre ville de Strasbourg ? \n\nVenez vous renseigner au magasin Coopalim 💚\n\n#coopalim #cooperative #economiesocialeetsolidaire #strasbourg #bio",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "coopalim.bsky.social",
+    "note": "False negative 2026-11-07. Coopalim invites people to shop at an engaged cooperative grocery in Strasbourg."
+  },
+  {
+    "id": "fn-2026-11-07-inference-members",
+    "text": "A bit of a milestone!",
+    "expected": true,
+    "signal": "text",
+    "bucket": "entity_in_scope",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "inference.coop",
+    "alt_text": "101 members of the Inference Cooperative!",
+    "note": "False negative 2026-11-07. Membership milestone for the Inference Cooperative. The name is in the image alt text."
+  },
+  {
+    "id": "fn-2026-11-07-workers-cooperative",
+    "text": "To me Socialism is just another word for Workers cooperative.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "kythra.bsky.social",
+    "note": "False negative 2026-11-07. Plural workers cooperative is the same institution as worker cooperative."
+  },
+  {
+    "id": "fn-2026-11-07-platformcoops",
+    "text": "One of our members is **Platformcoops in Germany**. They work for a _sustainable economy in which the interests of people & nature are at the center_.\n\n\"We design and support cooperative systems that redistribute ownership and participation across digital and analogue economies. Our work […]",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "democratictechfund.social.democratictech.fund.ap.brid.gy",
+    "note": "False negative 2026-11-07. Platformcoops designs cooperative systems that redistribute ownership. The name is one word."
+  },
+  {
+    "id": "fn-2026-11-07-nema-love-apartments",
+    "text": "A l'occasion de la Semaine de la finance solidaire du 9 au 15 novembre, portrait de ce Stéphanois, qui préside une coopérative qui réhabilite des appartements pour les mettre à disposition des plus fragiles.\n➡️ https://l.la-croix.com/1UU",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "la-croix.com",
+    "note": "False negative 2026-11-07. Portrait of a cooperative that rehabilitates apartments for people in precarious housing. Not a share solicitation."
+  },
+  {
+    "id": "fn-2026-11-07-nema-love-alt",
+    "text": "HRDINOVÉ, KTEŘÍ CHTĚJÍ VYTVOŘIT LEPŠÍ SVĚT\nwww.la-croix.com/economie/fin...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "pepikhipik.bsky.social",
+    "alt_text": "Finance solidaire : Jean-François Deral réhabilite des logements pour les jeunes précaires avec Néma Lové CES HÉROS QUI VEULENT RENDRE LE MONDE MEILLEUR (3/5). Maître d’ouvrage à la retraite, ce Stéphanois préside Néma Lové, une coopérative qui réhabilite des appartements pour les mettre à disposition des...",
+    "note": "False negative 2026-11-07. Same apartment cooperative, with the French sentence in the card description."
+  },
+  {
+    "id": "fn-2026-11-07-burin-farming-agricultural",
+    "text": "“Israeli intelligence agents had explicitly threatened Ghassan Najjar, co-founder of Burin’s Land and Farming Agricultural Cooperative, that he would be arrested if he did not stop” his peaceful activism to protect the olive harvest season in Burin www.amnesty.org/en/latest/ne...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "lphr-lawyers.bsky.social",
+    "note": "False negative 2026-11-07. Same Burin farming cooperative as the food-sovereignty post. Agricultural sits between Farming and Cooperative. The demand is non-violent resistance."
   }
 ]
