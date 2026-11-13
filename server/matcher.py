@@ -101,7 +101,7 @@ _STRONG_POSITIVE = re.compile(
       | worker(?:s['’]?)?\s+cooperatives?\b
       | worker(?:s['’]?)?\s+co[\s-]?ops?\b
       | platform\s+cooperatives?\b
-      | platform\s+co[\s-]?ops?\b
+      | (?<![\w-])platform\s+co[\s-]?ops?\b
       | \bplatformco-?ops?\b
       | (?:soft|sott)ware\s+co[\s-]?(?:operatives?|ops?)\b
       | faire\s+(?:vos|ses|mes)\s+courses.{0,80}coop[eé]rative\b
@@ -181,6 +181,27 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+model\s+help\s+university\b
       | coop[eé]rative\s+d['’]habitation\b
       | \blocal\s+pub\b.{0,80}\bcooperative\b
+      | started\s+a\s+co-?op\b(?!\s+(?:game|server|mode|campaign|run|session|night|playthrough)\b)
+      | co-?ops?\s+(?:or|and)\s+other\s+democratic\b
+      | forged\s+in\s+co-?op\s+principles
+      | build\s+\w+\s+as\s+a\s+co-?op\b
+      | community\s+co-?operatives?\b
+      | community\s+solar\s+co-?ops?\b
+      | community\s+solar\s+co-?operatives?\b
+      | co-?op\s+shifts?\b(?!\s+(?:to|into|toward|towards)\b)
+      | co-?op\b.{0,200}member-governed
+      | member-governed.{0,200}co-?op\b
+      | co-?op\b.{0,120}pooling\s+saved
+      | pooling\s+saved.{0,120}co-?op\b
+      | co-?op\s+emerging\b
+      | alliance\s+coop[eé]rative\s+internationale
+      | coop[eé]rative\s+fonci[eè]re
+      | titre\s+participatif
+      | collectively\s+own\b.{0,80}\b(?:tools|booking)
+      | planned\s+as\s+a\s+cooperative\s+community
+      | cooperative\s+software\s+initiative
+      | join\s+our\s+co-?op\b(?!\s+game\b)
+      | cooperative\s+gets\s+set\s+up
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -276,7 +297,7 @@ _MUTUALIST_CONTEXT = re.compile(
       | worker(?:s['’]?)?\s+cooperatives?\b
       | worker(?:s['’]?)?\s+co[\s-]?ops?\b
       | platform\s+cooperatives?\b
-      | platform\s+co[\s-]?ops?\b
+      | (?<![\w-])platform\s+co[\s-]?ops?\b
       | \bplatformco-?ops?\b
       | (?:soft|sott)ware\s+co[\s-]?(?:operatives?|ops?)\b
       | faire\s+(?:vos|ses|mes)\s+courses.{0,80}coop[eé]rative\b
@@ -401,6 +422,8 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | communal\s+shrine
       | \bgoddess(?:['’]s)?\s+pack\b
       | apparent\s+deaths
+      | \#a2council\b
+      | has\s+been\s+verified\s+by\s+@
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -439,6 +462,8 @@ _HARD_NEGATIVE = re.compile(
       | communal\s+shrine
       | \bgoddess(?:['’]s)?\s+pack\b
       | apparent\s+deaths
+      | \#a2council\b
+      | has\s+been\s+verified\s+by\s+@
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -505,6 +530,7 @@ _EVENT_CUE = re.compile(
         doors(?:\s+at|\s+open)|tickets?|presale|save\s+the\s+date|join\s+us|
         open\s+mic|festival|bookfair|distro|teach[\s-]?in|assembly|
         \d{1,2}:\d{2}\s*(?:am|pm)|(?<!\d)\d{1,2}\s*(?:am|pm)\b|
+        \b\d{1,2}/\d{1,2}\b|
         january|february|march|april|june|july|august|september|
         october|november|december
     )\b
