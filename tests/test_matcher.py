@@ -124,7 +124,7 @@ def test_blocklist_beats_allowlist() -> None:
 def test_event_in_scope_venue_requires_cue_and_venue() -> None:
     keep = match_post('Really Really Free Market this Saturday in the park — bring what you can.')
     assert keep.matched is True
-    assert keep.reason.startswith('event_in_scope_venue:')
+    assert keep.reason == 'strong_positive'
 
     no_cue = match_post('The really really free market archive needs a new index.')
     assert no_cue.matched is False
@@ -934,6 +934,57 @@ def test_cooperative_forms_missed_on_2026_11_12() -> None:
     platform = match_post('Our platform co-op shares surplus with the workers who build it.')
     assert platform.matched is True
     assert platform.reason == 'strong_positive'
+
+
+def test_cooperative_forms_missed_on_2026_11_13() -> None:
+    cases = [
+        'The Really Really Free Market is one of my favorite things in LA.',
+        'Some scenes from the Really Really Free Market.',
+        "The Finland Co-op, Minnesota's oldest continuing co-op since 1913.",
+        'Surrey ACORN holds a Save Our Co-op, Save Our Homes Day of Action.',
+        'As a multi-stakeholder co-operative, the writers are paid by subscribers.',
+        'The app is owned by the taxi drivers.',
+        'Its fishermen still run their own co-op, as they have since 1948.',
+        'I want to make the social platform a customer-owned co-op.',
+        'Our co-op windfarm has been spinning idle for most of the month.',
+        'The Cooperative Wholesale Society office and warehouse in Manchester.',
+        'I organized eight families into a loose co-op at the farmers market.',
+        'If people want a non-profit grocery, they can form a co-op.',
+        'A new platform to build knowledge for a stronger cooperative movement.',
+        'The cooperative village of Hjortshøj has been a living laboratory since 1992.',
+        'Wakefern celebrated its cooperative roots at the annual meeting.',
+        'The World Cooperative Monitor tracks the largest cooperatives.',
+        'The Cambridge Artists Cooperative crafts a shop of member works.',
+        'Subscribe to our journalist-owned cooperative.',
+        'The credit cooperative society pools savings for cheap loans.',
+        'De-Google Together is hosted by Bunk Computer Cooperative.',
+        'Il festival è promosso da Confcooperative.',
+        'Le quatrième lieu de vie de la coopérative ouvre ses portes.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+
+    drops = [
+        'Edinburgh Community Solar Co-operative launches new share offer.',
+        (
+            'A clear bipartisan win is massive building reform. '
+            'And they even brought up community land trusts!'
+        ),
+        'Pico Park is a platform co-op puzzle game for two to eight players.',
+        (
+            'Every Walmart will be a trans-run co-op and the Walton family '
+            'will be flensed for winter heating.'
+        ),
+        'The community land trust holds the land so occupancy is not a landlord title.',
+    ]
+    results = [match_post(text) for text in drops]
+    assert results[0].matched is False
+    assert results[1].matched is False
+    assert results[2].matched is False
+    assert results[3].matched is False
+    assert results[4].matched is True
+    assert results[4].reason == 'strong_positive'
 
 
 def test_extract_alt_text_clips_external_description() -> None:

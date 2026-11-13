@@ -31,7 +31,7 @@ DEFAULT_API_URL = 'https://openrouter.ai/api/alpha/decisions'
 DEFAULT_KEEP_MIN = 0.5
 DEFAULT_TIMEOUT_S = 8.0
 DEFAULT_MAX_TEXT_CHARS = 2000
-PROMPT_VERSION = 'institution-keep-v7'
+PROMPT_VERSION = 'institution-keep-v8'
 SPIRIT_PROMPT_VERSION = 'spirit-account-v2'
 SPIRIT_MIN = 0.58
 VOICE_MIN = 0.70
@@ -66,7 +66,12 @@ _KEEP_QUESTION: dict[str, Any] = {
             'when Proudhon is named only to dismiss tenant ownership. '
             "A commercial or central bank that only shares the name People's Bank "
             'or Peoples Bank is out of scope, including quarterly profit and earnings '
-            "reports. Proudhon's Bank of the People and mutual credit stay in scope."
+            "reports. Proudhon's Bank of the People and mutual credit stay in scope. "
+            'A co-operative share offer is out of scope. A community land trust '
+            'mentioned only inside bipartisan building reform, or a governor or '
+            'mayor housing partnership, is out of scope. A land trust that '
+            'holds land for occupancy stays in scope, and a co-op that runs '
+            'its service stays in scope when the post is not a share offer.'
         ),
         'criteria': {
             'true': (
@@ -87,7 +92,9 @@ _KEEP_QUESTION: dict[str, Any] = {
                 'dismiss tenant ownership), commercial or central-bank earnings '
                 "under the name People's Bank or Peoples Bank (profit, dividends, "
                 "shareholders) when the post is not about mutual credit or Proudhon's "
-                'Bank of the People, academic social-ecological '
+                'Bank of the People, a co-operative share offer, a community land '
+                'trust named only inside bipartisan building reform or a governor '
+                'or mayor housing partnership, academic social-ecological '
                 'systems, sectarian communalism, EU confederalism, fandom, roleplay, '
                 'or adult social-club invites (VRChat, roleplay packs, shrine servers), '
                 'syndicalist or '
