@@ -2246,5 +2246,224 @@
     "langs": [
       "en"
     ]
+  },
+  {
+    "id": "fn-2026-11-14-karma-repair",
+    "text": "Got electronics, and small appliances that need #tlc? Bring them to be repaired at Karma Co-op on Sun., Nov. 15 from 12-3pm. \nEvent created in collaboration w/ RepairCafe Toronto.\nEveryone is welcome, registration on-site.\nMore info here: www.karmacoop.org/events-calen...\n\n#repaircafe",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "karmacooptoronto.bsky.social",
+    "note": "A food co-op hosting a repair cafe.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-clay-co-op",
+    "text": "Come to our sale tomorrow! Tell your friends! Tell your friend's friends! We have some amazing pottery from amazing artists! #pottery #dmvarts",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "kerrinsuzanne.bsky.social",
+    "alt_text": "A poster for the Alexandria Clay Co-op pottery sale on November 14 from 10-4",
+    "note": "An artists' clay co-op pottery sale.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-co-op-city",
+    "text": "Check out this week's edition of the Co-op City Times!\n\nTop Stories: \n- November 18 Open Board Meeting Agenda \n- Co-op City Community Survey \n- New Report Details Declining Public School Population\n\n💻Read Online: issuu.com/cctimes/docs...\n#coopcity",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "coopcitytimes.bsky.social",
+    "note": "A housing co-op's newsletter leading with its open board meeting.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-right-to-use-solabria",
+    "text": "l.euronews.com/Hu1Y",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "solabria.bsky.social",
+    "alt_text": "The right to a home: Spain’s cooperative answer to the housing crisis As Spain faces a deepening housing crisis, a Barcelona-based cooperative offers an alternative to renting and buying. Its non-profit, right-to-use model provides affordable, long-term homes. Could it ...",
+    "note": "A Barcelona cooperative's non-profit right-to-use housing model.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-right-to-use-euronews",
+    "text": "The right to a home: Spain’s cooperative answer to the housing crisis",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "euronews.com",
+    "alt_text": "The right to a home: Spain’s cooperative answer to the housing crisis As Spain faces a deepening housing crisis, a Barcelona-based cooperative offers an alternative to renting and buying. Its non-profit, right-to-use model provides affordable, long-term homes. Could it help tackle Europe's housing crisis?",
+    "note": "A Barcelona cooperative's non-profit right-to-use housing model.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-right-to-use-wiki",
+    "text": "The right to a home: Spain’s cooperative answer to the housing crisis\n\nAs Spain faces a deepening housing crisis, a Barcelona-based cooperative offers an alternative to renting and buying. Its n…\n\nhttps://www.vublox.com/posts/the-right-to-a-home-spains-cooperative-answer-to-the-housing-crisis-dyqrhi",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "wiki-vu.vublox.com",
+    "alt_text": "The right to a home: Spain’s cooperative answer to the housing crisis As Spain faces a deepening housing crisis, a Barcelona-based cooperative offers an alternative to renting and buying. Its non-profit, right-to-use model provides affordable, long-term homes. Could it",
+    "note": "A Barcelona cooperative's non-profit right-to-use housing model.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-right-to-use-solabria-2",
+    "text": "www.euronews.com/2026/11/13/t...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "solabria.bsky.social",
+    "alt_text": "The right to a home: Spain’s cooperative answer to the housing crisis As Spain faces a deepening housing crisis, a Barcelona-based cooperative offers an alternative to renting and buying. Its non-profit, right-to-use model provides affordable, long-term homes. Could it ...",
+    "note": "A Barcelona cooperative's non-profit right-to-use housing model.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-textile-cooperative",
+    "text": "I went looking for wool-felted shoes & found several suppliers (Amazon sucked) including one that had this film made about their felt shoe & textile cooperative in Kyrghistan. Most shoes like this are from distant lands. Why isn't someone in the US making them?",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "keithdjohnson.bsky.social",
+    "alt_text": "Making of Kyrgies (No Titles) This is \"Making of Kyrgies (No Titles)\" by KYRGIES on Vimeo, the home for high quality videos and the people who love them.",
+    "note": "A film about a textile cooperative that makes felt shoes.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-childcare-cooperative",
+    "text": "Today, Seattle City Council will be weighing the merits of murals and a Jimothy statue in Ballard against funding our community college childcare cooperative.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "caverylittle.bsky.social",
+    "note": "A community college childcare cooperative facing a city funding vote.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-cooperative-citoyenne",
+    "text": "Ce jour, inauguration de la centrale photovoltaïque de Tinténiac sur une ISDND (Installation de Stockage de Déchets Non Dangereux), développée avec la coopérative citoyenne BretiSun 👍",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "richardloyen.bsky.social",
+    "note": "A citizen energy cooperative inaugurating a solar plant.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-equal-exchange",
+    "text": "A lovely ethical hamper for ourselves. Equal Exchange is a cooperative specialising in coffee grown by women. I'll look forward especially to tasting the Palestinian olive oil.\n\n#ethical",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "thenakedpoet.bsky.social",
+    "alt_text": "An open delivery box containing assorted coffee, sweets, cashews and olive oil. A bar or organic fair trade lemon and ginger flavour dark chocolate. The inside of the chocolate bar wrapper detailing its ethical credentials.",
+    "note": "Equal Exchange identified as a cooperative that specialises in coffee.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-indivisible-reserves",
+    "text": "Why voting control without a statutory asset lock isn't enough: comparing bespoke 'steward-ownership' & the proposed 'EU Inc' 28th regime against Civil Law indivisible reserves and IFRIC 2 equity gates.\n\nrootandbranch.online/library/stew... \n\n#Coops #SocialEconomy",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "shaunmurdock.bsky.social",
+    "alt_text": "Voting Without an Asset Lock – Root & Branch Translation Why democratic voting rights without a statutory indivisible asset lock fail: auditing Anglo-American 'steward ownership' and the proposed 'EU Inc' 28th corporate regime against Civil Law cooperative ...",
+    "note": "Cooperative indivisible reserves as the statutory asset lock.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-starnthwaite",
+    "text": "Starnthwaite Colony - Unemployed Land Experiment (1892–1900)\nKendal\nThe Colony aimed to give unemployed people a self-sustaining life through cooperative farming and light industry\nActivist Enid Stacy lived at the colony in 1893, as did future Labour MP Dan Irving\nBurnley\nBristol\nHerbert Mills\nSDF",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "partizandulwich.bsky.social",
+    "note": "A colony organized around cooperative farming and light industry.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-statut-de-cooperative",
+    "text": "La chaîne d'épiceries bio passe du statut de coopérative à celui de SRL, plus adapté à son activité commerciale et à sa volonté d'expansion. Acteur numéro un de la consolidation du secteur, Färm va continuer à ouvrir de nouveaux magasins et reste ouvert aux opportunités d'acquisition.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "lechobe.bsky.social",
+    "alt_text": "Färm, leader des épiceries bio en Belgique, tourne la page du projet coopératif pour grandir plus vite",
+    "note": "A grocery chain leaving cooperative status for a private company.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-14-member-fees",
+    "text": "Municipal grants, public health funds, or cooperative member fees cover the overhead costs of cold storage, delivery vans, and drivers. Stores pay only for the food at near-wholesale rates, allowing them to price produce affordably while still making a profit.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "g-age.bsky.social",
+    "note": "Cooperative member fees funding shared cold storage for affordable food.",
+    "langs": [
+      "en"
+    ]
   }
 ]

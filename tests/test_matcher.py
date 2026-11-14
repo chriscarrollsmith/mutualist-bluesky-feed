@@ -987,6 +987,49 @@ def test_cooperative_forms_missed_on_2026_11_13() -> None:
     assert results[4].reason == 'strong_positive'
 
 
+def test_cooperative_forms_missed_on_2026_11_14() -> None:
+    cases = [
+        'Bring them to be repaired at Karma Co-op. RepairCafe Toronto is co-hosting.',
+        'A poster for the Alexandria Clay Co-op pottery sale.',
+        'Co-op City Times: November 18 Open Board Meeting Agenda.',
+        'A Barcelona cooperative offers a non-profit, right-to-use model for long-term homes.',
+        'This film is about their felt shoe and textile cooperative in Kyrgyzstan.',
+        'City council is weighing a statue against our community college childcare cooperative.',
+        'La centrale a été développée avec la coopérative citoyenne BretiSun.',
+        'Equal Exchange is a cooperative specialising in coffee grown by women.',
+        'Civil Law indivisible reserves lock cooperative equity in the common fund.',
+        (
+            'The colony aimed at a self-sustaining life through '
+            'cooperative farming and light industry.'
+        ),
+        "La chaîne d'épiceries passe du statut de coopérative à celui de SRL.",
+        'Cooperative member fees cover the cold storage so stores can buy food near wholesale.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive'
+
+    drops = [
+        'The sewing team at the repair cafe fixed a coat.',
+        'His pitch was a cooperative farming community. The tract became a summer resort.',
+        'The right to use this software is included with the license.',
+        'Central Virginia Electric Cooperative cut the ribbon on a solar facility.',
+        'Cooperative Bank of Kenya raised its interim dividend.',
+        'Our co-op escape room game arrives on Steam in two days.',
+        'We’ll be playing songs at a benefit for a co-op preschool in Burbank.',
+        'Thanks to our co-op student, the toy section is restocked.',
+        'Has cooperative federalism become permissive federalism?',
+        'Pico Park is a platform co-op puzzle game for two to eight players.',
+        'Edinburgh Community Solar Co-operative launches new share offer.',
+        'A shooting in Co-op City left two people injured.',
+        'Spain’s cooperative answer to the housing crisis.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {

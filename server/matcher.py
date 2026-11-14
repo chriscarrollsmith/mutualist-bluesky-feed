@@ -223,6 +223,21 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+roots\b
       | world\s+cooperative\s+monitor\b
       | lieu\s+de\s+vie\s+de\s+la\s+coop
+      | repaired\s+at\s+(?:[\w'’-]+\s+){0,6}co-?ops?\b
+      | \brepaircafe\b.{0,200}\bco-?ops?\b
+      | \bco-?ops?\b.{0,200}\brepaircafe\b
+      | clay\s+co-?ops?\b
+      | co-?op\s+city\b.{0,180}\bboard\s+meeting\b
+      | right-to-use\s+model\b
+      | textile\s+cooperatives?\b
+      | childcare\s+cooperatives?\b
+      | child[\s-]care\s+cooperatives?\b
+      | coop[eé]rative\s+citoyenne\b
+      | \bis\s+a\s+cooperative\s+speciali[sz]ing\b
+      | indivisible\s+reserves\b
+      | cooperative\s+farming\s+and\s+light\s+industry\b
+      | statut\s+de\s+coop[eé]rative\b
+      | cooperative\s+member\s+fees\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
