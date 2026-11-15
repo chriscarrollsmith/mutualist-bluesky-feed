@@ -1030,6 +1030,82 @@ def test_cooperative_forms_missed_on_2026_11_14() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_15() -> None:
+    cases = [
+        'The directory internet, rebuilt as a co-op. 0% platform fees. No ads. No VC.',
+        (
+            'We created a "co-op within a co-op" and let young people build it. '
+            'One called it a community business, not one where it is every person '
+            'for themselves.'
+        ),
+        'Tillamook is suing the co-op that owns Darigold to keep a milk pooling agreement alive.',
+        'Maryland & Virginia Milk Producers, a co-op since 1920: 750 member farms.',
+        "Helena's club burned, then rose again. Now a public co-op, its Rathskeller is open.",
+        "Land O'Lakes is an American agricultural cooperative known for its butter.",
+        "Monet fundó la Société Anonyme Coopérative d'Artistes-Peintres en 1873.",
+        '282 doctors founded a cooperative in Adana and press their own olive oil.',
+        'Se domattina le cooperative sociali andassero in black out, il paese si ferma.',
+        'Welfare, Gardini: "Paese si ferma senza cooperative".',
+        'The Cooperative Cure for Capitalism',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive'
+
+    amesbury = match_post(
+        "Remember when Amesbury's new Co-op opened?",
+        alt_text=(
+            'Crowds gathered to celebrate the opening of a new Co-op superstore '
+            'in Amesbury, continuing a relationship stretching back to the early 20th century.'
+        ),
+    )
+    assert amesbury.matched is True
+    assert amesbury.reason == 'strong_positive'
+
+    mobile = match_post(
+        'Good Morning from the land of the Finns',
+        alt_text="Customers about to enter cooperative Mäki-Matti's mobile shop 'Auto-Matti'.",
+    )
+    assert mobile.matched is True
+    assert mobile.reason == 'strong_positive'
+
+    preschool = match_post(
+        '',
+        alt_text=(
+            'Parents and educators warn state funding changes threaten '
+            'cooperative preschool programs.'
+        ),
+    )
+    assert preschool.matched is True
+    assert preschool.reason == 'strong_positive'
+
+    darigold = match_post(
+        'Tillamook is suing over a terminated agreement.',
+        alt_text='The lawsuit is against the dairy cooperative that owns Darigold.',
+    )
+    assert darigold.matched is True
+    assert darigold.reason == 'strong_positive'
+
+    drops = [
+        "I haven't played a co-op since last year.",
+        'Muse at Co-op Live in Manchester was a laser-soaked masterclass.',
+        'Please join me in supporting co-op! coopradio.org/donate/',
+        'A woman in my co-op brought pillows to the Board Meeting.',
+        'The soul veg popup at the co-op was excellent.',
+        'We’ll be playing songs at a benefit for a co-op preschool in Burbank.',
+        (
+            'pour remettre en cause le système, passer à une propriété coopérative, '
+            'collective ou publique, sortir le rail de la sphère privée.'
+        ),
+        'The rural electric co-op is raising the kilowatt rate this winter.',
+        'Cooperative Bank of Kenya raised its interim dividend.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {

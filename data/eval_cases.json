@@ -2465,5 +2465,229 @@
     "langs": [
       "en"
     ]
+  },
+  {
+    "id": "fn-2026-11-15-directory-co-op",
+    "text": "The directory internet, rebuilt as a co-op.\n\nList one thing you make — a product, a service, a class, a project. What you add now sets the tone.\n\n0% platform fees. Donor funded. No ads. No VC. No token. AGPL-3.0-or-later.\n\nWhat would you list first?\n\nxistrymemz.xyz",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "xistrymemz.bsky.social",
+    "note": "A directory rebuilt as a co-op: no platform fees, no ads, no VC.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-co-op-within",
+    "text": "A few years ago, we worried our co-op culture might be lost. So we created a \"co-op within a co-op\" and let young people with disabilities build it from the ground up. Last week, one proudly described it as:\n\"a community business, not one where it's every person for themselves.\" 🙌 🙌 🙌",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "nundahcoop.bsky.social",
+    "note": "A co-op within a co-op, built by young people with disabilities as a community business.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-milk-pooling",
+    "text": "Tillamook is suing the co-op that owns Darigold to keep a roughly 25-year milk pooling agreement alive. Tillamook says losing it would hurt its milk supply and regional dairy farms. The co-op opposes a restraining order, Capital Press reports. #Oregon",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "bryanmvance.com",
+    "alt_text": "Tillamook sues Darigold's owner over terminated agreement | Capital Press The Tillamook County Creamery Association has filed a lawsuit against the dairy cooperative that owns Darigold for backing out of an agreement related to federal milk marketing orders. The Tillamook […]",
+    "note": "A dairy cooperative and a milk pooling agreement between Tillamook and Darigold's owner.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-member-farms",
+    "text": "Maola — the milk at Costco, Food Lion, Walmart and Giant from New Jersey to South Carolina — is owned by the farms. Maryland & Virginia Milk Producers, a co-op since 1920: 750 member farms, $1.4 billion in sales, four bottling plants.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "cleartxt.bsky.social",
+    "note": "Maryland and Virginia Milk Producers, a farmer co-op since 1920."
+  },
+  {
+    "id": "fn-2026-11-15-co-op-superstore",
+    "text": "20 years on: Remember when Amesbury's new Co-op opened? \n\n#Wiltshire #Salisbury",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "wiltshireuk.bsky.social",
+    "alt_text": "20 years on: Remember when Amesbury Twenty years ago, crowds gathered to celebrate the opening of a new Co-op superstore in Amesbury, continuing a relationship stretching back to the early 20th century.",
+    "note": "The opening of an Amesbury Co-op superstore, continuing a 20th-century co-op relationship."
+  },
+  {
+    "id": "fn-2026-11-15-public-co-op",
+    "text": "Fifty powerbrokers. One fiery night in 1903. Helena's Montana Club hosted Teddy Roosevelt and Mark Twain, burned to the ground, then rose again under architect Cass Gilbert. Now a public co-op, its Rathskeller is open again. Step inside Montana's most storied […] \n\n[Original post on mastodon.world]",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "bigskytreasure.mastodon.world.ap.brid.gy",
+    "note": "A Helena club that is now a public co-op, with its Rathskeller open again.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-mobile-shop",
+    "text": "Good Morning from the land of the Finns, #Bluesky🌞",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "painmike1.bsky.social",
+    "alt_text": "Customers about to enter cooperative Mäki-Matti's mobile shop 'Auto-Matti' possibly in Central Finland 1950s-1960s. (tkk_88013/Labour Museum Werstas)\n\nYou haven't lived if you haven't visited a mobile shop for coffee and beer in the remote countryside.\nJust kidding. If you are breathing, you have lived.",
+    "note": "A Finnish cooperative mobile shop, Auto-Matti, in the 1950s or 1960s.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-cooperative-preschool",
+    "text": "",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "king5.com.web.brid.gy",
+    "alt_text": "Seattle families seek to preserve preschool programs as City Council weighs budget changes Parents and educators warn state funding changes threaten cooperative preschool programs as Seattle councilmembers consider emergency funding.",
+    "note": "Families trying to preserve Seattle cooperative preschool programs."
+  },
+  {
+    "id": "fn-2026-11-15-land-o-lakes",
+    "text": "Land O'Lakes is an American agricultural cooperative known for its butter and dairy products, founded in 1921 in Saint Paul, Minnesota.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "carltonliam96.bsky.social",
+    "note": "Land O'Lakes, an agricultural cooperative founded in 1921.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-artistes-peintres",
+    "text": "Formado en París, Monet estudió en la Académie Suisse y bajo Charles Gleyre. Allí conoció a Auguste Renoir y Frédéric Bazille, con quienes fundó la Société Anonyme Coopérative d'Artistes-Peintres en 1873. #Pintura",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "enelensayomedia.bsky.social",
+    "note": "The Société Anonyme Coopérative d'Artistes-Peintres that Monet, Renoir, and Bazille founded.",
+    "langs": [
+      "es"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-doctors-adana",
+    "text": "282 doctors founded a cooperative in Adana! They turn the olives from their own gardens into oil in their own factory.\n\nhttps://www.diningandcooking.com/2890883/282-doctors-founded-a-cooperative-in-adana-they-turn-the-olives-from-their-own-gardens-into-oil-in-their-own-factory/\n\n14.11.2026 12:41 …",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "mediterraneanfood.bsky.social",
+    "alt_text": "282 doctors founded a cooperative in Adana! They turn the olives from their own gardens into oil in their own factory. - Dining and Cooking | DiningAndCooking.com 14.11.2026 12:41",
+    "note": "Doctors in Adana who founded a cooperative and press oil from their own olives.",
+    "langs": [
+      "en-US",
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-doctors-adana-2",
+    "text": "282 doctors founded a cooperative in Adana! They turn the olives from their own gardens into oil in their own factory.\n\nhttps://www.diningandcooking.com/2890883/282-doctors-founded-a-cooperative-in-adana-they-turn-the-olives-from-their-own-gardens-into-oil-in-their-own-factory/\n\n14.11.2026 12:41 …",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "diningandcooking.bsky.social",
+    "alt_text": "282 doctors founded a cooperative in Adana! They turn the olives from their own gardens into oil in their own factory. - Dining and Cooking | DiningAndCooking.com 14.11.2026 12:41",
+    "note": "A second post on the Adana doctors' olive cooperative.",
+    "langs": [
+      "en-US",
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-cooperative-sociali",
+    "text": "Welfare, Gardini: “Paese si ferma senza cooperative, servono misure per sostenerne sviluppo”\n\nWelfare, Gardini: “Paese si ferma senza cooperative, servono misure per sostenerne sviluppo”. \"Se domattina le cooperative sociali andassero in black out, 6...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "lamilano.bsky.social",
+    "alt_text": "Welfare, Gardini: “Paese si ferma senza cooperative, servono misure per sostenerne sviluppo” Welfare, Gardini: “Paese si ferma senza cooperative, servono misure per sostenerne sviluppo”. \"Se domattina le cooperative sociali andassero in black out, 6...",
+    "note": "Italian social cooperatives described as infrastructure the country stops without.",
+    "langs": [
+      "it"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-senza-cooperative",
+    "text": "Welfare, Gardini: \"Paese si ferma senza cooperative, servono misure per sostenerne sviluppo\"",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "vivereitalia.bsky.social",
+    "alt_text": "https://vivere.me/hiUs-k Welfare, Gardini: \"Paese si ferma senza cooperative, servono misure per sostenerne sviluppo\"",
+    "note": "The headline that the country stops without cooperatives."
+  },
+  {
+    "id": "fn-2026-11-15-cure-for-capitalism",
+    "text": "🐸🏴🌐 www.youtube.com/watch?v=ZmGm...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "lightspore.bsky.social",
+    "alt_text": "The Cooperative Cure for Capitalism YouTube video by Literate Machine Segments",
+    "note": "A video titled The Cooperative Cure for Capitalism.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-15-cure-for-capitalism-2",
+    "text": "youtu.be/ZmGm5te_smQ",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "artnonart.bsky.social",
+    "alt_text": "The Cooperative Cure for Capitalism YouTube video by Literate Machine Segments",
+    "note": "Another post of the video The Cooperative Cure for Capitalism.",
+    "langs": [
+      "en"
+    ]
   }
 ]

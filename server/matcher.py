@@ -238,6 +238,21 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+farming\s+and\s+light\s+industry\b
       | statut\s+de\s+coop[eé]rative\b
       | cooperative\s+member\s+fees\b
+      | rebuilt\s+as\s+a\s+co-?op\b
+      | co-?op\s+within\s+a\s+co-?op\b
+      | milk\s+pooling\b
+      | dairy\s+cooperatives?\b
+      | a\s+co-?op\s+since\s+\d{4}\b
+      | co-?op\s+superstores?\b
+      | now\s+a\s+public\s+co-?op\b
+      | cooperative\s+preschools?\b
+      | cooperative.{0,80}mobile\s+shops?\b
+      | agricultural\s+cooperatives?\b
+      | coop[eé]rative\s+d['’]artistes\b
+      | founded\s+a\s+cooperative\b(?!\s+(?:game|board)\b)
+      | cooperative\s+sociali\b
+      | senza\s+cooperative\b
+      | cooperative\s+cure\s+for\s+capitalism\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
