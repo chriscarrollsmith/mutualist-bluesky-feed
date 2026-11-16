@@ -253,6 +253,17 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+sociali\b
       | senza\s+cooperative\b
       | cooperative\s+cure\s+for\s+capitalism\b
+      | growers['’]?\s+co-?ops?\b
+      | wind\s+turbine\s+co-?ops?\b
+      | co-?op\s+music\s+services?\b
+      | cooperative\s+digital\s+music\s+platforms?\b
+      | olive\s+oil\s+cooperatives?\b
+      | news\s+cooperatives?\b
+      | cooperative\s+grocery\s+stores?\b
+      | cooperative\s+economics\b
+      | coffee\s+cooperatives?\b
+      | joined\s+(?:a|the|this|our|their)\s+cooperatives?\b
+      | health\s+insurance\s+cooperatives?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
