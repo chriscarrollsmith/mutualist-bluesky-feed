@@ -1106,6 +1106,75 @@ def test_cooperative_forms_missed_on_2026_11_15() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_16() -> None:
+    cases = [
+        (
+            "The Calavo sticker on the avocado began as a growers' co-op in 1924. "
+            'California avocado farmers copied the Sunkist model.'
+        ),
+        (
+            'In 2005 I set up a wind turbine co-op to give a local community cheap energy. '
+            'I had the land, the council and the funding.'
+        ),
+        (
+            'Discovered her on the co-op music service. '
+            'It supports a cooperative digital music platform.'
+        ),
+        'I am daydreaming about running a cooperative grocery store.',
+        (
+            'The Dr. U.S. Awasthi Initiative in Cooperative Economics '
+            'funds research on cooperatives.'
+        ),
+        'Maybe time for them to just go ahead and start a new coffee cooperative.',
+        (
+            'I joined this cooperative thing to make it think the way I do, and if I fail, '
+            'I hate it and leave.'
+        ),
+        'The district is exploring a health insurance cooperative that pools shared risk.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive'
+
+    olive = match_post(
+        'Spain’s olive oil intervention hits trouble just days after new rules take effect.',
+        alt_text=(
+            'A Spanish olive oil cooperative has stopped buying oil from local producers '
+            'following the government’s latest intervention in the market.'
+        ),
+    )
+    assert olive.matched is True
+    assert olive.reason == 'strong_positive'
+
+    news = match_post(
+        'thesouthlander.com give us your email so you see our story tomorrow morning',
+        alt_text="The Southlander The Southland's Only Investigative News Cooperative",
+    )
+    assert news.matched is True
+    assert news.reason == 'strong_positive'
+
+    drops = [
+        'We’ll be playing songs at a benefit for a co-op preschool in Burbank.',
+        'The rural electric co-op is raising the kilowatt rate this winter.',
+        'Kit Carson Electric Co-op has maintained its base electric rates since 2016.',
+        'A Dakota co-op apartment once owned by Rex Reed is listed for $5.99 million.',
+        (
+            'Let the very tractors weep with pride: '
+            'the cabbage cooperative have coaxed a second harvest.'
+        ),
+        'Red billed Blue Magpies practice cooperative breeding.',
+        'It is unclear whether cooperative overtures from Trump officials will survive.',
+        'Tommy Douglas led the Cooperative Commonwealth Federation.',
+        'Gift ideas: Palestinian Soap Cooperative olive oil soap blocks.',
+        'The theft happened outside the Co-op store in Doune.',
+        'A co-op restaurant management sim for 1-4 players.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {

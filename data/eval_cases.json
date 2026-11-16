@@ -2689,5 +2689,144 @@
     "langs": [
       "en"
     ]
+  },
+  {
+    "id": "fn-2026-11-16-growers-coop",
+    "text": "The Calavo sticker on the avocado, and the Calavo guacamole in the deli case, began as a growers' co-op in 1924. California avocado farmers copied the Sunkist model to sell a fruit most of the country had never tasted.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "cleartxt.bsky.social",
+    "note": "Calavo began as a growers' co-op in 1924."
+  },
+  {
+    "id": "fn-2026-11-16-wind-turbine-coop",
+    "text": "The wind turbine co-op I almost built\r\n\r\nIn 2005 I set up a wind turbine co-op to give a local community cheap energy. I had the land, the council and the funding. Then one phone call ended it. https://www.rfr.bz/b0d537251",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "willsussolved.bsky.social",
+    "alt_text": "The wind turbine co-op I almost built In 2005 I set up a wind turbine co-op to give a local community cheap energy. I had the land, the council and the funding. Then one phone call ended ...",
+    "note": "A wind turbine co-op set up to give a local community cheap energy."
+  },
+  {
+    "id": "fn-2026-11-16-music-platform",
+    "text": "Discovered #VirtualStarEmbryology on the co-op music service @subvert.fm \nIf you like #drone #ambient music, check her out.\n#music #musicalartist #subvert #CoOp",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "161bentzl.eurosky.social",
+    "alt_text": "you can also pick the same up on subvert.fm, which always gives me 100% of the proceeds and supports a cooperative digital music platform virtual star embryology - Subvert organically grown synthesizer sounds from futures past",
+    "note": "Subvert, a co-op music service and cooperative digital music platform.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-olive-oil-cooperative",
+    "text": "Spain’s olive oil intervention hits trouble just days after new rules take effect « Euro Weekly News\n\nhttps://www.diningandcooking.com/2893066/spains-olive-oil-intervention-hits-trouble-just-days-after-new-rules-take-effect-euro-weekly-news/\n\nFresh olives being processed at an olive oil mill as …",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "mediterraneanfood.bsky.social",
+    "alt_text": "Spain’s olive oil intervention hits trouble just days after new rules take effect « Euro Weekly News - Dining and Cooking | DiningAndCooking.com A Spanish olive oil cooperative has stopped buying oil from local producers following the government’s latest intervention in the market. The decision has",
+    "note": "A Spanish olive oil cooperative that stopped buying from local producers.",
+    "langs": [
+      "en-US",
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-news-cooperative",
+    "text": "thesouthlander.com\n\ngive us your email so you see our story tomorrow morning",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "bencamach0.bsky.social",
+    "alt_text": "The Southlander The Southland's Only Investigative News Cooperative",
+    "note": "The Southlander, an investigative news cooperative.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-grocery-store",
+    "text": "I've been listening to the \"Screw this... Let's try something different\" podcast and now I am once again spending a bunch of time daydreaming about running a cooperative grocery store.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "scroeser.kolektiva.social.ap.brid.gy",
+    "note": "Daydreaming about running a cooperative grocery store.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-cooperative-economics",
+    "text": "The Dr. U.S. Awasthi Initiative in Cooperative Economics funds UCSB research on cooperatives: up to $2,000 for student projects and up to $4,000 for faculty to hire student research assistants. The next call opens in Winter Quarter 2027 at blumcenter.ucsb.edu. #UCSB #BlumCenter",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "ucsbblumcenter.bsky.social",
+    "alt_text": "Cooperatives Compared, Research Funding. Research awards from the Dr. U.S. Awasthi Initiative. $2,000 maximum for a UCSB student research project, undergraduate or graduate. $4,000 maximum for UCSB faculty to hire student research assistants. Source: Dr. U.S. Awasthi Initiative in Cooperative Economics, 2025 call for p Cooperatives Compared, Research Funding. What student awards cover. Fieldwork original data collection and archival research. Data data acquisition and transcription. Supplies software, small equipment and research supplies. Source: Dr. U.S. Awasthi Initiative in Cooperative Economics, 2025 call for proposals. Cooperatives Compared, Research Funding. Awardees share their findings. Annual Cooperative Economics Research Symposium at the UCSB Blum Center. The next call for proposals opens in Winter Quarter 2027. Watch for it at blumcenter.ucsb.edu. Source: UCSB Blum Center.",
+    "note": "A research fund for cooperative economics.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-coffee-cooperative",
+    "text": "I am amused. They literally have a truck called Boycott Starbucks. And it’s even 🎄🤶🏼 -colored! Maybe time for them to just go ahead and start a new coffee cooperative.\n\n#cooperatives #boycott",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "democracyop.bsky.social",
+    "alt_text": "Boycott Starbucks truck offers free coffee",
+    "note": "A suggestion to start a coffee cooperative instead of buying Starbucks.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-joined-cooperative",
+    "text": "I have more than one thing in my life that makes me think of this, but the modern attitude of “I joined this cooperative thing to make it think the way I do, and if I fail, I hate it and leave” is at times destructive and can become wrecker behavior.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "brandonwestnyc.bsky.social",
+    "note": "Wrecker behavior after joining a cooperative to remake it.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-16-insurance-cooperative",
+    "text": "Proviso Township High School District 209 is exploring a health insurance cooperative that could stabilize costs but comes with significant risks—will they take the leap?  \n\nClick to read more!\n\n#IL #CitizenPortal #EducationFinance #HealthCareCosts #InsuranceCooperative",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "citizenptnewsil.bsky.social",
+    "alt_text": "Proviso district weighs health insurance cooperative as costs rise A broker presented a possible school-district health insurance cooperative, outlining potential cost stability and shared risks. Preliminary figures showed a 3.2% decrease in premiums but a possible $51 million aggregate stop-loss exposure; no commitment was made.",
+    "note": "A school district exploring a health insurance cooperative."
   }
 ]
