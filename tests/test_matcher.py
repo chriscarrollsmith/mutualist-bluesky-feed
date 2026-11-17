@@ -1175,6 +1175,101 @@ def test_cooperative_forms_missed_on_2026_11_16() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_17() -> None:
+    cases = [
+        "Third Act volunteers can now join Clean Energy Credit Union's financial cooperative.",
+        'Our little cooperative made sure to have D&O insurance before users joined our PDS.',
+        'Our next Co-op Conversation is on cooperative democracy and the boardroom.',
+        'Consum, the Valencian cooperative, opens a 1,135 square metre supermarket.',
+        'The Irish Organic Milk Suppliers Cooperative established a dairy producer organisation.',
+        'Sandrine organise un job dating pour notre coopérative MEDICOOP.',
+        'In a just world, every tech company would be a leftist co-op.',
+        'Chico Natural Foods Co-op’s board found its footing through a GM transition.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive'
+
+    doula = match_post(
+        'Doula care is growing in North Carolina’s rural counties.',
+        alt_text='A Chatham County group supports a doula cooperative.',
+    )
+    assert doula.matched is True
+    assert doula.reason == 'strong_positive'
+
+    ambulance = match_post(
+        'www.ctaq.com',
+        alt_text=(
+            'CTAQ : Coopérative des techniciens ambulanciers du Québec. '
+            'La CTAQ offre un service paramédical à ses membres.'
+        ),
+    )
+    assert ambulance.matched is True
+    assert ambulance.reason == 'strong_positive'
+
+    grain = match_post(
+        'WA’s harvest is piling into the grain network.',
+        alt_text='Cooperative Bulk Handling Group logged 665,000 tonnes at Kwinana.',
+    )
+    assert grain.matched is True
+    assert grain.reason == 'strong_positive'
+
+    forestry = match_post(
+        'New episode of Forestry Now.',
+        alt_text='Victor Barber from Western Forestry Co Op explains how harvesting works.',
+    )
+    assert forestry.matched is True
+    assert forestry.reason == 'strong_positive'
+
+    solar = match_post(
+        'Coconut Creek was asked to publicize a homeowner buying group.',
+        alt_text=(
+            'Solar United Neighbors urged the city to publicize a free solar co-op. '
+            'The nonprofit uses group purchasing and is not seeking city funding.'
+        ),
+    )
+    assert solar.matched is True
+    assert solar.reason == 'strong_positive'
+
+    wind = match_post(
+        'Minstens de helft van de windmolens blijft in handen van de buurt.',
+        alt_text=(
+            'De Windvogel is samen met drie Utrechtse energiecoöperaties '
+            'het lokaal eigendom aan het organiseren.'
+        ),
+    )
+    assert wind.matched is True
+    assert wind.reason == 'strong_positive'
+
+    films = match_post(
+        'GRIEF screens November 18 at the Filmmakers Co-op in NYC.',
+        alt_text='A filmmaker-member of the co-op curated the program.',
+    )
+    assert films.matched is True
+    assert films.reason == 'strong_positive'
+
+    drops = [
+        'Give monthly to Drivers Cooperative Colorado and the match is 100%.',
+        'The rural electric co-op is raising the kilowatt rate this winter.',
+        'Co-operative Bank is cutting mortgage rates by 20 basis points.',
+        'Delivery app got a mad offer on co-op veg.',
+        'A $6M co-op in the Dakota was Rex Reed’s longtime home.',
+        'Helldivers 2 co-op with the squad this weekend.',
+        'Red billed Blue Magpies practice cooperative breeding.',
+        '2027 Summer Co op Manufacturing Technology, Swiftwater PA.',
+        'The board renewed a unified bowling co-op with the Catholic school.',
+        'We’ll be playing songs at a benefit for a co-op preschool in Burbank.',
+        'The solar co-op published a share offer for new members.',
+        'Mohave Electric Cooperative congratulates its Citizen of the Year.',
+        'Two officers were shot at Co-op City in the Bronx.',
+        'Our little cooperative game night is on Thursday.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
