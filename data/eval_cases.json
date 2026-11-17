@@ -2828,5 +2828,194 @@
     "author_handle": "citizenptnewsil.bsky.social",
     "alt_text": "Proviso district weighs health insurance cooperative as costs rise A broker presented a possible school-district health insurance cooperative, outlining potential cost stability and shared risks. Preliminary figures showed a 3.2% decrease in premiums but a possible $51 million aggregate stop-loss exposure; no commitment was made.",
     "note": "A school district exploring a health insurance cooperative."
+  },
+  {
+    "id": "fn-2026-11-17-financial-cooperative",
+    "text": "Did you know that eligible Third Act volunteers can now join Clean Energy Credit Union's financial cooperative?",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "clean-energy-cu.bsky.social",
+    "note": "A credit union inviting people to join its financial cooperative.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-17-little-cooperative",
+    "text": "Our little cooperative made sure to have D&O insurance by the time we stood up by the time we had users on our PDS.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "lucca.northsky.team",
+    "note": "A small cooperative that already has users on its PDS."
+  },
+  {
+    "id": "fn-2026-11-17-coop-conversation",
+    "text": "Our next Co-op Conversation will feature a talk on AI, collective judgment, and the future of cooperative democracy.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "coopstudies.bsky.social",
+    "note": "A co-op studies talk on cooperative democracy."
+  },
+  {
+    "id": "fn-2026-11-17-ambulance-cooperative",
+    "text": "www.ctaq.com",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "leshoshin.bsky.social",
+    "alt_text": "Accueil - CTAQ : Coopérative des techniciens ambulanciers du Québec La CTAQ offre un service paramédical au professionnalisme exemplaire à la population et fournit des emplois de qualités à ses membres.",
+    "note": "A Quebec ambulance technicians' cooperative describing its service.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-17-valencian-cooperative",
+    "text": "Consum, the Valencian cooperative, opens a 1,135 square metre supermarket in Gràcia.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "barnanews.bsky.social",
+    "note": "A Valencian consumer cooperative opening a supermarket."
+  },
+  {
+    "id": "fn-2026-11-17-milk-suppliers-cooperative",
+    "text": "The Irish Organic Milk Suppliers Cooperative established the first officially recognised dairy producer organisation in Ireland.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "capnetworkireland.bsky.social",
+    "note": "An organic milk suppliers' cooperative recognised as a dairy producer organisation.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-17-doula-cooperative",
+    "text": "Doula care aiming to improve maternal health and wellbeing grows in NC’s rural counties.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "lbonner.bsky.social",
+    "alt_text": "A Chatham County group supports a doula cooperative.",
+    "note": "A rural doula cooperative supported alongside a training program.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-17-bulk-handling",
+    "text": "WA’s grain growing regions are piling their harvested crops into the network.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "articleweblog.bsky.social",
+    "alt_text": "Cooperative Bulk Handling Group logged 665,000 tonnes across its Kwinana sites.",
+    "note": "A grain cooperative's harvest receival network."
+  },
+  {
+    "id": "fn-2026-11-17-notre-cooperative",
+    "text": "Sandrine Mazzilli, Directrice des opérations nationales de notre coopérative, organisait un job dating MEDICOOP France.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "medicoopfrance.bsky.social",
+    "note": "A health cooperative hosting its own hiring day.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-17-forestry-coop",
+    "text": "Just published a new episode of Forestry Now: How Harvesting Works.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "forestrynowpodcast.bsky.social",
+    "alt_text": "Today I'm joined by Victor Barber from Western Forestry Co Op.",
+    "note": "A forestry cooperative explaining how harvesting works."
+  },
+  {
+    "id": "fn-2026-11-17-natural-foods-coop",
+    "text": "Chico Natural Foods Co-op’s board found its footing through a GM transition, a remodel, and the pandemic.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "columinatecoop.bsky.social",
+    "note": "A natural foods co-op board working through a general-manager transition."
+  },
+  {
+    "id": "fn-2026-11-17-solar-group-purchasing",
+    "text": "Coconut Creek homeowners can now join a free co-op program that connects them to installers.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "citizenptnewsfl.bsky.social",
+    "alt_text": "Solar United Neighbors urged Coconut Creek to publicize a free, no-obligation solar co-op. He said the nonprofit uses group purchasing and competitive bids, and is not seeking city funding.",
+    "note": "A solar buying co-op that uses group purchasing rather than a share offer."
+  },
+  {
+    "id": "fn-2026-11-17-energiecooperatie",
+    "text": "Dan is minstens de helft van de windmolens in handen van de buurt.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "dewindvogel.bsky.social",
+    "alt_text": "De Windvogel is samen met drie Utrechtse energiecoöperaties het lokaal eigendom van de windmolens aan het organiseren.",
+    "note": "Energy cooperatives organizing local ownership of neighborhood wind turbines.",
+    "langs": [
+      "nl"
+    ]
+  },
+  {
+    "id": "fn-2026-11-17-filmmakers-coop",
+    "text": "GRIEF, guest curated by a filmmaker-member, screens at the Filmmakers Co-op in NYC.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "expcinema.bsky.social",
+    "note": "A screening at a filmmakers' cooperative."
+  },
+  {
+    "id": "fn-2026-11-17-leftist-coop",
+    "text": "In a just world, every tech company would be a leftist co-op and computer technology would be designed to benefit people instead of being designed to hurt us and take our money.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "myburningblade.bsky.social",
+    "note": "A case for tech firms as leftist cooperatives."
   }
 ]
