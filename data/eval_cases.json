@@ -3017,5 +3017,149 @@
     "regression": true,
     "author_handle": "myburningblade.bsky.social",
     "note": "A case for tech firms as leftist cooperatives."
+  },
+  {
+    "id": "fp-2026-11-18-kickstarter-worker-cooperative",
+    "text": "Full trailer for Delta x Dungeon Breaker by Timeless Way Interactive: an equal ownership worker cooperative #kickstarter #gametrailer #rpg #indiedev #noai",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "timelesswayint.bsky.social",
+    "note": "A worker-cooperative game studio's Kickstarter trailer."
+  },
+  {
+    "id": "fn-2026-11-18-solarcoop",
+    "text": "En France, le solaire citoyen et solidaire avec la coopérative SolarCoop. Kits et wébinaires.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "jose-relland.framapiaf.org.ap.brid.gy",
+    "note": "A citizen solar cooperative offering kits and webinars."
+  },
+  {
+    "id": "fn-2026-11-18-photovoltaic-cooperative",
+    "text": "Un petit coup de projecteur.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "alt_text": "Société coopérative photovoltaïque. Commandez vos panneaux solaires.",
+    "note": "Link card for a photovoltaic cooperative that sells panels."
+  },
+  {
+    "id": "fn-2026-11-18-farmers-grocery",
+    "text": "Black farmers in a cooperative in Alabama opened a grocery store in Fountain Heights.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "peoplestribune.bsky.social",
+    "note": "A farmers' cooperative opened a neighborhood grocery."
+  },
+  {
+    "id": "fn-2026-11-18-farmer-owned",
+    "text": "Fram Farmers, a cooperative owned by its farmers, won a new cooperative award.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "memypigsandi.bsky.social",
+    "note": "A farmer-owned cooperative recognized for pooling against big buyers."
+  },
+  {
+    "id": "fn-2026-11-18-publishing-coop",
+    "text": "Forming a Publishing Co-op: The Ups & Downs.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "joannanovinswrites.bsky.social",
+    "note": "A video about forming a publishing co-op."
+  },
+  {
+    "id": "fn-2026-11-18-fertiliser-coops",
+    "text": "New Zealand's fertiliser co-ops manage risk for farmers who own them.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "byteseu.bsky.social",
+    "note": "Farmer-owned fertiliser cooperatives."
+  },
+  {
+    "id": "fn-2026-11-18-developer-coop",
+    "text": "Our developer co-op has been building MVPs and mobile apps for startups.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "michaelmwu.bsky.social",
+    "note": "A developer co-op describing the work it does."
+  },
+  {
+    "id": "fn-2026-11-18-credit-unions",
+    "text": "In favour of credit unions & other cooperative models that follow the law.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "mcraewrites.bsky.social",
+    "note": "Advocacy for credit unions and cooperative models over for-profit banks."
+  },
+  {
+    "id": "fn-2026-11-18-new-harmony",
+    "text": "Robert Owen founded the cooperative community at New Harmony, Indiana.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "brookfarm.bsky.social",
+    "note": "The cooperative community Owen founded at New Harmony."
+  },
+  {
+    "id": "fn-2026-11-18-agriculture-cooperative",
+    "text": "The Bridge of Blessing Farmers Agriculture Cooperative received a livelihood grant.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "en-ph.pds.netasgard.com",
+    "note": "A named farmers' agriculture cooperative."
+  },
+  {
+    "id": "fn-2026-11-18-cooperative-model",
+    "text": "At Multipharma, our cooperative model gives a clear answer: the people who count on us.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "geertreyniers.wsocial.eu",
+    "note": "A pharmacy cooperative explaining who its model serves."
+  },
+  {
+    "id": "fn-2026-11-18-not-for-profit-cooperative",
+    "text": "What do Ungagged do? Have a look.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "ungagged.bsky.social",
+    "alt_text": "Descriptive text about the not-for-profit cooperative podcast and article platform.",
+    "note": "A not-for-profit cooperative podcast and article platform."
   }
 ]

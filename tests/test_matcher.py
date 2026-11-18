@@ -1270,6 +1270,69 @@ def test_cooperative_forms_missed_on_2026_11_17() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_18() -> None:
+    cases = [
+        (
+            'En France, le solaire citoyen et solidaire avec la coopérative SolarCoop. '
+            'Kits et wébinaires.'
+        ),
+        ('Black farmers in a cooperative in Alabama opened a grocery store in Fountain Heights.'),
+        'Fram Farmers, a cooperative owned by its farmers, won a new cooperative award.',
+        'Forming a Publishing Co-op: The Ups & Downs.',
+        "New Zealand's fertiliser co-ops manage risk for farmers who own them.",
+        'Our developer co-op has been building MVPs and mobile apps for startups.',
+        'In favour of credit unions & other cooperative models that follow the law.',
+        'Robert Owen founded the cooperative community at New Harmony, Indiana.',
+        'The Bridge of Blessing Farmers Agriculture Cooperative received a livelihood grant.',
+        'At Multipharma, our cooperative model gives a clear answer: the people who count on us.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    podcast = match_post(
+        'What do Ungagged do? Have a look.',
+        alt_text=(
+            'Descriptive text about the not-for-profit cooperative podcast and article platform.'
+        ),
+    )
+    assert podcast.matched is True
+    assert podcast.reason == 'strong_positive'
+
+    solar_card = match_post(
+        'Un petit coup de projecteur.',
+        alt_text='Société coopérative photovoltaïque. Commandez vos panneaux solaires.',
+    )
+    assert solar_card.matched is True
+    assert solar_card.reason == 'strong_positive'
+
+    kickstarter = match_post(
+        'Full trailer for Delta x Dungeon Breaker by Timeless Way Interactive: '
+        'an equal ownership worker cooperative #kickstarter #gametrailer'
+    )
+    assert kickstarter.matched is False
+    assert kickstarter.reason == 'hard_negative'
+
+    housing = match_post(
+        'Laurie Fitz invites residents to share what it is really like '
+        'transitioning into cooperative housing.'
+    )
+    assert housing.matched is False
+
+    drops = [
+        '2027 Summer Co-op Manufacturing Science, Framingham, MA.',
+        'Engineering co-op prep for next semester.',
+        'Il est toujours possible de prendre des parts de la coopérative.',
+        'Kick off the year-end fundraising campaign for our members.',
+        "Ranger's Path leaves Early Access with two-player co-op.",
+        'Two officers were shot at Co-op City in the Bronx.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
@@ -1429,3 +1492,10 @@ def test_spirit_surface_word_order() -> None:
     )
     assert spaced.matched is True
     assert spaced.reason == 'decision_keep:spirit_account:0.910'
+
+    cooperative_housing = match_post(
+        'Residents described transitioning into cooperative housing at the center.',
+        decider=script,
+    )
+    assert cooperative_housing.matched is True
+    assert cooperative_housing.reason == 'decision_keep:spirit_account:0.910'
