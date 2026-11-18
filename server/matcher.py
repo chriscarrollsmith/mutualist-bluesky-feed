@@ -279,6 +279,19 @@ _STRONG_POSITIVE = re.compile(
       | co-?op\s+conversations?\b
       | notre\s+coop[eé]rative\b
       | leftist\s+co-?ops?\b
+      | \bsolarcoop\b
+      | soci[eé]t[eé]\s+coop[eé]rative\s+photovolta
+      | solaire\s+citoyen.{0,80}coop[eé]rative
+      | farmers\s+in\s+a\s+cooperative.{0,160}grocery\s+store
+      | cooperative\s+owned\s+by\s+its\s+farmers\b
+      | publishing\s+co-?ops?\b(?!\s+(?:program|internship|placement|job|position)\b)
+      | fertili[sz]er\s+co-?ops?\b
+      | \bour\s+developer\s+co-?ops?\b
+      | credit\s+unions?.{0,80}cooperative\s+models?\b
+      | founded\s+the\s+cooperative\s+community\b
+      | agriculture\s+cooperatives?\b
+      | not-for-profit\s+cooperatives?\b
+      | our\s+cooperative\s+model\b(?!\s+(?:of\s+)?(?:play|gameplay|game|gaming)\b)
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -502,6 +515,7 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | \#a2council\b
       | has\s+been\s+verified\s+by\s+@
       | \bshare\s+offers?\b
+      | \bkickstarters?\b
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
     )
@@ -545,6 +559,7 @@ _HARD_NEGATIVE = re.compile(
       | \#a2council\b
       | has\s+been\s+verified\s+by\s+@
       | \bshare\s+offers?\b
+      | \bkickstarters?\b
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
     )
@@ -700,6 +715,7 @@ _SPIRIT_SURFACE = re.compile(
     (?:
         housing\s+co[\s-]?ops?\b
       | housing\s+cooperatives?\b
+      | cooperative\s+housing\b
       | co[\s-]?ops?\s+housing\b
       | co[\s-]?housing\b
       | repair\s+caf[eé]s?\b
