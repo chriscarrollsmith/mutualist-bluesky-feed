@@ -1333,6 +1333,101 @@ def test_cooperative_forms_missed_on_2026_11_18() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_19() -> None:
+    cases = [
+        (
+            'Does selling mean I am an owner? The article is about selling on '
+            'Artisans Cooperative and becoming a member-owner.'
+        ),
+        ('The Sacramento-based almond cooperative will reopen membership after a 10-year closure.'),
+        (
+            'Ocean Spray is a cooperative of farm business owners, which has '
+            'very little to do with treatment of farm workers.'
+        ),
+        ('A conversation on the work of Nundah Community Enterprises Cooperative.'),
+        (
+            'La coopérative L’Arban accompagne particuliers et collectivités '
+            'dans l’éco-rénovation de logements.'
+        ),
+        'The coffee shop is a co-op now, and everyone is growing their own food.',
+        "It's a co op site, not like bandcamp, which venture capital keeps passing around.",
+        (
+            'Timeless Way Interactive is organized as a worker owned gamedev '
+            'cooperative developing Delta x Dungeon Breaker.'
+        ),
+        (
+            'Group Health Cooperative member Joe Gardiner received a new heart, '
+            'and Group Health pays the cost.'
+        ),
+        (
+            'The Technology Freedom Cooperative is a project to break up with Big Tech '
+            'and share an archive server.'
+        ),
+        ('Join the webinar on cooperative banking experiences from India, Malaysia and Australia.'),
+        'Parkdale’s Danu Social House became a co-op, a neighbourhood third space.',
+        'From a £9m grocery to a 1,400-farmer co-op.',
+        'Seven residents signed up after joining a solar co-op workshop.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    writer = match_post(
+        'Olivia Charles on music and finally living as herself.',
+        alt_text='Olivia Charles: The Flaming Hydra Interview a fiery writer-owned cooperative',
+    )
+    assert writer.matched is True
+    assert writer.reason == 'strong_positive'
+
+    nundah_alt = match_post(
+        'Really enjoyed this conversation with Dr Peter Westoby.',
+        alt_text='Richard Warner, Co-ordinator of Nundah Community Enterprise Co-op',
+    )
+    assert nundah_alt.matched is True
+    assert nundah_alt.reason == 'strong_positive'
+
+    artist = match_post(
+        'Wednesday advert of the week.',
+        alt_text='Aberdeen City Arts Board artist co-op. Original designs.',
+    )
+    assert artist.matched is True
+    assert artist.reason == 'strong_positive'
+
+    drops = [
+        'French cooperative bank Crédit Mutuel Arkéa was targeted in a cyberattack.',
+        (
+            'Help keep Drivers Cooperative Colorado rolling: new monthly gifts '
+            'are matched 100%, up to $100.'
+        ),
+        'Former Co-op building to become a fitness studio and ironing business.',
+        'Midwest Electric is returning $2.5 million to members who had electric service.',
+        'Central Electric Cooperative is accepting applications for its youth trip.',
+        'White-fronted nun-birds are cooperative-breeding pairs plus helpers.',
+        (
+            'It is a Mitchell-Lama co-op, where the city controls the price and '
+            'owners cannot resell at a profit.'
+        ),
+        'An introduction with EmpowerLocal and the Center for Cooperative Media.',
+        "Ranger's Path leaves Early Access with two-player co-op.",
+        "You've been very cooperative.",
+        'Hegseth arrived to sign a cooperative defense agreement.',
+        "Iowa's largest farm cooperative is suing its former CEO.",
+        'Thank you Tillamook cooperative.',
+        'We work in a cooperative manner wherein 51% of profit goes to upgrades.',
+        'Shein attiva in Italia il programma Cooperative Logistics.',
+        'Full trailer for an equal ownership worker cooperative #kickstarter',
+        'The worker owned electric cooperative posted a new rate notice.',
+        'I manage a co-op owned & operated by leftists. We want to donate to campaigns.',
+        'Support us through the Co-op Local Community Fund on the Co-op app.',
+        'Golding Homes completes a stock transfer from a housing co-op.',
+        'Night of the Living Toys lets you stuff your co-op partners into boxes.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {

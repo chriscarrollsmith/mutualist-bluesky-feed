@@ -292,6 +292,22 @@ _STRONG_POSITIVE = re.compile(
       | agriculture\s+cooperatives?\b
       | not-for-profit\s+cooperatives?\b
       | our\s+cooperative\s+model\b(?!\s+(?:of\s+)?(?:play|gameplay|game|gaming)\b)
+      | \bartisans\s+cooperatives?\b
+      | \balmond\s+cooperatives?\b
+      | cooperative\s+of\s+farm\s+business\s+owners\b
+      | community\s+enterprises?\s+co(?:-?ops?|operatives?)\b
+      | coop[eé]rative.{0,220}[eé]co-r[eé]novation
+      | writer[\s-]owned\s+cooperatives?\b
+      | coffee\s+shop\s+is\s+a\s+co-?op\b
+      | \bco\s+op\s+site\b
+      | worker[\s-]owned\s+(?!electric\b|utility\b|rural\b)\w+\s+cooperatives?\b
+      | \bgroup\s+health\s+cooperative\b
+      | \btechnology\s+freedom\s+cooperative\b
+      | \bcooperative\s+banking\b
+      | became\s+a\s+co-?op\b(?!\s+(?:game|mode|server|session)\b)
+      | artists?\s+co-?ops?\b
+      | \bfarmer\s+co-?ops?\b
+      | joining\s+a\s+solar\s+co-?op\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
