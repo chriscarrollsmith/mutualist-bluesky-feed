@@ -135,7 +135,7 @@ _STRONG_POSITIVE = re.compile(
       | coop[eé]rative.{0,160}vente\s+de\s+livres
       | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}dairies\b
       | coop[eé]rative\s+pour\s+seniors\b
-      | cooperative\s+di\s+comunit[aà]\b
+      | cooperativ[ae]\s+di\s+comunit[aà]\b
       | cave\s+coop[eé]rative\b
       | co-?ops?\b.{0,40}\bpay\s+to\s+be\s+a\s+members?\b
       | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
@@ -150,7 +150,7 @@ _STRONG_POSITIVE = re.compile(
       | autog[eè]rent\s+leur\s+usine\b
       | network\s+of\s+co-?ops\b
       | worker-owners?\b
-      | co-?op\s+platforms\b
+      | co-?op\s+platforms?\b(?!\s+(?:game|games|shooter|fighter)\b)
       | \bbaugemeinschaft\b
       | co-?ops?\s+that\s+pays?\s+fair\s+wages\b
       | socially\s+responsible\s+cooperative\s+business\b
@@ -167,7 +167,7 @@ _STRONG_POSITIVE = re.compile(
       | co-?op\s+member\s+with\s+a\s+monthly\s+subscription\b
       | food\s+hub\s+cooperatives?\b
       | savings\s+and\s+credit\s+cooperative\b
-      | farmer-owned\s+cooperatives?\b
+      | farmer[\s-]owned\s+co[\s-]?(?:operative|op)s?\b
       | press\s+cooperatives?\b
       | publishing\s+cooperatives?\b
       | reprise\s+en\s+coop[eé]rative\b
@@ -293,6 +293,7 @@ _STRONG_POSITIVE = re.compile(
       | not-for-profit\s+cooperatives?\b
       | our\s+cooperative\s+model\b(?!\s+(?:of\s+)?(?:play|gameplay|game|gaming)\b)
       | \bartisans\s+cooperatives?\b
+      | \bartisans?['’]s?\s+cooperatives?\b
       | \balmond\s+cooperatives?\b
       | cooperative\s+of\s+farm\s+business\s+owners\b
       | community\s+enterprises?\s+co(?:-?ops?|operatives?)\b
@@ -308,6 +309,20 @@ _STRONG_POSITIVE = re.compile(
       | artists?\s+co-?ops?\b
       | \bfarmer\s+co-?ops?\b
       | joining\s+a\s+solar\s+co-?op\b
+      | worker[\s-]owned\s+newsrooms?\b
+      | worker[\s-]owned\s+media\s+leaders\b
+      | squatters?['’]?\s+cooperatives?\b
+      | \bfontstand\s+cooperative\b
+      | \bfan\s+cooperatives?\b(?!\s+(?:game|games|board|mode)\b)
+      | \bsupporter\s+cooperatives?\b
+      | cooperative\s+business\b.{0,200}\bfarmers\s+who\s+own\b
+      | art\s+cooperative\s+galler(?:y|ies)\b
+      | start\s+a\s+\#?cooperatives?\b(?!\s+(?:game|games|board|mode|server|campaign)\b)
+      | co-?operative\s+principles\b(?!\s+of\s+(?:play|gameplay|games?|the\s+game)\b)
+      | collectively\s+buy\b.{0,160}\bco-?ops?\b
+      | put\s+together\s+a\s+co-?op\b(?!\s+(?:game|games|team|server|mode)\b)
+      | co-?operative\s+global\s+music\b
+      | cooperative\s+\#?filmfestivals?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -437,7 +452,7 @@ _MUTUALIST_CONTEXT = re.compile(
       | coop[eé]rative.{0,160}vente\s+de\s+livres
       | co-?op\s+of\s+(?:[\w'’-]+\s+){0,6}dairies\b
       | coop[eé]rative\s+pour\s+seniors\b
-      | cooperative\s+di\s+comunit[aà]\b
+      | cooperativ[ae]\s+di\s+comunit[aà]\b
       | cave\s+coop[eé]rative\b
       | co-?ops?\b.{0,40}\bpay\s+to\s+be\s+a\s+members?\b
       | entreprises\s+s['’]unissent\s+en\s+coop[eé]rative\b
