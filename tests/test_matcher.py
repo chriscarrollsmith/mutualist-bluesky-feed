@@ -1428,6 +1428,93 @@ def test_cooperative_forms_missed_on_2026_11_19() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_20() -> None:
+    cases = [
+        'Hensall seems small on the map, its farmer owned co-op exports dry beans.',
+        "Artisans who are anti AI should consider trying Artisan's Cooperative!",
+        'Premi per Incontro, cooperativa di comunità, e Almaflores.',
+        'A weeklong conference for worker-owned newsrooms just wrapped up.',
+        "Bonnington Square's squatters' cooperative preserved terraced homes.",
+        'Nürnberg explores a fan cooperative to fund stadium redevelopment.',
+        'FC Nürnberg is considering a supporter cooperative for the stadium.',
+        (
+            'In a cooperative business, there is no distance between the CEO '
+            'and the farmers who own the company.'
+        ),
+        'Free art at City Art Cooperative Gallery runs through November 27.',
+        'We collectively buy a few GPUs and rotate them through the co-op.',
+        'Hippie fans put together a co-op to open a juice bar club.',
+        'Beyond The Music is the co-operative global music and media conference.',
+        'Intrigued by this cooperative filmfestival of collaboratively made works.',
+        'Wonder what a co-op platform would look like for workers locked out of processors.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    fontstand = match_post(
+        'More cooperatives, today for type foundries.',
+        alt_text='Pssst, the Fontstand Cooperative now exists',
+    )
+    assert fontstand.matched is True
+    assert fontstand.reason == 'strong_positive'
+
+    leaders = match_post(
+        'I wrote an essay about why collective action is how we survive.',
+        alt_text=(
+            'Grounded Together: Why Cooperative Organizing Works When Systems Fail. '
+            'The groundstop stranded worker-owned media leaders.'
+        ),
+    )
+    assert leaders.matched is True
+    assert leaders.reason == 'strong_positive'
+
+    principles = match_post(
+        '',
+        alt_text=(
+            'Co-Operative Principles Are The Foundation Of Development at the Sahakari awards.'
+        ),
+    )
+    assert principles.matched is True
+    assert principles.reason == 'strong_positive'
+
+    started = match_post(
+        'One idea sparked by the layoff wave.',
+        alt_text='Someone who wants to start a #cooperative instead of another corporation.',
+    )
+    assert started.matched is True
+    assert started.reason == 'strong_positive'
+
+    media = match_post(
+        'A report on media run on #cooperative principles is coming out.',
+        alt_text=(
+            'Learning from cooperatives: media organizations inspired by cooperative principles.'
+        ),
+    )
+    assert media.matched is True
+    assert media.reason == 'strong_positive'
+
+    drops = [
+        'It is a Mitchell-Lama co-op, where the city controls the price.',
+        'Starting a co-op discord server for streamers to promote themselves.',
+        "Let's start a cooperative game tonight.",
+        'The board game teaches cooperative principles of play.',
+        'Support us through the Co-op Local Community Fund on the Co-op app.',
+        'Central Electric Cooperative is accepting applications for its youth trip.',
+        'Thank you Tillamook cooperative.',
+        'A fan cooperative board game night at the library.',
+        'Fans put together a co-op game for the poster.',
+        'Wonder what a co-op platform game would look like.',
+        'Couch co-op pixel platformer for two cats.',
+        'White-fronted nun-birds are cooperative-breeding pairs plus helpers.',
+        'Full trailer for an equal ownership worker cooperative #kickstarter',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
