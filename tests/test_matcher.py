@@ -1515,6 +1515,57 @@ def test_cooperative_forms_missed_on_2026_11_20() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_21() -> None:
+    cases = [
+        (
+            'Magnum Photos is a cooperative of acclaimed, independent photographers '
+            'who document daily life.'
+        ),
+        ('The Brick House is a cooperative of writers, artists, and editors founded in 2020.'),
+        'VatN plays at The Monarch, a cooperative musician workerspace in Louisville.',
+        ('Rabobank is a cooperative bank established by farmers in the late nineteenth century.'),
+        'Windcoop est une coopérative maritime basée à Lorient.',
+        'Le moyen, rejoindre la coopérative d’activité et d’emploi coop alpha.',
+        (
+            'A renewable energy cooperative is bringing pathways for trading work '
+            'to Chicago’s south side.'
+        ),
+        'He has been living at the farm the Longo maï collective took over.',
+        'Leading Austrian wine producer and cooperative Domäne Wachau unveiled the vintage.',
+        'She has been leading the cranberry growers’ cooperative for a few months.',
+        'Not a member? Join the co-op at subvert.fm',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    sighting = match_post('I saw Gaby Hoffmann checking out at the Park Slope Food Coop')
+    assert sighting.matched is False
+    assert sighting.reason == 'hard_negative'
+
+    stocking = match_post('i stocked nut butters at the park slope food co-op with peter sarsgaard')
+    assert stocking.matched is True
+    assert stocking.reason == 'strong_positive'
+
+    meeting = match_post('I saw the food co-op board post the meeting notes.')
+    assert meeting.matched is True
+    assert meeting.reason == 'strong_positive'
+
+    drops = [
+        'Cooperative Bank of Kenya raised its interim dividend.',
+        'Pedernales Electric Cooperative approved a 5% rate reduction.',
+        'Spirit Island is a cooperative strategy game where island spirits drive off invaders.',
+        'Double your gift to Drivers Cooperative Colorado through December 8.',
+        'La coopérative lance une levée de fonds citoyenne pour son modèle agroécologique.',
+        'One challenge of living in co-op housing is individual preference.',
+        'Join the co-op at discord.gg for the raid night.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
