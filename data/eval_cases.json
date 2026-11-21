@@ -3553,5 +3553,173 @@
     "regression": true,
     "author_handle": "helloim6foot4.bsky.social",
     "note": "Wondering what a co-op platform would look like against payment processors."
+  },
+  {
+    "id": "fp-2026-11-21-food-coop-sighting",
+    "text": "I saw Gaby Hoffmann checking out at the Park Slope Food Coop",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "kwistent.bsky.social",
+    "note": "A celebrity sighting at a food co-op checkout, with no account of the cooperative.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-photographer-cooperative",
+    "text": "Magnum Photos is a cooperative of acclaimed, independent photographers who share an ongoing commitment to documenting world events, people, places, daily life and culture.\n\nwww.magnumphotos.com",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "brot34cas.bsky.social",
+    "alt_text": "Magnum Photos | Iconic images, authentic visual storytelling Magnum Photos A photographic cooperative of great diversity and distinction owned by its photographer members",
+    "note": "A photographer cooperative owned by its members.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-writer-cooperative",
+    "text": "The Brick House is a cooperative of writers, artists, and editors founded in 2020. We work in three main areas to strengthen freedom of information, libraries, cultural preservation, and the independent press.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "self-management.bsky.social",
+    "alt_text": "The Brick House Cooperative The wolf-proof media collective. Founded, owned and operated by a group of passionate, truthful and committed journalists and artists.",
+    "note": "A cooperative of writers, artists, and editors.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-musician-workerspace",
+    "text": "TONIGHT at 8! VatN opens for Jeri Katherine at The Monarch, a cooperative musician workerspace in Louisville. See you there! ;)",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "claywallace.bsky.social",
+    "alt_text": "Hand-chalked a-frame sign reading LIVE MUSIC JERI KATHERINE HOWELL AND VIOLET AND THE NEWSROOM DOORS 7 BYOB MUSIC 8 A cute little turf sidewalk courtyard with monarch butterflies painted on a wall. The stage! Blue velvet curtains, rugs, and instrument cases. Some candles at the edge of the stage. Listening room at The Monarch from the next room over. Cozy couches and chairs with artsy vintage decor. Big walkway into the listening room with the words THE MONARCH overhead. Stage in the background.",
+    "note": "A show at a cooperative musician workerspace.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-farmer-cooperative-bank",
+    "text": "'Rabobank is a cooperative bank established by farmers in the late nineteenth century.' Jochem de Bruijn gaat nooit uit mijn hoofd.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "annetkadet.bsky.social",
+    "note": "A cooperative bank established by farmers.",
+    "langs": [
+      "nl"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-cooperative-maritime",
+    "text": "www.wind.coop",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "dsestier.eurosky.social",
+    "alt_text": "Windcoop la compagnie maritime militante Windcoop est une coopérative maritime basée à Lorient qui propose un transport de marchandises à la voile, décarboné et éthique.",
+    "note": "A sail-freight maritime cooperative.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-activity-employment-cooperative",
+    "text": "Dimanche, j’ai rempli mon dossier de réinscription à France Travail.\nLe but, parler de mon projet dans la pair aidance en santé mentale.\nLe moyen, rejoindre la coopérative d’activité et d’emploi coop alpha sur Bordeaux.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "azythum.bsky.social",
+    "note": "Joining a French business-and-employment cooperative.",
+    "langs": [
+      "fr"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-renewable-energy-cooperative",
+    "text": "",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "nonprofitquarterly.org.web.brid.gy",
+    "alt_text": "How a renewable energy cooperative is bringing economic justice and community to Chicago’s south side A renewable energy cooperative is bringing investment and open pathways for trading work to Chicago’s far south side.",
+    "note": "A renewable energy cooperative opening pathways to trade work."
+  },
+  {
+    "id": "fn-2026-11-21-longo-mai",
+    "text": "",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "arc2020.eu.web.brid.gy",
+    "alt_text": "France | Nothing Works Without Love Johannes Dahmke has been living and working at the Mas de Granier cooperative near Marseille in France since 2008. Taken over by the Longo maï collective 30 years ago, the farm covers 30 hectares. Half of this consists of hay meadows, mainly for sale. There are 3 hectares of horticulture, half of which is under plastic",
+    "note": "Living and working on a farm the Longo maï collective took over."
+  },
+  {
+    "id": "fn-2026-11-21-wine-cooperative",
+    "text": "Domane Wachau: Yields down 30% in 2026 \n#wine #winenews #news \nharpers.co.uk/news/fullsto...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "harperswinespirit.bsky.social",
+    "alt_text": "Domane Wachau: Yields down 30% in 2026 - Harpers Wine & Spirit Trade News Leading Austrian wine producer and cooperative Domäne Wachau has unveiled its 2026 vintage...",
+    "note": "A wine producer that is a cooperative.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-21-growers-cooperative",
+    "text": "The original superfood? We think so too! And our researchers are looking for the best ways to grow and get them in your kitchen.\nhttps://www.bostonglobe.com/2026/11/20/business/ocean-spray-ceo-cranberry-thanksgiving/",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "umassamherst.bsky.social",
+    "alt_text": "‘The original superfood’: New Ocean Spray CEO Abigail Buckwalter has big plans for those little berries - The Boston Globe After leading the cranberry growers’ cooperative for the past few months, Buckwalter is gearing up for her first Thanksgiving season — the equivalent of the brand’s Super Bowl.",
+    "note": "A cranberry growers' cooperative."
+  },
+  {
+    "id": "fn-2026-11-21-subvert-membership",
+    "text": "How To Leave Spotify: A Free Live Workshop.\nFor decades artists have been told that Spotify is necessary to build a successful artist career... but what if there was another way? \nNot a member? Join the co-op at subvert.fm",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "gabrielbrox.bsky.social",
+    "alt_text": "Subvert · Events Calendar View and follow events from Subvert on Luma.",
+    "note": "An invitation to join the Subvert co-op instead of Spotify.",
+    "langs": [
+      "en"
+    ]
   }
 ]

@@ -323,6 +323,17 @@ _STRONG_POSITIVE = re.compile(
       | put\s+together\s+a\s+co-?op\b(?!\s+(?:game|games|team|server|mode)\b)
       | co-?operative\s+global\s+music\b
       | cooperative\s+\#?filmfestivals?\b
+      | \bcooperative\s+of\b(?:\s+[\w,]+){0,8}\s+
+        (?:photographers?|writers?|artists?|editors?|journalists?)\b
+      | coop[eé]rative\s+maritime\b
+      | coop[eé]rative\s+d['’]activit[eé]\s+et\s+d['’]emploi\b
+      | renewable\s+energy\s+cooperatives?\b
+      | \blongo\s+ma[iï]\b
+      | wine\s+producers?\s+and\s+cooperatives?\b
+      | growers['’]?\s+cooperatives?\b
+      | cooperative\s+musician\s+workerspaces?\b
+      | cooperative\s+banks?\s+established\s+by\s+farmers\b
+      | join\s+the\s+co-?op\s+at\s+subvert\.fm\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -520,7 +531,8 @@ _INSTITUTION_CUE = re.compile(
 # VRChat, roleplay packs, and shrine invites are the same kind of collision:
 # an in-scope ideology name does not make a fandom or adult social club
 # into a commune, assembly, or cooperative. A death hoax in the post's own
-# words is not rescued by an in-scope link card.
+# words is not rescued by an in-scope link card. Seeing someone check out
+# at a food co-op is a sighting, not the cooperative.
 _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
     r"""
     (?:
@@ -549,6 +561,7 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | \bkickstarters?\b
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
+      | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -593,6 +606,7 @@ _HARD_NEGATIVE = re.compile(
       | \bkickstarters?\b
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
+      | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
