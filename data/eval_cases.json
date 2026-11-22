@@ -3721,5 +3721,85 @@
     "langs": [
       "en"
     ]
+  },
+  {
+    "id": "fp-2026-11-22-carpet-chamber",
+    "text": "It’s McDonald Carpet One’s 50th Anniversary, and they are this week’s member feature!\n\nCome visit them today and discover the distinctive blend of a local business and community cooperative.\n\nYou can go to McdonaldCarpetOneBoulder.com to see what they have to offer.",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "boulderchamber.bsky.social",
+    "note": "A chamber anniversary ad that calls a carpet store a community cooperative.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-22-fishing-boat-cooperative",
+    "text": "I subscribe to a fishing boat cooperative and every week I pick up a slab of fish from a cooler on someone's porch and it's the single most crime-coded activity I participate in on a regular basis but the fresh tuna, salmon, black cod, etc is so so so worth it.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "hikikomorphism.bsky.social",
+    "note": "A subscriber pickup from a fishing boat cooperative.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-22-weaving-cooperative",
+    "text": "Back in April, a fire tore through the workspace of the FAMIOVA Women's Weaving Cooperative, leaving the women without their source of livelihood and destroying years of collective work. Now, they are asking for your help to finish rebuilding their workshop and get back to weaving on their land.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "olonala.bsky.social",
+    "note": "A women's weaving cooperative rebuilding its workshop."
+  },
+  {
+    "id": "fn-2026-11-22-franconian-cooperative",
+    "text": "Bavaria’s biggest wine producer asks 1,100 growers to delay grape payments #Bavaria #WineIndustry #GrapeHarvest #Sustainability #WineProducers",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "vineturglobal.bsky.social",
+    "alt_text": "Bavaria’s biggest wine producer asks 1,100 growers to delay grape payments The Franconian cooperative says deferring 2024 and 2025 harvest proceeds is necessary for survival through 2027",
+    "note": "A Franconian wine cooperative deferring harvest payments to growers.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-22-wine-cooperatives",
+    "text": "Italy’s League proposed a 12-month loan moratorium for wine cooperatives burdened by unsold stocks #WineIndustry #Italy #WineCooperatives #LoanMoratorium #Agriculture",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "vineturglobal.bsky.social",
+    "alt_text": "Italy’s League proposed a 12-month loan moratorium for wine cooperatives burdened by unsold stocks The budget amendment would let eligible producers pay cooperative members first, easing pressure from weak balance sheets and unsold inventories",
+    "note": "A loan moratorium so wine cooperatives can pay their members.",
+    "langs": [
+      "en"
+    ]
+  },
+  {
+    "id": "fn-2026-11-22-really-really-free",
+    "text": "We will have whistle kits with Know Your Rights literature available for free pickup at tomorrow's Really (Really!) Free Market!\n\n¡Tendremos kits con silbatos y folletos de Conozca Sus Derechos disponibles para recoger gratis en el Mercado Realmente Gratis de mañana!",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "socodsa.org",
+    "note": "A Really Really Free Market announced with a parenthetical Really."
   }
 ]

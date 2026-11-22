@@ -202,7 +202,11 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+software\s+initiative
       | join\s+our\s+co-?op\b(?!\s+game\b)
       | cooperative\s+gets\s+set\s+up
-      | really\s+really\s+free\s+markets?\b(?!\s+archive\b)
+      | really\s*(?:\(\s*)?really[!)]*\s+free\s+markets?\b(?!\s+archive\b)
+      | fishing\s+boat\s+cooperatives?\b
+      | weaving\s+cooperatives?\b
+      | franconian\s+cooperatives?\b
+      | wine\s+co-?operatives?\b(?!\s+(?:game|games|board|mode|expansion)\b)
       | oldest\s+continuing\s+co-?ops?\b
       | save\s+our\s+co-?ops?\b
       | multi-stakeholder\s+co-?operatives?\b
@@ -532,7 +536,9 @@ _INSTITUTION_CUE = re.compile(
 # an in-scope ideology name does not make a fandom or adult social club
 # into a commune, assembly, or cooperative. A death hoax in the post's own
 # words is not rescued by an in-scope link card. Seeing someone check out
-# at a food co-op is a sighting, not the cooperative.
+# at a food co-op is a sighting, not the cooperative. A chamber
+# anniversary feature that calls a store a local business and community
+# cooperative is an ad for the shop.
 _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
     r"""
     (?:
@@ -562,6 +568,7 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
       | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
+      | local\s+business\s+and\s+community\s+co-?operatives?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -607,6 +614,7 @@ _HARD_NEGATIVE = re.compile(
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
       | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
+      | local\s+business\s+and\s+community\s+co-?operatives?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -689,7 +697,7 @@ _IN_SCOPE_EVENT_VENUE = re.compile(
       | free\s+bank(?:ing)?\s+(?:workshop|teach[\s-]?in|meetup)
       | occupancy[\s-]and[\s-]use
       | proudhon\s+(?:reading|circle|meetup)
-      | really\s+really\s+free\s+market
+      | really\s*(?:\(\s*)?really[!)]*\s+free\s+markets?
     )
     """,
     re.IGNORECASE | re.VERBOSE,
