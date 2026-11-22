@@ -1566,6 +1566,54 @@ def test_cooperative_forms_missed_on_2026_11_21() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_22() -> None:
+    cases = [
+        (
+            'I subscribe to a fishing boat cooperative and every week I pick up a slab of fish '
+            "from a cooler on someone's porch."
+        ),
+        (
+            "A fire tore through the workspace of the FAMIOVA Women's Weaving Cooperative, "
+            'leaving the women without their source of livelihood.'
+        ),
+        (
+            'Bavaria’s biggest wine producer asks 1,100 growers to delay grape payments.',
+            'The Franconian cooperative says deferring harvest proceeds is necessary.',
+        ),
+        'Italy’s League proposed a 12-month loan moratorium for wine cooperatives.',
+        "We will have whistle kits at tomorrow's Really (Really!) Free Market!",
+        'Really Really Free Market this Saturday in the park.',
+    ]
+    for item in cases:
+        text, alt = item if isinstance(item, tuple) else (item, '')
+        result = match_post(text, alt_text=alt)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    community = match_post('The community cooperative runs the town grocery.')
+    assert community.matched is True
+    assert community.reason == 'strong_positive'
+
+    ad = match_post(
+        'It’s McDonald Carpet One’s 50th Anniversary, and they are this week’s member feature! '
+        'Come visit them today and discover the distinctive blend of a local business and '
+        'community cooperative.'
+    )
+    assert ad.matched is False
+    assert ad.reason == 'hard_negative'
+
+    drops = [
+        'The really really free market archive needs a new index.',
+        'Like REALLY REALLY nicely? Like REALLY REALLY REALLY nicely?',
+        'Cardedeu Opens Catalonia’s Largest Private-Land Housing Co-op.',
+        'Play Viticulture as a cooperative game with the Viticulture World expansion.',
+        'Help keep the co-op accessible. Donate via www.gofundme.com/f/support-the-coop.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
