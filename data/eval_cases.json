@@ -3801,5 +3801,74 @@
     "regression": true,
     "author_handle": "socodsa.org",
     "note": "A Really Really Free Market announced with a parenthetical Really."
+  },
+  {
+    "id": "fn-2026-11-23-nonprofit-cooperative",
+    "text": "Mon plan économique de philosophe : fin de l'économie de propriété lucrative et économie à 0%\n- Toute entreprise devient coopérative à but non lucratif\n- Financement par prêt bancaire à 0%\n- Zéro dividende\n- Tous les produits à prix coûtant (dont salaires et remboursement du prêt)",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "acedie.bsky.social",
+    "note": "A cost-price economy of non-profit cooperatives, zero dividends, and zero-interest loans."
+  },
+  {
+    "id": "fn-2026-11-23-grain-warehouse",
+    "text": "Raga has a new cooperative grain warehouse. Storage can buy time, but it is not a buyer. Intake rules, fees and who buys the grain will determine how useful it is.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "makhanamornings.bsky.social",
+    "alt_text": "A cooperative warehouse was inaugurated in Arunachal Pradesh’s Kamle district. The real test is whether farmers can store grain long enough to choose when to sell it.",
+    "note": "A farmer cooperative grain warehouse, judged by intake rules and who buys the grain."
+  },
+  {
+    "id": "fn-2026-11-23-territorio-colectivo",
+    "text": "In a new piece for Black Agenda Report, Francy Natalia Mosquera Garcia and Caroline Shenaz Hossein examine how Afro-Colombian women use territorio colectivo and comadreo to build resilient, cooperative economic futures against racial capitalism.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "africanaeconomics.bsky.social",
+    "alt_text": "Colombia's constitution recognizes Black communities as collective rights-holders, but extractivism and dispossession have undermined those guarantees, inspiring people to build their own institutions.",
+    "note": "Collective land tenure held against dispossession."
+  },
+  {
+    "id": "fn-2026-11-23-cooperative-community",
+    "text": "We're offering free cups of Griffin Creek Coffee to show our gratitude and appreciation for our cooperative community. Visit the Café through Wednesday, Nov 25 and warm up with a free cup of locally roasted coffee.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "medfordfoodcoop.bsky.social",
+    "note": "A food co-op speaking as its own cooperative community."
+  },
+  {
+    "id": "fn-2026-11-23-wine-cooperative-hashtag",
+    "text": "FYI: Sicilian cooperatives seek €50 million to rescue the island’s wine sector #SicilyWine #WineCooperatives #AgricultureFunding #WineIndustry #SustainableWinemaking",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "vineturglobal.bsky.social",
+    "alt_text": "Sicilian cooperatives seek €50 million to rescue the island’s wine sector The groups want the regional budget to fund crisis distillation, producer aid and cooperative capital after €19 million was cut",
+    "note": "Wine cooperatives named in the hashtag, seeking funds for distillation, producer aid, and cooperative capital."
+  },
+  {
+    "id": "fn-2026-11-23-cooperative-publishing",
+    "text": "Fund a cooperative publishing company that eschews Gen AI at every stage, focusing on publishing marginalised writers whose books might not be considered \"commercial\" enough for trad pub, for whatever reason. The first imprint would be romance focused.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "maetangwriter.com",
+    "note": "A cooperative publishing company, the reverse of publishing cooperative."
   }
 ]

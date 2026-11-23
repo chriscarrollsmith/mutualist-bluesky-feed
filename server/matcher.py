@@ -337,6 +337,13 @@ _STRONG_POSITIVE = re.compile(
       | growers['’]?\s+cooperatives?\b
       | cooperative\s+musician\s+workerspaces?\b
       | cooperative\s+banks?\s+established\s+by\s+farmers\b
+      | \#wineco-?operatives?\b
+      | cooperative\s+grain\s+warehouses?\b
+      | our\s+cooperative\s+community\b
+        (?!\s+(?:of\s+)?(?:play|gameplay|games?|gaming|players?|server)\b)
+      | territorio\s+colectivo\b
+      | coop[eé]rative\s+[aà]\s+but\s+non[\s-]?lucratif\b
+      | cooperative\s+publishing\b(?!\s+(?:game|games|board|mode)\b)
       | join\s+the\s+co-?op\s+at\s+subvert\.fm\b
     )
     """,

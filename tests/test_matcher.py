@@ -1614,6 +1614,57 @@ def test_cooperative_forms_missed_on_2026_11_22() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_23() -> None:
+    cases = [
+        (
+            "Mon plan économique de philosophe : fin de l'économie de propriété lucrative "
+            'et économie à 0%. Toute entreprise devient coopérative à but non lucratif. '
+            'Financement par prêt bancaire à 0%. Zéro dividende. '
+            'Tous les produits à prix coûtant.'
+        ),
+        (
+            'Raga has a new cooperative grain warehouse. Storage can buy time, but it is '
+            'not a buyer. Intake rules, fees and who buys the grain will determine how '
+            'useful it is.'
+        ),
+        (
+            'Sicilian cooperatives seek €50 million to rescue the island’s wine sector '
+            '#WineCooperatives'
+        ),
+        (
+            "We're offering free cups of coffee to show our gratitude for our cooperative "
+            'community. Visit the café through Wednesday.'
+        ),
+        (
+            'Afro-Colombian women use territorio colectivo and comadreo to build '
+            'cooperative economic futures against racial capitalism.'
+        ),
+        (
+            'Fund a cooperative publishing company that eschews generative models and '
+            'publishes writers trad pub will not.'
+        ),
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    drops = [
+        'Toute entreprise devient coopérative.',
+        'Create a cooperative community for women who are aging alone.',
+        'Our cooperative community of players finished the campaign.',
+        'Sicilian cooperatives seek €50 million to rescue the island’s wine sector.',
+        'The retail sale is advertised à prix coûtant this weekend.',
+        'Play Viticulture as a cooperative game with the Viticulture World expansion.',
+        'Cardedeu Opens Catalonia’s Largest Private-Land Housing Co-op.',
+        'Check out the cooperative publishing company on Kickstarter.',
+        'The cooperative publishing game ships a new board.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
