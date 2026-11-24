@@ -345,6 +345,15 @@ _STRONG_POSITIVE = re.compile(
       | coop[eé]rative\s+[aà]\s+but\s+non[\s-]?lucratif\b
       | cooperative\s+publishing\b(?!\s+(?:game|games|board|mode)\b)
       | join\s+the\s+co-?op\s+at\s+subvert\.fm\b
+      | ace\s+hardware\s+cooperatives?\b
+      | workshop\s+cooperatives?\b
+        (?!\s+(?:game|games|board|mode|gameplay|agreement)\b)
+      | la\s+coop[eé]rative\s+de\s+
+        (?!(?:jeu|jeux|games?|cr[eé]dits?|logement)\b)
+      | \bcooperative\s+inc\b
+      | marketing\s+cooperatives?\b(?!\s+(?:game|games|board|mode)\b)
+      | industrial\s+cooperatives?\b
+      | processing\s+co-?ops?\b(?!\s+(?:game|games|mode|gameplay)\b)
     )
     """,
     re.IGNORECASE | re.VERBOSE,
