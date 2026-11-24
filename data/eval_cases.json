@@ -3870,5 +3870,87 @@
     "regression": true,
     "author_handle": "maetangwriter.com",
     "note": "A cooperative publishing company, the reverse of publishing cooperative."
+  },
+  {
+    "id": "fn-2026-11-24-ace-hardware-cooperative",
+    "text": "Target and Home Depot, and it’s made my life immeasurably better because I’ve discovered as a result that locally owned stores in the Ace Hardware cooperative have literally anything I’d want from either of those, and way better vibes",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "youwere.cool",
+    "note": "Locally owned stores in the Ace Hardware retailer cooperative."
+  },
+  {
+    "id": "fn-2026-11-24-workshop-cooperative",
+    "text": "Country Gate Players Workshop Cooperative presents Cratchit - an original family holiday musical by Bill Scurato from December 4-6, 2026. Generations after the beloved \"Tiny Tim\" captured the hearts of readers in A Christmas Carol, his descendant, Timothy Cratchit, Esq, has inherited the family name",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "newjerseystage.com",
+    "alt_text": "Country Gate Players Workshop Cooperative presents \"Cratchit\" (BELVIDERE, NJ) -- Country Gate Players Workshop Cooperative presents Cratchit - an original family holiday musical by Bill Scurato from December 4-6, 2026. Generations after the beloved \"Tiny Tim\" ca...",
+    "note": "A players workshop cooperative presenting a holiday musical."
+  },
+  {
+    "id": "fn-2026-11-24-rogersville-cooperative",
+    "text": "La Coop de Rogersville peine à retrouver l’équilibre financier",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "mediasca.skyfleet.blue",
+    "alt_text": "La Coop de Rogersville toujours en difficulté financière La Coopérative de Rogersville, située à Nouvelle-Arcadie, subit toujours les répercussions de la perte de son contrat d'agence d'Alcool NB en 2023.",
+    "note": "La Coopérative de Rogersville still recovering after losing its agency contract."
+  },
+  {
+    "id": "fn-2026-11-24-cooperative-inc",
+    "text": "@zspencer hi there. Who do you use for banking for your coop? I just tried to open an account and the banker had no idea how to classify a cooperative inc",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "anca.mastodon.xyz.ap.brid.gy",
+    "note": "A cooperative inc that a bank could not classify when opening an account."
+  },
+  {
+    "id": "fn-2026-11-24-marketing-cooperative",
+    "text": "www.shelf-awareness.com/theshelf/202...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "habbymomma.bsky.social",
+    "alt_text": "Vayinafash Press, Featuring Jewish Authors, Launches Vayinafash Press, a publishing imprint and marketing cooperative for independent Jewish authors, has launched with a list of 11 books",
+    "note": "A publishing imprint that is a marketing cooperative for independent authors."
+  },
+  {
+    "id": "fn-2026-11-24-industrial-cooperative",
+    "text": "TIL...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "jothehat.eurosky.social",
+    "alt_text": "Tumblr text post \n\naudible-smiles \nApr 26, 2024\n\nWhen people get a little too gung-ho about-\nwait. cancel post. gung-ho cannot be English. where did that phrase come from? China?\nok, yes. gönghé, which is...an abbreviation for \"industrial cooperative\"?\nLike it was just a term for a worker-run organization? A specific U",
+    "note": "Gung-ho as the name of an industrial cooperative, a worker-run organization."
+  },
+  {
+    "id": "fn-2026-11-24-processing-co-op",
+    "text": "",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "chyrons.bsky.social",
+    "alt_text": "Bridget Swift | General Mgr, West Michigan Processing Co-op",
+    "note": "The general manager of West Michigan Processing Co-op."
   }
 ]

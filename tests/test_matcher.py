@@ -1665,6 +1665,68 @@ def test_cooperative_forms_missed_on_2026_11_23() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_24() -> None:
+    cases = [
+        (
+            'Target and Home Depot, and it’s made my life immeasurably better because '
+            'I’ve discovered as a result that locally owned stores in the Ace Hardware '
+            'cooperative have literally anything I’d want from either of those.'
+        ),
+        (
+            'Country Gate Players Workshop Cooperative presents Cratchit, an original '
+            'family holiday musical.'
+        ),
+        (
+            'La Coop de Rogersville peine à retrouver l’équilibre financier',
+            'La Coopérative de Rogersville, située à Nouvelle-Arcadie, subit toujours '
+            'les répercussions de la perte de son contrat d’agence.',
+        ),
+        (
+            'Who do you use for banking for your coop? I just tried to open an account '
+            'and the banker had no idea how to classify a cooperative inc'
+        ),
+        (
+            'www.shelf-awareness.com/theshelf/202',
+            'Vayinafash Press, a publishing imprint and marketing cooperative for '
+            'independent Jewish authors, has launched with a list of 11 books',
+        ),
+        (
+            'TIL...',
+            'gönghé, which is an abbreviation for "industrial cooperative"? '
+            'Like it was just a term for a worker-run organization?',
+        ),
+        (
+            '',
+            'Bridget Swift | General Mgr, West Michigan Processing Co-op',
+        ),
+        'La coopérative de production a ouvert son magasin.',
+    ]
+    for item in cases:
+        text, alt = item if isinstance(item, tuple) else (item, '')
+        result = match_post(text, alt_text=alt)
+        assert result.matched is True, text or alt
+        assert result.reason == 'strong_positive', text or alt
+
+    drops = [
+        'Ace Hardware has a sale on drills this weekend.',
+        'Play the workshop cooperative game tonight.',
+        'The processing co-op mode is online only.',
+        'La coopérative de jeux sort un nouveau titre.',
+        'La coopérative de crédit verse un dividende.',
+        'La coopérative de logement ouvre ses inscriptions.',
+        'Do you want the heritage ethically slaughtered kosher turkey cooperative story?',
+        'Support the cooperative where I write essays about the train.',
+        'Cooperative Bank of Kenya raised its interim dividend.',
+        'Pedernales Electric Cooperative approved a 5% rate reduction.',
+        'Check out the journalist-owned cooperative on Kickstarter.',
+        'Red billed Blue Magpies practice cooperative breeding.',
+        'Cardedeu Opens Catalonia’s Largest Private-Land Housing Co-op.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
