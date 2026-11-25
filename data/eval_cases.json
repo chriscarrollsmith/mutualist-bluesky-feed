@@ -3952,5 +3952,133 @@
     "author_handle": "chyrons.bsky.social",
     "alt_text": "Bridget Swift | General Mgr, West Michigan Processing Co-op",
     "note": "The general manager of West Michigan Processing Co-op."
+  },
+  {
+    "id": "fp-2026-11-25-matching-gift",
+    "text": "Daniel Mondragon drives with COOP to make a difference in his community. Help Colorado's driver-owned rideshare keep building: new monthly gifts matched 100%, up to $100, through Dec. 8. https://coloradodrivers.coop/donate",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "coloradodrivers.bsky.social",
+    "note": "A matching-gift drive for a driver-owned rideshare. The driver is named Mondragon."
+  },
+  {
+    "id": "fn-2026-11-25-neighborhood-farm-co-op",
+    "text": "Fountain Heights in Birmingham went nearly 70 years without a grocery store. So a neighborhood farm co-op built one 🥕 We All Eat Market opened Nov. 7 with food from 16 local plots, per ABC 33/40. Built by neighbors. buff.ly/aD6Pw9q",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "unruledmasses.bsky.social",
+    "alt_text": "Fountain Heights gets first grocery store in 70 years After nearly 70 years of having to leave the neighborhood to buy groceries, Fountain Heights residents now have a closer-to-home option.The “We All Eat” Market has opened in the neighborhood,…",
+    "note": "A neighborhood farm co-op that opened a grocery after seventy years without one."
+  },
+  {
+    "id": "fn-2026-11-25-radio-cooperative",
+    "text": "La Coopérative radiophonique de Toronto (@CHOQFM / GrandToronto.ca) recrute jusqu’à 3 membres pour son CA !\n\nProfils recherchés :\n📊 Finances / Comptabilité\n👥 RH\n⚖️ Droit / Gouvernance\n\n📩 CV + lettre : administration@choqfm.ca\n⏳ Avant le 30 nov. 2026\n\n#Toronto #Francophonie",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "choqfmtoronto.bsky.social",
+    "note": "A radio cooperative recruiting members of its board."
+  },
+  {
+    "id": "fn-2026-11-25-subvert-cooperative",
+    "text": "All my music and audio producing followers and friends should checkout the @subvert.fm cooperative!\n\nThey implemented an excellent AI policy long before Tidal noticed the writing on the wall.\n\nIt's also a magnificent place for artists to host exclusive audio.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "climathosphere.bsky.social",
+    "note": "The Subvert cooperative, named as subvert.fm cooperative."
+  },
+  {
+    "id": "fn-2026-11-25-cooperative-alliance",
+    "text": "Howard Brodsky\n\nCo-Founder, CCA Global Partners\nFounder, Cooperatives for a Better World\nCo-Founder, The Principle 6 Cooperative\nGlobal Chairman, International Cooperative Alliance G20 Group\nVice President, International Cooperative Innovation Network\n\nIcons of Change SDG 8 Ambassador for USA",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "iconsofchange.bsky.social",
+    "note": "A chair of the International Cooperative Alliance."
+  },
+  {
+    "id": "fn-2026-11-25-cooperative-news-outlet",
+    "text": "Join us at 7 p.m. Dec. 1 for a virtual town hall with Max Alvarez of @therealnews.com, Post-Gazette strike veterans and community members. \n\nWe'll discuss how the Pittsburgh Progress can meet our collective needs and share updates on our progress.\n\nREGISTER: tinyurl.com/pittsburghPr...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "pittsburghprogress.bsky.social",
+    "alt_text": "The graphic reads: The Pittsburgh Progress presents A Progress Virtual Town Hall. Support our worker-led, community-owned cooperative news outlet. 7 p.m. Tuesday, Dec. 1, 2026, via Zoom. Register at tinyurl.com/PittsburghProgress12-01. Check out our work at pittsburghprogress.com.",
+    "note": "A worker-led, community-owned cooperative news outlet."
+  },
+  {
+    "id": "fn-2026-11-25-dairy-cooperative",
+    "text": "La Coopérative Sodiaal et Alsace Lait entrent en négociation exclusive pour l’acquisition de la laiterie Chalifoux\nwww.soreltracy.com/la-cooperati...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "soreltracymagazine.bsky.social",
+    "alt_text": "La Coopérative Sodiaal et Alsace Lait entrent en négociation exclusive pour l’acquisition de la laiterie Chalifoux | SorelTracy Magazine (Sodiaal, 24 novembre 2026) – Sodiaal, première coopérative laitière française, et Alsace Lait annoncent être entrées en négociation exclusive en vue de l’acquisition par Sodiaal de la laiterie Chalif...",
+    "note": "Sodiaal, a French dairy cooperative, negotiating to buy a dairy."
+  },
+  {
+    "id": "fn-2026-11-25-worker-buyout",
+    "text": "« Nous avons racheté notre PME » : l’histoire de ces salariés devenus patrons\n\n\n",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "news-flows-fr.bsky.social",
+    "alt_text": "« Nous avons racheté notre PME » : l’histoire de ces salariés devenus patrons Encore mal connu des Français, le modèle de la coopérative fait pourtant ses preuves lors des transmissions d’entreprises (saines), avec une",
+    "note": "Workers who bought their firm through the cooperative model."
+  },
+  {
+    "id": "fn-2026-11-25-became-a-cooperative",
+    "text": "Confluence Conseil : “La parole est libre” (Mag2Lyon)\n\n#Lyon",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "lyonpresquile.bsky.social",
+    "alt_text": "Confluence Conseil : “La parole est libre” TROPHÉE 2025 ESS MAG2LYON, catégorie : DEMOCRATIE URSCOP Confluence Conseil, société de services numériques, s’est transformée en coopérative après une",
+    "note": "A digital-services firm that became a cooperative."
+  },
+  {
+    "id": "fn-2026-11-25-cooperative-power",
+    "text": "Just signed up for @copower.bsky.social 2.0 with Indigo Power\nwww.cooperativepower.org.au",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "phonakins.com",
+    "alt_text": "Make The Switch revisions - Cooperative Power We’re done with the traditional energy model. We’re non-profit. We believe in the science of climate change. Make the switch today!",
+    "note": "A signup for Cooperative Power, a non-profit energy cooperative."
+  },
+  {
+    "id": "fn-2026-11-25-sodiaal-link",
+    "text": "#PlusFortsEnCoop \nSodiaal vient d'entrer en négociations exclusives avec Alsace Lait pour acquérir une laiterie québécoise, avec l'objectif d'accroître ses capacités de production après l'acquisition, en 2024, des activités canadiennes de Yoplait.\nwww.soreltracy.com/la-cooperati...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "chouetteagile.bsky.social",
+    "alt_text": "La Coopérative Sodiaal et Alsace Lait entrent en négociation exclusive pour l’acquisition de la laiterie Chalifoux | SorelTracy Magazine (Sodiaal, 24 novembre 2026) – Sodiaal, première coopérative laitière française, et Alsace Lait annoncent être entrées en négociation exclusive en vue de l’acquisition par Sodiaal de la laiterie Chalif...",
+    "note": "A link card naming Sodiaal as a French dairy cooperative."
   }
 ]

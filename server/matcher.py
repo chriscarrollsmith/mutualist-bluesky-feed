@@ -354,6 +354,17 @@ _STRONG_POSITIVE = re.compile(
       | marketing\s+cooperatives?\b(?!\s+(?:game|games|board|mode)\b)
       | industrial\s+cooperatives?\b
       | processing\s+co-?ops?\b(?!\s+(?:game|games|mode|gameplay)\b)
+      | neighborhood\s+farm\s+co-?ops?\b
+      | cooperative\s+news\s+outlets?\b
+      | coop[eé]rative\s+radiophonique\b
+      | coop[eé]rative\s+laiti[eè]res?\b
+      | mod[eè]le\s+de\s+la\s+coop[eé]rative\b
+        (?!\s+(?:de\s+)?(?:jeu|jeux|games?|logement|cr[eé]dits?)\b)
+      | transform[eé]e\s+en\s+coop[eé]rative\b
+        (?!\s+(?:de\s+)?(?:jeu|jeux|games?|logement|cr[eé]dits?)\b)
+      | subvert\.fm\s+cooperatives?\b
+      | international\s+cooperative\s+alliance\b
+      | cooperative\s+power\b.{0,200}\b(?:non[\s-]?profit|energy\s+model)\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -554,7 +565,8 @@ _INSTITUTION_CUE = re.compile(
 # words is not rescued by an in-scope link card. Seeing someone check out
 # at a food co-op is a sighting, not the cooperative. A chamber
 # anniversary feature that calls a store a local business and community
-# cooperative is an ad for the shop.
+# cooperative is an ad for the shop. A matching-gift drive is a pledge.
+# Mondragon the federation is not a given name followed by Mondragon.
 _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
     r"""
     (?:
@@ -581,6 +593,7 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | has\s+been\s+verified\s+by\s+@
       | \bshare\s+offers?\b
       | \bkickstarters?\b
+      | monthly\s+gifts?\b.{0,40}\bmatch(?:ed|ing)?\b
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
       | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
@@ -627,6 +640,7 @@ _HARD_NEGATIVE = re.compile(
       | has\s+been\s+verified\s+by\s+@
       | \bshare\s+offers?\b
       | \bkickstarters?\b
+      | monthly\s+gifts?\b.{0,40}\bmatch(?:ed|ing)?\b
       | bipartisan.{0,200}community\s+land\s+trusts?
       | brought\s+up\s+community\s+land\s+trusts?
       | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
@@ -803,6 +817,16 @@ _EMBED_TEXT_MAX = 320
 
 def _normalize(text: str) -> str:
     return re.sub(r'\s+', ' ', text or '').strip()
+
+
+# A capitalized given name plus Mondragon is a person. The federation is the
+# bare name, including after a lowercase particle such as "de Mondragon".
+_GIVEN_NAME_MONDRAGON = re.compile(r'\b([A-Z][a-z]{1,20}) Mondragon\b')
+
+
+def _without_given_name_mondragon(haystack: str) -> str:
+    blank = ' ' * len('Mondragon')
+    return _GIVEN_NAME_MONDRAGON.sub(lambda match: f'{match.group(1)} {blank}', haystack)
 
 
 def _clip_embed_text(value: object, *, max_len: int = _EMBED_TEXT_MAX) -> str:
@@ -1108,7 +1132,7 @@ def match_post(
     if author_handle and author_handle.lower() in blocklist_handles:
         return MatchResult(False, 'blocklist_handle')
 
-    haystack = combine_text(text, alt_text=alt_text, langs=lang_tags)
+    haystack = _without_given_name_mondragon(combine_text(text, alt_text=alt_text, langs=lang_tags))
 
     if author_did and author_did in allowlist_dids:
         provisional = MatchResult(True, 'allowlist_did')
