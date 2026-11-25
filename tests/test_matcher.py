@@ -1727,6 +1727,76 @@ def test_cooperative_forms_missed_on_2026_11_24() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_25() -> None:
+    cases = [
+        (
+            'Fountain Heights in Birmingham went nearly 70 years without a grocery store. '
+            'So a neighborhood farm co-op built one.'
+        ),
+        'La Coopérative radiophonique de Toronto recrute jusqu’à 3 membres pour son CA.',
+        (
+            'All my music friends should checkout the @subvert.fm cooperative. '
+            'It is a magnificent place for artists to host exclusive audio.'
+        ),
+        'Howard Brodsky, Global Chairman, International Cooperative Alliance G20 Group.',
+        (
+            'Join us for a virtual town hall.',
+            'Support our worker-led, community-owned cooperative news outlet.',
+        ),
+        (
+            'La Coopérative Sodiaal et Alsace Lait entrent en négociation exclusive.',
+            'Sodiaal, première coopérative laitière française, annonce l’acquisition.',
+        ),
+        (
+            '« Nous avons racheté notre PME » : l’histoire de ces salariés devenus patrons.',
+            'Le modèle de la coopérative fait ses preuves lors des transmissions d’entreprises.',
+        ),
+        (
+            'Confluence Conseil : “La parole est libre”.',
+            'Confluence Conseil, société de services numériques, s’est transformée en coopérative.',
+        ),
+        (
+            'Just signed up for Cooperative Power with Indigo Power.',
+            'Cooperative Power. We’re done with the traditional energy model. We’re non-profit.',
+        ),
+        'Ven a las jornadas de puertas abiertas de Mondragon Unibertsitatea.',
+    ]
+    for item in cases:
+        text, alt = item if isinstance(item, tuple) else (item, '')
+        result = match_post(text, alt_text=alt)
+        assert result.matched is True, text or alt
+        assert result.reason == 'strong_positive', text or alt
+
+    pledge = match_post(
+        'Daniel Mondragon drives with COOP to make a difference in his community. '
+        "Help Colorado's driver-owned rideshare keep building: new monthly gifts matched "
+        '100%, up to $100, through Dec. 8. https://coloradodrivers.coop/donate'
+    )
+    assert pledge.matched is False
+    assert pledge.reason == 'hard_negative'
+
+    surname = match_post('Daniel Mondragon drives with COOP to make a difference.')
+    assert surname.matched is False
+
+    university_drive = match_post(
+        'Mondragon Unibertsitatea: new monthly gifts matched 100% through December 8.'
+    )
+    assert university_drive.matched is False
+    assert university_drive.reason == 'hard_negative'
+
+    drops = [
+        'Dominique Schelcher (Coopérative U) tops the ranking of everyday bosses.',
+        'I live in a cooperative, so building maintenance is taken care of.',
+        'Lumen Cooperative is a house in a strategy game.',
+        'The rural electric co-op is raising the kilowatt rate this winter.',
+        'La coopérative de logement ouvre ses inscriptions.',
+        'Play the workshop cooperative game tonight.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
