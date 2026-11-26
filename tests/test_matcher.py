@@ -1797,6 +1797,67 @@ def test_cooperative_forms_missed_on_2026_11_25() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_26() -> None:
+    cases = [
+        (
+            'The Keihoku Forestry Cooperative in Ukyo ward, Kyoto, needed a materials '
+            'store and garage, and built it from timber its own members had cut.'
+        ),
+        (
+            'the largest shareholder in the ocean spray cranberry cooperative is also '
+            'one of the largest producer of engineered soils in the northeast US.'
+        ),
+        (
+            "They're a grower-owned cooperative, the farmers in the Pine Barrens "
+            'are all great people.'
+        ),
+        "Ocean Spray is a grower's cooperative, owned by landowners, not workers.",
+        'Ocean Spray is a grower’s cooperative, owned by landowners, not workers.',
+        (
+            'talking about the present challenges and future promise of cooperative '
+            'business on Iowa Public Radio'
+        ),
+        (
+            'a purportedly substantive debate where Ocean Spray is a benevolent '
+            "worker's cooperative being oppressed by evil anti-worker foodies"
+        ),
+        (
+            'You can support cooperative agriculture and DIY your Goo by purchasing '
+            'Ocean Spray cranberries in a bag'
+        ),
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    drops = [
+        'Play the forestry cooperative board game tonight.',
+        'The cranberry cooperative game ships Friday.',
+        'A grower-owned cooperative board game.',
+        "Play the grower's cooperative board game.",
+        'Cooperative agriculture game night is sold out.',
+        'The challenges of a cooperative business agreement between two firms.',
+        'non-cooperative business as usual',
+        'Red billed Blue Magpies practice cooperative breeding.',
+        'Pedernales Electric Cooperative approved a 5% rate reduction.',
+        'Full trailer for an equal ownership worker cooperative #kickstarter',
+        "Iowa's largest farm cooperative is suing its former CEO.",
+        (
+            'At the Consolidated Farmers Cooperative Elevator, the scale ticket '
+            'is the only scripture that matters.'
+        ),
+        'Support us through the Co-op Local Community Fund on the Co-op app.',
+        'Cardedeu Opens Catalonia’s Largest Private-Land Housing Co-op.',
+        "You've been very cooperative.",
+        'Do you want the heritage ethically slaughtered kosher turkey cooperative story?',
+        'he is pushing for the cooperative MLS model worldwide.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {

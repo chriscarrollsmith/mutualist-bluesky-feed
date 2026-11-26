@@ -98,8 +98,8 @@ _STRONG_POSITIVE = re.compile(
       | neighborhood\s+assembl(?:y|ies)
       | community\s+land\s+trusts?
       | \btime[\s-]?banks?\b
-      | worker(?:s['’]?)?\s+cooperatives?\b
-      | worker(?:s['’]?)?\s+co[\s-]?ops?\b
+      | worker(?:s['’]?|['’]s)?\s+cooperatives?\b
+      | worker(?:s['’]?|['’]s)?\s+co[\s-]?ops?\b
       | platform\s+cooperatives?\b
       | (?<![\w-])platform\s+co[\s-]?ops?\b(?!\s+(?:puzzle|game|games|mode|gameplay)\b)
       | \bplatformco-?ops?\b
@@ -270,7 +270,8 @@ _STRONG_POSITIVE = re.compile(
       | health\s+insurance\s+cooperatives?\b
       | doula\s+cooperatives?\b
       | milk\s+suppliers\s+cooperatives?\b
-      | forestry\s+co[\s-]?ops?\b
+      | forestry\s+co[\s-]?(?:operatives?|ops?)\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
       | natural\s+foods\s+co[\s-]?ops?\b
       | solar\s+co-?ops?\b.{0,200}\bgroup[\s-]purchasing
       | energieco[oö]peraties?\b
@@ -334,7 +335,8 @@ _STRONG_POSITIVE = re.compile(
       | renewable\s+energy\s+cooperatives?\b
       | \blongo\s+ma[iï]\b
       | wine\s+producers?\s+and\s+cooperatives?\b
-      | growers['’]?\s+cooperatives?\b
+      | grower(?:s['’]?|['’]s)\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
       | cooperative\s+musician\s+workerspaces?\b
       | cooperative\s+banks?\s+established\s+by\s+farmers\b
       | \#wineco-?operatives?\b
@@ -365,6 +367,13 @@ _STRONG_POSITIVE = re.compile(
       | subvert\.fm\s+cooperatives?\b
       | international\s+cooperative\s+alliance\b
       | cooperative\s+power\b.{0,200}\b(?:non[\s-]?profit|energy\s+model)\b
+      | cranberry\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | grower[\s-]owned\s+co[\s-]?(?:operative|op)s?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | cooperative\s+agriculture\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | \bof\s+cooperative\s+business\b(?!\s+agreements?\b)
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -457,8 +466,8 @@ _MUTUALIST_CONTEXT = re.compile(
       | neighborhood\s+assembl
       | community\s+land\s+trusts?
       | \btime[\s-]?banks?\b
-      | worker(?:s['’]?)?\s+cooperatives?\b
-      | worker(?:s['’]?)?\s+co[\s-]?ops?\b
+      | worker(?:s['’]?|['’]s)?\s+cooperatives?\b
+      | worker(?:s['’]?|['’]s)?\s+co[\s-]?ops?\b
       | platform\s+cooperatives?\b
       | (?<![\w-])platform\s+co[\s-]?ops?\b(?!\s+(?:puzzle|game|games|mode|gameplay)\b)
       | \bplatformco-?ops?\b
@@ -537,7 +546,7 @@ _INSTITUTION_CUE = re.compile(
       | women'?s\s+(?:council|assembl|cooperative|co[\s-]?op)
       | community\s+land\s+trusts?
       | \btime[\s-]?banks?\b
-      | worker(?:s['’]?)?\s+co(?:operatives?|[\s-]?ops?)\b
+      | worker(?:s['’]?|['’]s)?\s+co(?:operatives?|[\s-]?ops?)\b
       | platform\s+co(?:operatives?|[\s-]?ops?)
       | community\s+currenc
       | \bbookchin\b

@@ -4080,5 +4080,83 @@
     "author_handle": "chouetteagile.bsky.social",
     "alt_text": "La Coopérative Sodiaal et Alsace Lait entrent en négociation exclusive pour l’acquisition de la laiterie Chalifoux | SorelTracy Magazine (Sodiaal, 24 novembre 2026) – Sodiaal, première coopérative laitière française, et Alsace Lait annoncent être entrées en négociation exclusive en vue de l’acquisition par Sodiaal de la laiterie Chalif...",
     "note": "A link card naming Sodiaal as a French dairy cooperative."
+  },
+  {
+    "id": "fn-2026-11-26-forestry-cooperative",
+    "text": "The Keihoku Forestry Cooperative in Ukyo ward, Kyoto, needed a materials store and garage, and built it from timber its own members had cut.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "tatamispaces.bsky.social",
+    "note": "A forestry cooperative built its store from timber its members cut."
+  },
+  {
+    "id": "fn-2026-11-26-cranberry-cooperative",
+    "text": "Since we’re all arguing about the canned cranberry sauce, a fun fact is that the largest shareholder in the ocean spray cranberry cooperative is also one of the largest producer of engineered soils in the northeast US.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "provenwinner.bsky.social",
+    "note": "Ocean Spray named as a cranberry cooperative."
+  },
+  {
+    "id": "fn-2026-11-26-grower-owned-cooperative",
+    "text": "No matter how you do it, remember to buy Ocean Spray! They're a grower-owned cooperative, the farmers in the Pine Barrens are all great people, and I personally benefit from your purchase. 😅",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "lanna.bsky.social",
+    "note": "Ocean Spray described as a grower-owned cooperative."
+  },
+  {
+    "id": "fn-2026-11-26-growers-cooperative",
+    "text": "Ocean Spray is a grower's cooperative, owned by landowners, not workers. And, as far as I can tell, only one Ocean Spray factory (in Grays Harbor, WA) and the bulk of the workforce is not. Further they appear to have lobbied against and successfully defeated a unionization drive in Wisconsin.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "stephenjudkins.bsky.social",
+    "note": "Ocean Spray described as a grower's cooperative owned by landowners."
+  },
+  {
+    "id": "fn-2026-11-26-cooperative-business",
+    "text": "If you weren't driving through Iowa this week, you might have missed me talking about the present challenges and future promise of cooperative business on Iowa Public Radio: www.iowapublicradio.org/podcast/rive…",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "ntnsndr.social.coop.ap.brid.gy",
+    "note": "A public-radio discussion of cooperative business."
+  },
+  {
+    "id": "fn-2026-11-26-workers-cooperative",
+    "text": "It's funny how a low-stakes cultural beef about canned cranberry sauce (that I take no sides in) has transformed, on here, into a purportedly substantive debate where Ocean Spray is a benevolent worker's cooperative being oppressed by evil anti-worker foodies",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "stephenjudkins.bsky.social",
+    "note": "A debate that names Ocean Spray as a worker's cooperative."
+  },
+  {
+    "id": "fn-2026-11-26-cooperative-agriculture",
+    "text": "You can support cooperative agriculture and DIY your Goo by purchasing Ocean Spray cranberries in a bag ✊🏽",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "modata.dev",
+    "alt_text": "Bag of Organic Ocean Spray cranberries",
+    "note": "A call to support cooperative agriculture by buying from a grower cooperative."
   }
 ]
