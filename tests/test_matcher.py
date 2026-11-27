@@ -1858,6 +1858,92 @@ def test_cooperative_forms_missed_on_2026_11_26() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_27() -> None:
+    cases = [
+        (
+            "Happy Thanksgiving from all of us at RMEOC! This year we're grateful "
+            'for co-op founders like the members of the Sand Dunes Mushroom Cooperative.'
+        ),
+        (
+            'Our friends are looking for peer supports interested in receiving '
+            'training in co-op studio development. #cooperatives #workerled'
+        ),
+        (
+            'Free in-person bookstore comedy night in San Francisco features Bay Area '
+            'comics hosted by Adobe Books & Arts Cooperative.'
+        ),
+        (
+            'Meerkat Media Cooperative tackles challenges in community: an interview '
+            'with the filmmaking cooperative behind Between Worlds.'
+        ),
+        (
+            'How the co-op began, in the founder’s telling, and growth shaped by what '
+            'members asked for. https://example.com/co-building-the-inference-cooperative/'
+        ),
+        'Une quinzaine d’agriculteurs cultivent des arachides pour la coopérative Océalia.',
+        'Une visite dans une coopérative de santé coûte deux fois moins cher.',
+        'Il en coûte 34$ en coopérative, selon la Fédération des coopératives de santé.',
+        ('From Aid to Ownership: Rethinking International Development through a Cooperative Lens.'),
+        ('More than 95% of GWF members approve a moratorium delaying grape payments. #Cooperative'),
+        'The ocean spray cooperative calls their can of cranberry sauce the log.',
+        'The Papay community cooperative runs the island shop for its members.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    artists = match_post(
+        "A bundle of two of Justseeds' recent cooperative publications.",
+        alt_text=(
+            "SLOW COOKER is a collaborative cookbook by Justseeds Artists' Cooperative and friends."
+        ),
+    )
+    assert artists.matched is True
+    assert artists.reason == 'strong_positive'
+
+    sante_card = match_post(
+        'Deux fois moins chères en coopérative que dans le réseau public.',
+        alt_text=(
+            'Le coût d’une visite médicale est en moyenne deux fois moins cher '
+            'dans les coopératives de santé que le réseau public.'
+        ),
+    )
+    assert sante_card.matched is True
+    assert sante_card.reason == 'strong_positive'
+
+    drops = [
+        'Play the mushroom cooperative board game tonight.',
+        'One step closer to a working Co-Op build.',
+        'The martial arts cooperative meets on Tuesday.',
+        'A social media cooperative game mode.',
+        'Play the filmmaking cooperative game.',
+        "The artists' cooperative board game ships Friday.",
+        'Prendre des parts pour la coopérative.',
+        '23 parts sociales pour la coopérative.',
+        'Investir pour la coopérative avant vendredi.',
+        'Des places pour la coopérative de logement.',
+        'Un scénario pour la coopérative de jeu.',
+        (
+            'Cheapest Diesel (B7) in the UK today: Papay community cooperative '
+            'Orkney, Scotland 175.0p/L'
+        ),
+        'The community co-op posted unleaded at 175.0p/L.',
+        'Red billed Blue Magpies practice cooperative breeding.',
+        'Pedernales Electric Cooperative approved a 5% rate reduction.',
+        'Cardedeu Opens Catalonia’s Largest Private-Land Housing Co-op.',
+        'Full trailer for an equal ownership worker cooperative #kickstarter',
+        'Il est toujours possible de prendre des parts de la coopérative.',
+        'La coopérative de logement ouvre ses inscriptions.',
+        "You've been very cooperative.",
+        'Cooperative learning raised the math scores.',
+        'More than 95% of growers approve a moratorium delaying grape payments.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
