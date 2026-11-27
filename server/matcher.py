@@ -374,6 +374,27 @@ _STRONG_POSITIVE = re.compile(
       | cooperative\s+agriculture\b
         (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
       | \bof\s+cooperative\s+business\b(?!\s+agreements?\b)
+      | mushroom\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | co-?op\s+studio\s+development\b.{0,240}(?:cooperatives?\b|worker-?led\b)
+      | (?:cooperatives?\b|worker-?led\b).{0,240}co-?op\s+studio\s+development\b
+      | (?<!martial\s)arts\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | filmmaking\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | (?<!social\s)media\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | inference[\s-]cooperatives?\b
+      | artists?(?:['’]s?|s['’])?\s+cooperatives?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | (?<!parts\s)(?<!part\s)(?<!investir\s)(?<!sociales\s)
+        pour\s+la\s+coop[eé]rative\b
+        (?!\s+de\s+(?:jeu|jeux|games?|cr[eé]dits?|logement)\b)
+      | coop[eé]ratives?\s+de\s+sant[eé]\b
+      | through\s+a\s+cooperative\s+lens\b
+      | delaying\s+grape\s+payments\b.{0,200}cooperatives?\b
+      | cooperatives?\b.{0,200}delaying\s+grape\s+payments\b
+      | ocean\s+spray\s+cooperatives?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -576,6 +597,7 @@ _INSTITUTION_CUE = re.compile(
 # anniversary feature that calls a store a local business and community
 # cooperative is an ad for the shop. A matching-gift drive is a pledge.
 # Mondragon the federation is not a given name followed by Mondragon.
+# A fuel-price board that names a community cooperative is a rate notice.
 _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
     r"""
     (?:
@@ -607,6 +629,10 @@ _HARD_NEGATIVE_BLOCKS_STRONG = re.compile(
       | brought\s+up\s+community\s+land\s+trusts?
       | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
       | local\s+business\s+and\s+community\s+co-?operatives?\b
+      | cheapest\s+(?:diesel|petrol|unleaded)\b.{0,240}co-?(?:operatives?|ops?)\b
+      | co-?(?:operatives?|ops?)\b.{0,240}cheapest\s+(?:diesel|petrol|unleaded)\b
+      | \b\d+(?:\.\d+)?p/l\b.{0,200}co-?(?:operatives?|ops?)\b
+      | co-?(?:operatives?|ops?)\b.{0,200}\b\d+(?:\.\d+)?p/l\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,
@@ -654,6 +680,10 @@ _HARD_NEGATIVE = re.compile(
       | brought\s+up\s+community\s+land\s+trusts?
       | \bsaw\b.{0,60}\bchecking\s+out\b.{0,80}\bfood\s+co[\s-]?(?:operatives?|ops?)\b
       | local\s+business\s+and\s+community\s+co-?operatives?\b
+      | cheapest\s+(?:diesel|petrol|unleaded)\b.{0,240}co-?(?:operatives?|ops?)\b
+      | co-?(?:operatives?|ops?)\b.{0,240}cheapest\s+(?:diesel|petrol|unleaded)\b
+      | \b\d+(?:\.\d+)?p/l\b.{0,200}co-?(?:operatives?|ops?)\b
+      | co-?(?:operatives?|ops?)\b.{0,200}\b\d+(?:\.\d+)?p/l\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,

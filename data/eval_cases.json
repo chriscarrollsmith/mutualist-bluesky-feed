@@ -4158,5 +4158,141 @@
     "author_handle": "modata.dev",
     "alt_text": "Bag of Organic Ocean Spray cranberries",
     "note": "A call to support cooperative agriculture by buying from a grower cooperative."
+  },
+  {
+    "id": "fp-2026-11-27-fuel-price",
+    "text": "💰 Cheapest Diesel (B7) in the UK today:\n\n📍 Papay community cooperative\n📌 Orkney, Scotland, KW17 2BU\n💷 175.0p/L\n\n#UKFuel #CheapFuel #Pumpr",
+    "expected": false,
+    "signal": "text",
+    "bucket": "hard_negative",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "pumpr-app.bsky.social",
+    "note": "A fuel-price board naming a community cooperative."
+  },
+  {
+    "id": "fn-2026-11-27-mushroom-cooperative",
+    "text": "Happy Thanksgiving from all of us at RMEOC! This year we're grateful for co-op founders like the members of the Sand Dunes Mushroom Cooperative, and for everyone who gathers with us and shows up for this work. #HappyThanksgiving",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "rmeoc.bsky.social",
+    "note": "Members of the Sand Dunes Mushroom Cooperative."
+  },
+  {
+    "id": "fn-2026-11-27-coop-studio-development",
+    "text": "Hey super cool folks in Atlantic Canada, Ontario, BC and The Territories! \n\nOur friends at @babyghosts.org are looking for peer supports from these regions that would be interested in receiving training in co-op studio development!\n\nbabyghosts.org/coop-foundat...\n\n#cooperatives #workerled #gamedev",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "mistikstudios.bsky.social",
+    "note": "Training in worker-led co-op studio development."
+  },
+  {
+    "id": "fn-2026-11-27-arts-cooperative",
+    "text": "Free in-person bookstore comedy night in San Francisco features Bay Area comics hosted by Adobe Books & Arts Cooperative.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "booksbriefly.bsky.social",
+    "note": "A comedy night hosted by Adobe Books & Arts Cooperative."
+  },
+  {
+    "id": "fn-2026-11-27-media-cooperative",
+    "text": "In this week's Art Side Roundup:\n\nMeerkat Media Cooperative tackles challenges in community: An interview with the filmmaking cooperative behind “Between Worlds”\n\nRoundup: https://artside.substack.com/p/art-side-roundup-november-25-2026",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "philosophypublics.bsky.social",
+    "alt_text": "Meerkat Media Cooperative tackles challenges in community An interview with the filmmaking cooperative behind “Between Worlds”",
+    "note": "An interview with a filmmaking media cooperative."
+  },
+  {
+    "id": "fn-2026-11-27-inference-cooperative",
+    "text": "How the co-op began, in the founder's telling: from AI rabbit holes to a warm den, research at Metagov, a chat and an API gateway at first, and growth shaped by what members asked for. https://nathanschneider.info/2026/11/from-ai-rabbit-holes-to-a-warm-den-co-building-the-inference-cooperative/",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "inference.coop",
+    "note": "The founder's account of how the inference cooperative began."
+  },
+  {
+    "id": "fn-2026-11-27-artists-cooperative",
+    "text": "A bundle of two of Justseeds' recent cooperative publications, Slow Cooker, a collaborative recipe book by Justseeds and friends, and Toward Radical Futures: a Justseeds coloring book. justseeds.org/product/slow...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "justseeds.bsky.social",
+    "alt_text": "SLOW COOKER is a collaborative cookbook by Justseeds Artists' Cooperative and friends. Twenty-one recipes featuring decadent baked goods, recipes to keep loved ones’ memories alive, foraged ingredients, and more to fuel the revolution! No crock pot, or \"slow cooker\" needed.",
+    "note": "Publications from Justseeds Artists' Cooperative."
+  },
+  {
+    "id": "fn-2026-11-27-pour-la-cooperative",
+    "text": "#PlusFortsEnCoop\n\"Une filière française de cacahuète\"\n Une quinzaine d’agriculteurs cultivent depuis peu des arachides pour la coopérative Océalia et sa filiale Menguy’s. Le spécialiste de l’apéritif vise plus de 2 000 tonnes par an d’ici à 2030.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "chouetteagile.bsky.social",
+    "note": "Farmers growing peanuts for the Océalia cooperative."
+  },
+  {
+    "id": "fn-2026-11-27-cooperative-de-sante",
+    "text": "Une visite dans une coopérative de santé coûte deux fois moins cher que dans le réseau public www.ledevoir.com/actualites/s...",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "rickiboy.bsky.social",
+    "alt_text": "Une visite dans une coopérative de santé coûte deux fois moins cher que dans le réseau public Il en coûte 34$ en coopérative contre 69 $ dans le réseau public, selon la Fédération des coopératives de santé.",
+    "note": "A visit to a Quebec health cooperative costs less than the public system."
+  },
+  {
+    "id": "fn-2026-11-27-cooperative-lens",
+    "text": "❓Did you miss our high-level event “From Aid to Ownership: Rethinking International Development through a Cooperative Lens”?  \n\nOur report and core messages are out! 📙\n\n#coops4dev🌍",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "coopseurope.eurosky.social",
+    "note": "Cooperatives Europe on development as ownership rather than aid."
+  },
+  {
+    "id": "fn-2026-11-27-grape-payments",
+    "text": "More than 95% of GWF members approve moratorium delaying grape payments #GrapePayments #Cooperative #Restructuring #Moratorium #Agriculture",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "vineturglobal.bsky.social",
+    "alt_text": "More than 95% of GWF members approve moratorium delaying grape payments The vote clears the last major hurdle for the cooperative’s 2030 restructuring, with deferred claims preserved in full",
+    "note": "Members of a wine cooperative voting to delay grape payments."
+  },
+  {
+    "id": "fn-2026-11-27-ocean-spray-cooperative",
+    "text": "if u were unaware the ocean spray cooperative calls their can of cranberry sauce “the log”",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "realpartyvan.bsky.social",
+    "note": "Ocean Spray named as a cooperative."
   }
 ]
