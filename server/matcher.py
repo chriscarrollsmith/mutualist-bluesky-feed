@@ -395,6 +395,15 @@ _STRONG_POSITIVE = re.compile(
       | delaying\s+grape\s+payments\b.{0,200}cooperatives?\b
       | cooperatives?\b.{0,200}delaying\s+grape\s+payments\b
       | ocean\s+spray\s+cooperatives?\b
+      | pari\s+de\s+la\s+coop[eé]rative\b
+        (?!\s+de\s+(?:jeu|jeux|games?|logement|cr[eé]dits?)\b)
+      | cooperative\s+non[\s-]?profits?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay|housing|agreements?)\b)
+      | cooperative\s+art\s+galler(?:y|ies)\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay)\b)
+      | farmers?(?:['’]s|s['’])?\s+co-?ops?\b
+        (?!\s+(?:(?:board\s+)?games?|mode|gameplay|electric|utility)\b)
+      | kubsitu\s+cooperatives?\b
     )
     """,
     re.IGNORECASE | re.VERBOSE,

@@ -4294,5 +4294,60 @@
     "regression": true,
     "author_handle": "realpartyvan.bsky.social",
     "note": "Ocean Spray named as a cooperative."
+  },
+  {
+    "id": "fn-2026-11-28-pari-de-la-cooperative",
+    "text": "Contre les pressions économiques et éditoriales, des médias font le pari de la coopérative",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "altermedias.skyfleet.blue",
+    "note": "Media outlets choosing the cooperative form against editorial pressure."
+  },
+  {
+    "id": "fn-2026-11-28-cooperative-nonprofit",
+    "text": "Then I opened my own company and made it a cooperative nonprofit where people who work here can just do",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "muzhudby.bsky.social",
+    "note": "A workplace converted into a cooperative nonprofit."
+  },
+  {
+    "id": "fn-2026-11-28-cooperative-art-gallery",
+    "text": "Two paintings of Castello di Amorosa currently at Moraga Art Gallery. I loved painting these in detailed watercolor. Please visit moragaartgallery 🎨 a lovely #BayArea cooperative art gallery. Art makes a wonderful gift! #art #wine #GiftIdeas #holidays #SmallBusiness",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "elizabethkennen.bsky.social",
+    "note": "Paintings on view at a cooperative art gallery."
+  },
+  {
+    "id": "fn-2026-11-28-kubsitu-cooperative",
+    "text": "Ethiopian Harrar dries whole in the cherry for 18 to 21 days, which is where its berry sweetness comes from. Our guide to the region, the Kubsitu Cooperative, the process and how to brew it:",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "holdout",
+    "regression": true,
+    "author_handle": "kocherecoffee.bsky.social",
+    "note": "A brew guide naming the Kubsitu coffee cooperative."
+  },
+  {
+    "id": "fn-2026-11-28-farmers-co-op",
+    "text": "How a Canadian cheesemaker's cheddar recipe and a 1909 farmers' co-op built Tillamook, plus the schooner on the label and the bitter 1960s split.",
+    "expected": true,
+    "signal": "text",
+    "bucket": "strong_positive",
+    "split": "dev",
+    "regression": true,
+    "author_handle": "grillcheesyhd.bsky.social",
+    "note": "Tillamook's history as a 1909 farmers' co-op."
   }
 ]

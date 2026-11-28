@@ -1944,6 +1944,54 @@ def test_cooperative_forms_missed_on_2026_11_27() -> None:
         assert result.matched is False, text
 
 
+def test_cooperative_forms_missed_on_2026_11_28() -> None:
+    cases = [
+        (
+            'Contre les pressions économiques et éditoriales, des médias font '
+            'le pari de la coopérative'
+        ),
+        (
+            'Then I opened my own company and made it a cooperative nonprofit '
+            'where people who work here can just do'
+        ),
+        'Please visit moragaartgallery, a lovely Bay Area cooperative art gallery.',
+        ('Our guide to the region, the Kubsitu Cooperative, the process and how to brew it'),
+        ("How a Canadian cheesemaker's cheddar recipe and a 1909 farmers' co-op built Tillamook"),
+        'A 1909 farmer’s co-op built the creamery.',
+    ]
+    for text in cases:
+        result = match_post(text)
+        assert result.matched is True, text
+        assert result.reason == 'strong_positive', text
+
+    drops = [
+        'Le pari de la coopérative de jeu ouvre vendredi.',
+        'Le pari de la coopérative de logement est complet.',
+        'The cooperative nonprofit game ships Friday.',
+        'A cooperative nonprofit housing lottery opened.',
+        'We signed a cooperative nonprofit agreement.',
+        'The cooperative art gallery board game ships Friday.',
+        "Play the farmers' co-op board game tonight.",
+        'The farmers co-op electric rate notice arrived.',
+        (
+            'Meet Sophia Avila of SLV Boss Cooperative, a worker-owned accounting '
+            'co-op in the San Luis Valley. Give monthly: https://example.com/gives'
+        ),
+        (
+            'Having a Thanksgiving Dinner Flight at Broken Clock Brewing Cooperative '
+            'and the lager is tasty.'
+        ),
+        (
+            'Unless the CC&Rs say otherwise, condominium, stock cooperative, and '
+            'community apartment associations repair the common area.'
+        ),
+        'Delaware Electric Cooperative members remained without power Friday.',
+    ]
+    for text in drops:
+        result = match_post(text)
+        assert result.matched is False, text
+
+
 def test_extract_alt_text_clips_external_description() -> None:
     embed = {
         'external': {
